@@ -1,0 +1,1 @@
+<iframe src='slide.php' width="100%" height="500px" frameborder="0" scrolling="no" />

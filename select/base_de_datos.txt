@@ -1,0 +1,81 @@
+-- phpMyAdmin SQL Dump
+-- version 3.4.5
+-- http://www.phpmyadmin.net
+--
+-- Servidor: localhost
+-- Tiempo de generación: 21-07-2012 a las 20:43:20
+-- Versión del servidor: 5.5.8
+-- Versión de PHP: 5.3.5
+
+SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
+--
+-- Base de datos: `combobox`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `hijo`
+--
+
+CREATE TABLE IF NOT EXISTS `hijo` (
+  `idhijo` int(255) NOT NULL AUTO_INCREMENT,
+  `idpadre` int(255) NOT NULL DEFAULT '0',
+  `hijo` text COLLATE latin1_spanish_ci NOT NULL,
+  PRIMARY KEY (`idhijo`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci AUTO_INCREMENT=5 ;
+
+--
+-- Volcado de datos para la tabla `hijo`
+--
+
+INSERT INTO `hijo` (`idhijo`, `idpadre`, `hijo`) VALUES
+(1, 1, 'Subfamilia 1 en Familia 1'),
+(2, 1, 'Subfamilia 2 en Familia 1'),
+(3, 2, 'Subfamilia 1 en Familia 2'),
+(4, 2, 'Subfamilia 2 en Familia 2');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `nieto`
+--
+
+CREATE TABLE IF NOT EXISTS `nieto` (
+  `idnieto` int(255) NOT NULL AUTO_INCREMENT,
+  `idhijo` int(255) NOT NULL DEFAULT '0',
+  `nieto` text COLLATE latin1_spanish_ci NOT NULL,
+  PRIMARY KEY (`idnieto`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci AUTO_INCREMENT=6 ;
+
+--
+-- Volcado de datos para la tabla `nieto`
+--
+
+INSERT INTO `nieto` (`idnieto`, `idhijo`, `nieto`) VALUES
+(2, 1, 'Subsub en sub1'),
+(3, 2, 'Subsub en sub2'),
+(4, 3, 'Subsub en sub3'),
+(5, 4, 'Subsub en sub4');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `padre`
+--
+
+CREATE TABLE IF NOT EXISTS `padre` (
+  `idpadre` int(255) NOT NULL AUTO_INCREMENT,
+  `padre` text COLLATE latin1_spanish_ci NOT NULL,
+  PRIMARY KEY (`idpadre`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci AUTO_INCREMENT=3 ;
+
+--
+-- Volcado de datos para la tabla `padre`
+--
+
+INSERT INTO `padre` (`idpadre`, `padre`) VALUES
+(1, 'Familia 1'),
+(2, 'Familia 2');
