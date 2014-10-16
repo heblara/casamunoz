@@ -2,14 +2,17 @@
   <script src="//code.jquery.com/jquery-1.10.2.js"></script>
   <script src="//code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
   <link rel="stylesheet" href="/resources/demos/style.css">
+
+
 <script>
-  $(function() {
-    $( ".datepicker" ).datepicker({
-      changeMonth: true,
-      changeYear: true,
-      dateFormat:'yy-mm-dd'
-    });
-  });
+    $(function() {
+	$('.datepicker').datepicker({
+	dateFormat: 'yy-mm-dd', 
+	changeMonth: true, 
+	changeYear: true, 
+	yearRange: '-40:+0'
+	});
+		});
 </script>
 <script src="js/mask.js"></script>
 <script>
@@ -22,6 +25,8 @@
      $("#txtNIT").mask("9999-999999-999-9");   
   });
 </script>
+
+
 <form name="hongkiat" id="hongkiat-form" method="post" action="#">
     <div id="wrapping" class="clearfix">
         <section id="aligned">
@@ -42,30 +47,30 @@
         </select>
         <label>Fecha de Nacimiento:</label>
         <input type="text" name="txtFecNac" id="txtFecNac" placeholder="Fecha de Nacimiento" autocomplete="off" tabindex="1" class="txtinput calendar datepicker">
-        <label>Departamento: </label>
-            <select id="lstDepto" name="lstDepto" tabindex="6" class="selmenu">
-                <option value="0">-- Elija departamento --</option>
-                <?php 
-                $objC=new CasaMunoz;
-                $consC=$objC->consultar_departamentos();
-                while($resC=$consC->fetch(PDO::FETCH_OBJ)){
-                ?>
-                  <option value="<?php echo $resC->id_dpto ?>"><?php echo $resC->nom_dpto ?></option>
-                <?php
-                }
-                ?>
-            </select>
+		
+              <label>Departamento: </label>
+<script type="text/javascript" src="funciones/select_dependientes.js"></script>>
+    <?php 
+      $objeto=new CasaMunoz;
+      $consultarDepartamentos=$objeto->consultar_departamentos();
+      //$consulta=mysql_query("SELECT cod_dpto, nom_dpto FROM DEPARTAMENTO");
+      // Voy imprimiendo el primer select compuesto por los paises
+      //echo $consultarDepartamentos->rowCount();
+      echo "<select name='paises' id='paises' onChange='cargaContenido(this.id)' class='selmenu'>";
+      echo "<option value='0'>Elige</option>";
+
+      while($registro=$consultarDepartamentos->fetch(PDO::FETCH_OBJ))
+      {
+        echo "<option value='".$registro->cod_dpto."'>".$registro->nom_dpto."</option>";
+      }
+      echo "</select>";
+   ?>
         <label>Municipio: </label>
-        <select id="recipient" name="recipient" tabindex="6" class="selmenu">
-            <option value="0">-- Elija municipio --</option>
-            <option value="1">San Salvador</option>
-            <option value="2">Soyapango</option>
-            <option value="3">Ilopango</option>
-            <option value="4">Mejicanos</option>
-            <option value="5">Santa Tecla</option>
-            <option value="6">Antiguo Cuscatlan</option>
-            <option value="7">Col&oacute;n</option>
-        </select>
+        <span id="demoDer">
+        <select disabled="disabled" name="estados" id="estados" class='selmenu'>
+          <option value="0">Selecciona opci&oacute;n...</option>
+      </select>
+        </span>
         <label>Tel&eacute;fono:</label>
         <input type="tel" name="txtTelFijo" id="txtTelFijo" placeholder="Telefono fijo" tabindex="4" class="txtinput telephone">
         <label>Correo electr&oacute;nico:</label>

@@ -4,12 +4,13 @@
   <link rel="stylesheet" href="/resources/demos/style.css">
 <script>
   $(function() {
-    $( ".datepicker" ).datepicker({
-      changeMonth: true,
-      changeYear: true,
-      dateFormat:'yy-mm-dd'
-    });
-  });
+	$('.datepicker').datepicker({
+	dateFormat: 'yy-mm-dd', 
+	changeMonth: true, 
+	changeYear: true, 
+	yearRange: '-40:+0'
+	});
+		});
 </script>
 <script src="js/mask.js"></script>
 <script>
@@ -29,23 +30,29 @@
         <label>Fecha:</label>
         <input type="text" name="txtFecha" id="txtFecha" placeholder="Seleccione una fecha" autocomplete="off" tabindex="1" class="txtinput calendar datepicker">
         <label>Sucursal: </label>
-        <select id="recipient" name="recipient" tabindex="6" class="selmenu">
-            <option value="staff">-- Elija sucursal --</option>
-            <option value="staff">La Joya</option>
-            <option value="editor">Merliot</option>
-            <option value="editor">Autopista Sur</option>
-            <option value="editor">Metrosur</option>
-            <option value="editor">Las Cascadas</option>
-        </select>
-        
+<script type="text/javascript" src="funciones/select_dependientes1.js"></script>>
+    <?php 
+      $objeto=new CasaMunoz;
+      $consultarSucursal=$objeto->consultar_sucursal();
+      //$consulta=mysql_query("SELECT cod_dpto, nom_dpto FROM DEPARTAMENTO");
+      // Voy imprimiendo el primer select compuesto por los paises
+      //echo $consultarDepartamentos->rowCount();
+      echo "<select name='paises' id='paises' onChange='cargaContenido(this.id)' class='selmenu'>";
+      echo "<option value='0'>Elige</option>";
+
+      while($registro=$consultarSucursal->fetch(PDO::FETCH_OBJ))
+      {
+        echo "<option value='".$registro->cod_sucursal."'>".$registro->nom_sucursal."</option>";
+      }
+      echo "</select>";
+   ?>
         <label>Pedicurista: </label>
-        <select id="recipient" name="recipient" tabindex="6" class="selmenu">
-            <option value="0">-- Elija pedicurista --</option>
-            <option value="1">Roxana Larios</option>
-            <option value="2">Maria Andrade</option>
-            <option value="3">Maritza Escobar</option>
-        </select>
-        <label for="txtHora">Hora:</label>
+        <span id="demoDer">
+        <select disabled="disabled" name="estados" id="estados" class='selmenu'>
+          <option value="0">Selecciona opci&oacute;n...</option>
+      </select>
+        </span>
+        <label for="txthora">Hora:</label>
         <input type="text" id="txtHora" placeholder='Hora' class="txtinput time" />
         <fieldset>
           <legend><span style='font-size:12pt;'>Disponibilidad de pedicurista seleccionado</span></legend>

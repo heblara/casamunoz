@@ -6,7 +6,7 @@ function procesaResultado() {
 // Si aun esta revisando los datos...
 if (objeto.readyState == 1) {
 //  document.getElementById('resultado').innerHTML = "Cargando datos con ajax...";
-  document.getElementById('resultado').innerHTML = "<td colspan='6'><img src='paginas/5-0.gif' title='Cargando datos' width='32' />";
+  document.getElementById('resultado').innerHTML = "<td colspan='6'><img src='img/load.gif' title='Cargando datos' width='32' />";
 }
 // Si el estado es 4 significa que ya termino
 if (objeto.readyState == 4) {
@@ -28,9 +28,11 @@ function crearObjeto() {
   }
 }
 
+
 // ------------------------------
 
-function leerDatos(valor,sel,opcion) {
+
+function leerDatos(valor) {
   crearObjeto();
   if (objeto.readyState != 0) {
     alert('Error al crear el objeto XML. El Navegador no soporta AJAX');
@@ -41,7 +43,7 @@ var ca=/^[ ]{1}/;
 var com=ca.test(valor);
 	if((!com=="") || (valor=="")){document.getElementById("resultado").innerHTML="";}else{
 	// Enviar la consulta
-	    objeto.open("GET", "paginas/busqueda.php?opc="+sel+"&usuario=" + valor + "&inscrito="+opcion, true);
+	    objeto.open("GET", "paginas/busquedaEmpleado.php?&valor=" + valor, true);
 	    objeto.send(null);
 	}
     
@@ -58,7 +60,7 @@ var ca=/^[ ]{1}/;
 var com=ca.test(valor);
 	if((!com=="") || (valor=="")){document.getElementById("resultado").innerHTML="";}else{
 	// Enviar la consulta
-	    objeto.open("GET", "paginas/busqueda.php?opc="+sel+"&usuario=" + valor + "&pagina="+pag+ "&inscrito="+opcion, true);
+	    objeto.open("GET", "paginas/busqueda.phpEmpleado?valor=" + valor + "&pagina="+pag, true);
 	    objeto.send(null);
 	}
     
@@ -94,44 +96,9 @@ function seleccionar(){
     <h3>Digite t&eacute;rmino a buscar:</h3>
 	<div id="cargarCaja" style="clear:both;"></div>
     <div id="dui" style='display:;clear:both;'> 
-		<input type="text" name="txtBuscar" onKeyPress="leerDatos(this.value,document.hongkiat.lstTipo.value,document.hongkiat.inscrito.value);" class="search txtinput" id="txtBuscar" placeholder="nombre, apellido, usuario" autocomplete="off" tabindex="1" style="width:25%;">
+		<input type="text" name="txtBuscar" onKeyPress="leerDatos(this.value);" class="search txtinput" id="txtBuscar" placeholder="nombre, apellido, usuario" autocomplete="off" tabindex="1" style="width:25%;">
 	</div>
     <div id="resultado" style='background:black;font-size:12pt;'>
-    	<table width='100%'>
-    		<tr style="background:white;">
-    			<th>Apellidos</th>
-    			<th>Nombres</th>
-    			<th>Dia libre</th>
-          <th>Jornada</th>
-    		</tr>
-    		<tr style="background:silver;">
-    			<td>Martinez</td>
-    			<td>Rosa</td>
-    			<td>15-08-2014</td>
-          <td>
-            <input type="checkbox" value="manana" checked="checked">Ma&ntilde;ana
-            <input type="checkbox" value="tarde">Tarde
-          </td>
-    		</tr>
-    		<tr style="background:white;">
-    			<td>Andrade</td>
-          <td>Maria</td>
-          <td>16-08-2014</td>
-          <td>
-            <input type="checkbox" value="manana" checked="checked">Ma&ntilde;ana
-            <input type="checkbox" value="tarde"  checked="checked">Tarde
-          </td>
-    		</tr>
-    		<tr style="background:silver;">
-    			<td>Larin</td>
-    			<td>Roxana</td>
-    			<td>17-08-2014</td>
-          <td>
-            <input type="checkbox" value="manana" checked="checked">Ma&ntilde;ana
-            <input type="checkbox" value="tarde" checked="checked">Tarde
-          </td>
-    		</tr>
-    	</table>
     </div>
   </section>
 </div>

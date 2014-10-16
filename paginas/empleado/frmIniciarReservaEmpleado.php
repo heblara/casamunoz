@@ -3,13 +3,14 @@
   <script src="//code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
   <link rel="stylesheet" href="/resources/demos/style.css">
 <script>
-  $(function() {
-    $( ".datepicker" ).datepicker({
-      changeMonth: true,
-      changeYear: true,
-      dateFormat:'yy-mm-dd'
-    });
-  });
+   $(function() {
+	$('.datepicker').datepicker({
+	dateFormat: 'yy-mm-dd', 
+	changeMonth: true, 
+	changeYear: true, 
+	yearRange: '-40:+0'
+	});
+		});
 </script>
 <form name="hongkiat" id="hongkiat-form" method="post" action="#">
     <div id="wrapping" class="clearfix">

@@ -3,12 +3,13 @@
   <link rel="stylesheet" href="/resources/demos/style.css">
 <script>
   $(function() {
-    $( ".datepicker" ).datepicker({
-      changeMonth: true,
-      changeYear: true,
-      dateFormat:'yy-mm-dd'
-    });
-  });
+	$('.datepicker').datepicker({
+	dateFormat: 'yy-mm-dd', 
+	changeMonth: true, 
+	changeYear: true, 
+	yearRange: '-40:+0'
+	});
+		});
 </script>
 <script src="js/mask.js"></script>
 <script language="JavaScript">

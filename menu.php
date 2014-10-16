@@ -24,7 +24,6 @@ if(isset($_SESSION['autenticado'])){
     <li class='active has-sub'><a href='#'><span>Reporte</span></a>
       <ul>
          <li><a href='?mod=buscarreporteventa'><span>Reportes de ventas</span></a></li>
-          <li class='last'><a href='?mod=buscarreportefestivo'><span>Reportes de dia festivo</span></a></li>
       </ul>
     </li>
     <li class='active has-sub'><a href='#'><span>Servicio</span></a>
@@ -35,7 +34,6 @@ if(isset($_SESSION['autenticado'])){
     </li>
     <li class='active has-sub'><a href='#'><span>Sucursal</span></a>
       <ul>
-         <li><a href='?mod=registrarfestivo'><span>Festivos</span></a></li>
           <li class='last'><a href='?mod=registrartemporada'><span>Temporadas</span></a></li>
       </ul>
     </li>
