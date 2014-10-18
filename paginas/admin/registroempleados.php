@@ -36,28 +36,108 @@ function validar(){
         document.getElementsByName('txtApellido1').style="border-color:#F80303;";
         document.getElementById('txtApellido1').focus();
         error=true;
+    }else if(dui==null || dui==""){
+        msg+='* DUI';
+        alert("Ingrese Numero de DUI");
+        //#hongkiat-form input.name
+        document.getElementsByName('txtDUI').style="border-color:#F80303;";
+        document.getElementById('txtDUI').focus();
+        error=true;
+    }else if(nit==null || nit==""){
+        msg+='* NIT';
+        alert("Ingrese Numero de NIT");
+        //#hongkiat-form input.name
+        document.getElementsByName('txtNIT').style="border-color:#F80303;";
+        document.getElementById('txtNIT').focus();
+        error=true;
+    }else if(genero==0){
+        msg+='* Genero';
+        alert("Seleccione un genero");
+        //#hongkiat-form input.name
+        document.getElementsByName('lstGenero').style="border-color:#F80303;";
+        error=true;
+    }else if(fecnac==null || fecnac==""){
+        msg+='* Fecha nacimiento';
+        alert("Ingrese fecha de nacimiento");
+        //#hongkiat-form input.name
+        document.getElementsByName('txtFecNac').style="border-color:#F80303;";
+        document.getElementById('txtFecNac').focus();
+        error=true;
+    }else if(cargo==0){
+        msg+='* Cargo';
+        alert("Seleccione un cargo");
+        //#hongkiat-form input.name
+        document.getElementsByName('lstCargo').style="border-color:#F80303;";
+        error=true;
+    }else if(sucursal==0){
+        msg+='* Sucursal';
+        alert("Seleccione sucursal");
+        //#hongkiat-form input.name
+        document.getElementsByName('lstSucursal').style="border-color:#F80303;";
+        error=true;
+    }else if(paises==0){
+        msg+='* Departamento';
+        alert("Seleccion un Departamento");
+        //#hongkiat-form input.name
+        document.getElementsByName('paises').style="border-color:#F80303;";
+        error=true;
+    }else if(direccion==null || direccion==""){
+        msg+='* Direccion';
+        alert("Ingrese direccion");
+        //#hongkiat-form input.name
+        document.getElementsByName('txtDireccion').style="border-color:#F80303;";
+        document.getElementById('txtDireccion').focus();
+        error=true;
+    }else if(telmovil==null || telmovil==""){
+        msg+='* Telefono movil';
+        alert("Ingrese Numero de Telefono Movil");
+        //#hongkiat-form input.name
+        document.getElementsByName('txtTelMovil').style="border-color:#F80303;";
+        document.getElementById('txtTelMovil').focus();
+        error=true;
+    }else if(telfijo==null || telfijo==""){
+        msg+='* Telefono Fijo';
+        alert("Ingrese Numero de Telefono Fijo");
+        //#hongkiat-form input.name
+        document.getElementsByName('txtTelFijo').style="border-color:#F80303;";
+        document.getElementById('txtTelFijo').focus();
+        error=true;
+    }else if(correo==null || correo==""){
+        msg+='* Correo';
+        alert("Ingrese Correo electronico");
+        //#hongkiat-form input.name
+        document.getElementsByName('txtCorreo').style="border-color:#F80303;";
+        document.getElementById('txtCorreo').focus();
+        error=true;
+    }else if(cubiculo==0){
+        msg+='* Cubiculo';
+        alert("Seleccione cubiculo");
+        //#hongkiat-form input.name
+        document.getElementsByName('lstCubiculo').style="border-color:#F80303;";
+        document.getElementById('lstCubiculo').focus();
+        error=true;
+    }else if(fecini==null || fecini==""){
+        msg+='* Fecha inicio';
+        alert("Ingrese fecha de inicio de contrato");
+        //#hongkiat-form input.name
+        document.getElementsByName('txtFecIni').style="border-color:#F80303;";
+        document.getElementById('txtFecIni').focus();
+        error=true;
+    }else if(fecfin==null || fecfin==""){
+        msg+='* Fecha fin';
+        alert("Ingrese fecha fin de contrato");
+        //#hongkiat-form input.name
+        document.getElementsByName('txtFecFin').style="border-color:#F80303;";
+        document.getElementById('txtFecFin').focus();
+        error=true;
     }
+
     if(error==true){
       return false;
     }else{
-      enviarDatos();
+      //enviarDatos();
       return false;
     }
-    /*if(apellido1=="" || apellido1==null){
-        msg+='* Primer Apellido';
-    }
-    if(dui=="" || nit==null){
-        msg+='* DUI';
-    }
-    if(nit=="" || nit==null){
-        msg+='* NIT';
-    }
-    if(genero==0 || genero==null){
-        msg+='* Genero';
-    }
-    if(fecnac=="" || fecnac==null){
-        msg+='* Fecha de nacimiento';
-    }*/
 }
 function enviarDatos(){
   var formulario = $("#hongkiat-form").serializeArray();
@@ -67,33 +147,10 @@ function enviarDatos(){
         url: "procesos/guardarEmpleado.php",
         data: formulario,
     }).done(function(respuesta){
-      //$("#mensaje").html(respuesta.mensaje);
-        //alert(respuesta.mensaje);
         if(respuesta.mensaje==1){
-          /*var x=document.getElementById("codigo");
-          x.innerHTML='Por favor llene todos los campos';*/
-          alert("Por favor llene todos los campos");
+          alert("No fue posible registrar el empleado");
         }else if(respuesta.mensaje==2){
-          /*var x=document.getElementById("codigo");
-          x.innerHTML="El DUI ingresado no est&aacute; registrado";*/
-          //document.getElementById('codigo').innerHTML='Su numero de DUI no fue encontrado';
-          alert("Usted ya realizó el proceso de registro");
-        }else if(respuesta.mensaje==3){
-          //document.getElementById('codigo').innerHTML='Datos correctos';
-          //var x=document.getElementById("codigo");
-          //x.innerHTML='Datos correctos';
-          alert("Su registro se ha procesado exitosamente");
-          location.href="?mod=imprimirboleta";
-        }else if(respuesta.mensaje==4){
-          //document.getElementById('codigo').innerHTML='Datos correctos';
-          //var x=document.getElementById("codigo");
-          //x.innerHTML='Datos correctos';
-          alert("El número de Tarjeta ingresado no es correcto");
-        }else if(respuesta.mensaje==5){
-          //document.getElementById('codigo').innerHTML='Datos correctos';
-          //var x=document.getElementById("codigo");
-          //x.innerHTML='Datos correctos';
-          alert("No fue posible guardar el registro");
+          alert("Registro realizado con exito");
         }
     });
 }
@@ -112,6 +169,14 @@ $(document).ready(function(){
   yearRange: '-100:+0'
   });
     });
+ $(function() {
+  $('#txtFecNac').datepicker({
+  dateFormat: 'yy-mm-dd', 
+  changeMonth: true, 
+  changeYear: true, 
+  yearRange: '-100:-18'
+  });
+    });
 </script>
 <script src="js/mask.js"></script>
 <script>
@@ -127,24 +192,6 @@ $(document).ready(function(){
 <form name="hongkiat" id="hongkiat-form" method="post" action="#" onsubmit="return validar();">
     <div id="wrapping" class="clearfix">
         <section id="aligned">
-       
-            <label>Sucursal: </label>
-        <?php 
-      $objeto=new CasaMunoz;
-      $consultarsucu=$objeto->consultar_sucursal();
-      //$consulta=mysql_query("SELECT cod_dpto, nom_dpto FROM DEPARTAMENTO");
-      // Voy imprimiendo el primer select compuesto por los paises
-      //echo $consultarDepartamentos->rowCount();
-      echo "<select name='lstSucursal' id='lstSucursal' class='selmenu'>";
-      echo "<option value='0'>Elige</option>";
-
-      while($sucu=$consultarsucu->fetch(PDO::FETCH_OBJ))
-      {
-        echo "<option value='".$sucu->cod_sucursal."'>".$sucu->nom_sucursal."</option>";
-      }
-      echo "</select>";
-   ?>
-          
             <h2>REGISTRO DE EMPLEADOS</h2>
         <label>Primer Nombre:</label>
         <input type="text" name="txtNombre1" id="txtNombre1" placeholder="Primer Nombre" autocomplete="off" tabindex="1" class="txtinput name">
@@ -165,7 +212,7 @@ $(document).ready(function(){
             <option value="M">Masculino</option>
         </select>
         <label>Fecha de Nacimiento:</label>
-        <input type="text" name="txtFecNac" id="txtFecNac" placeholder="Fecha de Nacimiento" autocomplete="off" tabindex="8" class="txtinput calendar datepicker">
+        <input type="text" name="txtFecNac" id="txtFecNac" placeholder="Fecha de Nacimiento" autocomplete="off" tabindex="8" class="txtinput calendar">
         <label>Cargo: </label>
             <?php 
       $objeto=new CasaMunoz;
