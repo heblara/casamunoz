@@ -3,7 +3,6 @@
   <script src="//code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
   <link rel="stylesheet" href="/resources/demos/style.css">
 
-
 <script>
  $(function() {
 	$('.datepicker').datepicker({
@@ -60,6 +59,7 @@
         <input type="text" name="txtenfer" id="txtCodigo" placeholder="Enfermedad del Cliente" autocomplete="off" tabindex="1" class="txtinput name">
        
         
+           
         <label>Municipio: </label>          
     <?php 
 
@@ -74,7 +74,7 @@
       }
       echo "</select>";
    ?>
-        
+          
     </div>
     <section id="buttons">
         <input type="reset" name="reset" id="resetbtn" class="resetbtn" value="Limpiar">
