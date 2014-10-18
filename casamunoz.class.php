@@ -84,6 +84,7 @@ class CasaMunoz {
         unset($dbh);
         unset($query);
     }  
+  
     function consultar_sucursal() {
         $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
         $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
@@ -170,5 +171,63 @@ class CasaMunoz {
         unset($dbh);
         unset($query);
     }
+    
+    
+    function consultar_municipio() {
+        
+        
+        $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
+        $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
+        $sql = "SELECT * FROM MUNICIPIO";
+        $query = $dbh->prepare($sql); // Preparamos la consulta para dejarla lista para su ejecucion
+        //$query->bindParam(":nombre",$dato);
+        $query->execute(); // Ejecutamos la consulta
+     
+               if ($query) {
+            return $query;
+        } //pasamos el query para utilizarlo luego con fetch
+        else {
+            return false;
+        }
+        unset($dbh);
+        unset($query);
+    }  
+    
+    function registar_cliente($datos) {
+        $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
+        $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
+        $sql = "INSERT INTO `CLIENTE`(`cod_cliente`, `primer_nom`, `segundo_nom`, `primer_ape`, `segundo_ape`, `genero_cliente`, 
+            `fec_nac`, `direc_cliente`, `tel_cliente`,`correo_cliente`, `diabetico_cliente`, `enfer_cliente`, 
+             `cod_usuario`, `cod_tipo_cliente`, `cod_municipio`) 
+        VALUES (:cod_cliente,:primer_nombre,:segundo_nombre,:primer_apellido,:segundo_apellido,:genero,:fecha_nac,:direct_cliente,:tel_cliente,:correo_cliente,:diabetico_cliente,:enfer_cliente,
+            :cod_usuario,:cod_tipo,:cod_municipio)";
+        $query = $dbh->prepare($sql); // Preparamos la consulta para dejarla lista para su ejecucion
+        $query->bindParam(":cod_cliente",$dato[0]);
+        $query->bindParam(":primer_nombre",$dato[1]);
+        $query->bindParam(":segundo_nombre",$dato[2]);
+        $query->bindParam(":primer_apellido",$dato[3]);
+        $query->bindParam(":segundo_apellido",$dato[4]);
+        $query->bindParam(":genero",$dato[5]);
+        $query->bindParam(":fecha_nac",$dato[6]);
+        $query->bindParam(":direct_cliente",$dato[7]);
+        $query->bindParam(":tel_cliente",$dato[8]);
+        $query->bindParam(":correo_cliente",$dato[9]);
+        $query->bindParam(":diabetico_cliente",$dato[10]);
+        $query->bindParam(":enfer_cliente",$dato[11]);
+        $query->bindParam(":cod_usuario",$dato[12]);
+        $query->bindParam(":cod_tipo",$dato[13]);
+        $query->bindParam(":cod_municipio",$dato[14]);
+        
+        $query->execute(); // Ejecutamos la consulta
+        if ($query)
+            return $query; //pasamos el query para utilizarlo luego con fetch
+        else
+            return false;
+        unset($dbh);
+        unset($query);
+    }
+    
+    
+    
 }
 ?>

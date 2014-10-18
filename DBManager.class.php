@@ -12,7 +12,6 @@
             try {
                 if($tipo=="mysql"){
 
-    
                     $dbh = new PDO("mysql:host=$conectar->Server_MySQL;dbname=$conectar->DB_MySQL","$conectar->User_MySQL","$conectar->Password_MySQL",array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
                     //$dbh->exec('SET CHARACTER SET utf8');
                 }

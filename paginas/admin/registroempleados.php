@@ -127,7 +127,25 @@ $(document).ready(function(){
 <form name="hongkiat" id="hongkiat-form" method="post" action="#" onsubmit="return validar();">
     <div id="wrapping" class="clearfix">
         <section id="aligned">
-        <h2>REGISTRO DE EMPLEADOS</h2>
+       
+            <label>Sucursal: </label>
+        <?php 
+      $objeto=new CasaMunoz;
+      $consultarsucu=$objeto->consultar_sucursal();
+      //$consulta=mysql_query("SELECT cod_dpto, nom_dpto FROM DEPARTAMENTO");
+      // Voy imprimiendo el primer select compuesto por los paises
+      //echo $consultarDepartamentos->rowCount();
+      echo "<select name='lstSucursal' id='lstSucursal' class='selmenu'>";
+      echo "<option value='0'>Elige</option>";
+
+      while($sucu=$consultarsucu->fetch(PDO::FETCH_OBJ))
+      {
+        echo "<option value='".$sucu->cod_sucursal."'>".$sucu->nom_sucursal."</option>";
+      }
+      echo "</select>";
+   ?>
+          
+            <h2>REGISTRO DE EMPLEADOS</h2>
         <label>Primer Nombre:</label>
         <input type="text" name="txtNombre1" id="txtNombre1" placeholder="Primer Nombre" autocomplete="off" tabindex="1" class="txtinput name">
         <label>Segundo Nombre:</label>
