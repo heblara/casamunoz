@@ -2,6 +2,7 @@
   <script src="//code.jquery.com/jquery-1.10.2.js"></script>
   <script src="//code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
   <link rel="stylesheet" href="/resources/demos/style.css">
+  <script type="text/javascript" src="js/jquery.blockUI.js"></script>
 <script type="text/javascript">
 function validar(){
     nombre1=document.getElementById('txtNombre1').value;
@@ -139,6 +140,11 @@ function validar(){
       return false;
     }
 }
+$(function() {
+  //Se pone para que en todos los llamados ajax se bloquee la pantalla mostrando el mensaje Procesando...
+  $.blockUI.defaults.message = 'Procesando información, por favor espere... <br /><img src=\'img/load.gif\' /><br />';
+  $(document).ajaxStart($.blockUI).ajaxStop($.unblockUI);
+});
 function enviarDatos(){
   var formulario = $("#hongkiat-form").serializeArray();
     $.ajax({
