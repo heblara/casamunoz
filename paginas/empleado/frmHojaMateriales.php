@@ -1,5 +1,17 @@
-<script type="text/javascript" src="js/calendar/scripts/epoch_classes.js"></script>
-<link rel="stylesheet" type="text/css" href="js/calendar/epoch_styles.css" />
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css">
+  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="//code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
+  <link rel="stylesheet" href="/resources/demos/style.css">
+  <script>
+   $(function() {
+	$('.datepicker').datepicker({
+	dateFormat: 'yy-mm-dd', 
+	changeMonth: true, 
+	changeYear: true, 
+	yearRange: '-5:+0'
+	});
+		});
+</script>
 <script language="JavaScript">
 var objeto = false;
 function procesaResultado() {
@@ -95,7 +107,7 @@ function seleccionar(){
   		<input type="text" name="txtBuscar" onKeyPress="leerDatos(this.value,document.hongkiat.lstTipo.value,document.hongkiat.inscrito.value);" class="search txtinput" id="txtBuscar" placeholder="nombre, apellido, usuario" autocomplete="off" tabindex="1" style="width:25%;">
   	</div>
     <h3>Fecha</h3>
-    <input type="text" name="txtFecha" class="datepicker calendar txtinput" id="txtFecha" placeholder="Fecha a buscar" autocomplete="off" tabindex="1">
+	<input type="text" name="txtFecha" id="txtFecha" placeholder="Fecha a buscar" autocomplete="off" tabindex="1" class="txtinput calendar datepicker">  
 
     <div id="resultado" style='background:black;'>
     	<table width='100%' style="font-size:12pt;">
