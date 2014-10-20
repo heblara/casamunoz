@@ -75,13 +75,15 @@ if(isset($_SESSION['autenticado'])){
     <li class='active has-sub'><a href='#'><span>Reporte</span></a>
       <ul>
          <li><a href='?mod=reporteventas'><span>Ventas</span></a></li>
-          <li class='last'><a href='?mod=reporteproductos'><span>Productos</span></a></li>
+          <li class='last'><a href='?mod=ingresoproductos'><span>Ingreso de productos</span></a></li>
+		   <li class='last'><a href='?mod=salidaproductos'><span>Salida de productos</span></a></li>
       </ul>
     </li>
     <li><a href='?mod=factura'><span>Factura</span></a></li>
     <li class='active has-sub'><a href='#'><span>Empleado</span></a>
       <ul>
          <li><a href='?mod=buscaremp'><span>Dias libres</span></a></li>
+		 <li><a href='?mod=entregamateriales'><span>Entrega de material</span></a></li>
          <li><a href='?mod=hojamateriales'><span>Hoja de materiales</span></a></li>
          <li><a href='?mod=pedidos'><span>Pedidos</span></a></li>
       </ul>
