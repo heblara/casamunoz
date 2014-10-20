@@ -270,8 +270,7 @@ class CasaMunoz {
     }
     
     function consultar_producto() { 
-	$con = new DBManager(); //creamos el objeto 
-	$con a partir de la clase DBManager 
+	$con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager 
 	$dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL. 
 	$sql = "SELECT * FROM PRODUCTO"; $query = $dbh->prepare($sql); // Preparamos la consulta para dejarla lista para su ejecucion //
 	$query->execute(); // Ejecutamos la consulta 
