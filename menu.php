@@ -64,22 +64,6 @@ if(isset($_SESSION['autenticado'])){
     }else if($_SESSION['tipo']==2){
       ?>
     <li><a href='index.php'><span>Inicio</span></a></li>
-    <li class='active has-sub'><a href='#'><span>Reserva</span></a>
-      <ul>
-         <li><a href='?mod=iniciarreserva'><span>Iniciar reserva</span></a></li>
-          <li class='last'><a href='?mod=vistareserva'><span>Vista de reservas</span></a></li>
-      </ul>
-    </li>
-    <li class='active has-sub'><a href='#'><span>Cuenta</span></a>
-      <ul>
-         <li><a href='?mod=cambiarcontrasena'><span>Cambiar Contrase&ntilde;a</span></a></li>
-          <li class='last'><a href='?mod=logout'><span>Cerrar Sesi&oacute;n</span></a></li>
-      </ul>
-    </li>
-      <?php
-    }else if($_SESSION['tipo']==3){
-      ?>
-    <li><a href='index.php'><span>Inicio</span></a></li>
     <li class='active has-sub'><a href='#'><span>Clientes</span></a>
       <ul>
         <li><a href='?mod=registrarcliente'><span>Registrar</span></a></li>
@@ -108,6 +92,23 @@ if(isset($_SESSION['autenticado'])){
           <li class='last'><a href='?mod=logout'><span>Cerrar Sesi&oacute;n</span></a></li>
       </ul>
     </li>
+      <?php
+    }else if($_SESSION['tipo']==3){
+      ?>
+	  <li><a href='index.php'><span>Inicio</span></a></li>
+    <li class='active has-sub'><a href='#'><span>Reserva</span></a>
+      <ul>
+         <li><a href='?mod=iniciarreserva'><span>Iniciar reserva</span></a></li>
+          <li class='last'><a href='?mod=vistareserva'><span>Vista de reservas</span></a></li>
+      </ul>
+    </li>
+    <li class='active has-sub'><a href='#'><span>Cuenta</span></a>
+      <ul>
+         <li><a href='?mod=cambiarcontrasena'><span>Cambiar Contrase&ntilde;a</span></a></li>
+          <li class='last'><a href='?mod=logout'><span>Cerrar Sesi&oacute;n</span></a></li>
+      </ul>
+    </li>
+    
       <?php
     }
 }else{
