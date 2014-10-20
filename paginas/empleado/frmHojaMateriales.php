@@ -1,24 +1,23 @@
-<link rel="stylesheet" href="//code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css">
-  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
   <script src="//code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
   <link rel="stylesheet" href="/resources/demos/style.css">
-  <script>
-   $(function() {
-	$('.datepicker').datepicker({
-	dateFormat: 'yy-mm-dd', 
-	changeMonth: true, 
-	changeYear: true, 
-	yearRange: '-5:+0'
-	});
-		});
+<script>
+  $(function() {
+    $( ".datepicker" ).datepicker({
+      changeMonth: true,
+      changeYear: true,
+      dateFormat:'yy-mm-dd'
+    });
+  });
 </script>
+<script src="js/mask.js"></script>
 <script language="JavaScript">
 var objeto = false;
 function procesaResultado() {
 // Si aun esta revisando los datos...
 if (objeto.readyState == 1) {
 //  document.getElementById('resultado').innerHTML = "Cargando datos con ajax...";
-  document.getElementById('resultado').innerHTML = "<td colspan='6'><img src='paginas/5-0.gif' title='Cargando datos' width='32' />";
+  document.getElementById('resultado').innerHTML = "<td colspan='6'><img src='img/load.gif' title='Cargando datos' width='32' />";
 }
 // Si el estado es 4 significa que ya termino
 if (objeto.readyState == 4) {
@@ -53,7 +52,7 @@ var ca=/^[ ]{1}/;
 var com=ca.test(valor);
 	if((!com=="") || (valor=="")){document.getElementById("resultado").innerHTML="";}else{
 	// Enviar la consulta
-	    objeto.open("GET", "paginas/busqueda.php?opc="+sel+"&usuario=" + valor + "&inscrito="+opcion, true);
+	    objeto.open("GET", "paginas/busquedaMateriales.php?opc="+sel+"&usuario=" + valor + "&inscrito="+opcion, true);
 	    objeto.send(null);
 	}
     
@@ -70,7 +69,7 @@ var ca=/^[ ]{1}/;
 var com=ca.test(valor);
 	if((!com=="") || (valor=="")){document.getElementById("resultado").innerHTML="";}else{
 	// Enviar la consulta
-	    objeto.open("GET", "paginas/busqueda.php?opc="+sel+"&usuario=" + valor + "&pagina="+pag+ "&inscrito="+opcion, true);
+	    objeto.open("GET", "paginas/busquedaMateriales.php?opc="+sel+"&usuario=" + valor + "&pagina="+pag+ "&inscrito="+opcion, true);
 	    objeto.send(null);
 	}
     
@@ -99,48 +98,31 @@ function seleccionar(){
 </script>
 <br />
 <br />
+<script>
+  $(function() {
+    $( ".datepicker" ).datepicker({
+      changeMonth: true,
+      changeYear: true,
+      dateFormat:'yy-mm-dd'
+    });
+  });
+</script>
+<h2> HOJA DE MATERIALES</h2>
+<h3>Sucursal: La Joya - Fecha actual: <?php echo date('d-m-Y H:i a'); ?></h3>
+<br /><br />
 <form name="hongkiat" id="hongkiat-form">
 <div id="wrapping" class="clearfix">
   <section id="aligned" style='text-align:center;'>
-    <h3>Pedicurista:</h3>
+        <label>Fecha de reporte a generar:</label>
+        <input type="text" name="txtFecReporte" id="txtFecReporte" placeholder="Fecha" autocomplete="off" tabindex="1" class="txtinput calendar datepicker">
+	<h3>Digite t&eacute;rmino a buscar:</h3>
+	<div id="cargarCaja" style="clear:both;"></div>
     <div id="dui" style='display:;clear:both;'> 
-  		<input type="text" name="txtBuscar" onKeyPress="leerDatos(this.value,document.hongkiat.lstTipo.value,document.hongkiat.inscrito.value);" class="search txtinput" id="txtBuscar" placeholder="nombre, apellido, usuario" autocomplete="off" tabindex="1" style="width:25%;">
-  	</div>
-    <h3>Fecha</h3>
-	<input type="text" name="txtFecha" id="txtFecha" placeholder="Fecha a buscar" autocomplete="off" tabindex="1" class="txtinput calendar datepicker">  
-
-    <div id="resultado" style='background:black;'>
-    	<table width='100%' style="font-size:12pt;">
-    		<tr style="background:white;">
-    			<th>Material</th>
-    			<th>Cantidad a entregar</th>
-    			<th>Rendimientos</th>
-    			<th>Fecha de entrega</th>
-    			<th>Pedicuros a la fecha</th>
-    		</tr>
-    		<tr style="background:silver;">
-    			<td>Ablandador</td>
-    			<td>Litro</td>
-    			<td>125</td>
-    			<td>13-06-2014</td>
-    			<td>125</td>
-    		</tr>
-    		<tr style="background:white;">
-          <td>Acetona</td>
-          <td>4 onzas</td>
-          <td>60</td>
-          <td>19-06-2014</td>
-          <td>60</td>
-    		</tr>
-    		<tr style="background:silver;">
-    			<td>Agua oxigenada</td>
-          <td>4 onzas</td>
-          <td>60</td>
-          <td>26-06-2014</td>
-          <td>60</td>
-    		</tr>
-    	</table>
+		<input type="text" name="txtBuscar" onKeyPress="leerDatos(this.value);" class="search txtinput" id="txtBuscar" placeholder="Pedicurista" autocomplete="off" tabindex="1" style="width:25%;">
+	</div>
+    <div id="resultado" style='background:black;font-size:12pt;'>
     </div>
+    <img src="images/print.png" width="64px" />
   </section>
 </div>
 </form>
