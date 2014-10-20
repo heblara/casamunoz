@@ -95,6 +95,10 @@ $conf['registrartemporada']=array(
 'archivo'=>'admin/frmRegistroTemporada.php',
 'layout'=>LAYOUT_INICIO
 );
+$conf['registroproducto']=array(
+'archivo'=>'admin/pruebaregistro.php',
+'layout'=>LAYOUT_INICIO
+);
 //CLIENTE
 $conf['iniciarreserva']=array(
 'archivo'=>'cliente/frmIniciarReserva.php',
