@@ -251,6 +251,34 @@ class CasaMunoz {
         unset($query);
     }
     
+       function consultar_cod_usuario($username, $password){
+        $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
+        $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
+        $sql = "SELECT * FROM USUARIO INNER JOIN EMPLEADO ON USUARIO.cod_usuario = EMPLEADO.cod_usuario where usuario='".$username."' and contra_usuario=md5('".$password."')";
+        $query = $dbh->prepare($sql); // Preparamos la consulta para dejarla lista para su ejecucion
+        $query->bindParam(":usuario",$username);
+        $query->bindParam(":contra",$password);
+        $query->execute(); // Ejecutamos la consulta
+        if ($query)
+            return $query; //pasamos el query para utilizarlo luego con fetch
+        else
+            return false;
+        unset($dbh);
+        unset($query);
+    }
+    
+    function consultar_producto() { 
+	$con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager 
+	$dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL. 
+	$sql = "SELECT * FROM PRODUCTO"; $query = $dbh->prepare($sql); // Preparamos la consulta para dejarla lista para su ejecucion //
+	$query->execute(); // Ejecutamos la consulta 
+	if ($query) 
+	return $query; //pasamos el query para utilizarlo luego con fetch 
+	else 
+	return false; 
+	unset($dbh); 
+	unset($query); 
+	}
     
     
 }

@@ -13,6 +13,7 @@ if(isset($_SESSION['autenticado'])){
       <ul>
          <li><a href='?mod=registroempleado'><span>Agregar</span></a></li>
           <li class='last'><a href='?mod=buscarempleado'><span>Buscar</span></a></li>
+          <li><a href='?mod=registroproducto'><span>Registro de producto</span></a></li>
       </ul>
     </li>
     <li class='active has-sub'><a href='#'><span>Promocion</span></a>
@@ -64,6 +65,40 @@ if(isset($_SESSION['autenticado'])){
     }else if($_SESSION['tipo']==2){
       ?>
     <li><a href='index.php'><span>Inicio</span></a></li>
+    <li class='active has-sub'><a href='#'><span>Clientes</span></a>
+      <ul>
+        <li><a href='?mod=registrarcliente'><span>Registrar</span></a></li>
+        <li><a href='?mod=reservarservicio'><span>Reserva</span></a></li>
+        <li><a href='?mod=buscarcliente'><span>Expediente</span></a></li>
+        <li class='last'><a href='?mod=vistareservaemp'><span>Vista de reserva</span></a></li>
+      </ul>
+    </li>
+    <li class='active has-sub'><a href='#'><span>Reporte</span></a>
+      <ul>
+         <li><a href='?mod=reporteventas'><span>Ventas</span></a></li>
+          <li class='last'><a href='?mod=ingresoproductos'><span>Ingreso de productos</span></a></li>
+		   <li class='last'><a href='?mod=salidaproductos'><span>Salida de productos</span></a></li>
+      </ul>
+    </li>
+    <li><a href='?mod=factura'><span>Factura</span></a></li>
+    <li class='active has-sub'><a href='#'><span>Empleado</span></a>
+      <ul>
+         <li><a href='?mod=buscaremp'><span>Dias libres</span></a></li>
+		 <li><a href='?mod=entregamateriales'><span>Entrega de material</span></a></li>
+         <li><a href='?mod=hojamateriales'><span>Hoja de materiales</span></a></li>
+         <li><a href='?mod=pedidos'><span>Pedidos</span></a></li>
+      </ul>
+    </li>
+    <li class='active has-sub'><a href='#'><span>Cuenta</span></a>
+      <ul>
+         <li><a href='?mod=cambiarcontrasena'><span>Cambiar Contrase&ntilde;a</span></a></li>
+          <li class='last'><a href='?mod=logout'><span>Cerrar Sesi&oacute;n</span></a></li>
+      </ul>
+    </li>
+      <?php
+    }else if($_SESSION['tipo']==3){
+      ?>
+	  <li><a href='index.php'><span>Inicio</span></a></li>
     <li class='active has-sub'><a href='#'><span>Reserva</span></a>
       <ul>
          <li><a href='?mod=iniciarreserva'><span>Iniciar reserva</span></a></li>
@@ -76,38 +111,7 @@ if(isset($_SESSION['autenticado'])){
           <li class='last'><a href='?mod=logout'><span>Cerrar Sesi&oacute;n</span></a></li>
       </ul>
     </li>
-      <?php
-    }else if($_SESSION['tipo']==3){
-      ?>
-    <li><a href='index.php'><span>Inicio</span></a></li>
-    <li class='active has-sub'><a href='#'><span>Clientes</span></a>
-      <ul>
-        <li><a href='?mod=registrarcliente'><span>Registrar</span></a></li>
-        <li><a href='?mod=reservarservicio'><span>Reserva</span></a></li>
-        <li><a href='?mod=buscarcliente'><span>Expediente</span></a></li>
-        <li class='last'><a href='?mod=vistareservaemp'><span>Vista de reserva</span></a></li>
-      </ul>
-    </li>
-    <li class='active has-sub'><a href='#'><span>Reporte</span></a>
-      <ul>
-         <li><a href='?mod=reporteventas'><span>Ventas</span></a></li>
-          <li class='last'><a href='?mod=reporteproductos'><span>Productos</span></a></li>
-      </ul>
-    </li>
-    <li><a href='?mod=factura'><span>Factura</span></a></li>
-    <li class='active has-sub'><a href='#'><span>Empleado</span></a>
-      <ul>
-         <li><a href='?mod=buscaremp'><span>Dias libres</span></a></li>
-         <li><a href='?mod=hojamateriales'><span>Hoja de materiales</span></a></li>
-         <li><a href='?mod=pedidos'><span>Pedidos</span></a></li>
-      </ul>
-    </li>
-    <li class='active has-sub'><a href='#'><span>Cuenta</span></a>
-      <ul>
-         <li><a href='?mod=cambiarcontrasena'><span>Cambiar Contrase&ntilde;a</span></a></li>
-          <li class='last'><a href='?mod=logout'><span>Cerrar Sesi&oacute;n</span></a></li>
-      </ul>
-    </li>
+    
       <?php
     }
 }else{

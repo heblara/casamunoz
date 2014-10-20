@@ -17,7 +17,7 @@ function procesaResultado() {
 // Si aun esta revisando los datos...
 if (objeto.readyState == 1) {
 //  document.getElementById('resultado').innerHTML = "Cargando datos con ajax...";
-  document.getElementById('resultado').innerHTML = "<td colspan='6'><img src='img/load.gif' title='Cargando datos' width='32' />";
+  document.getElementById('resultado').innerHTML = "<td colspan='6'><img src='paginas/5-0.gif' title='Cargando datos' width='32' />";
 }
 // Si el estado es 4 significa que ya termino
 if (objeto.readyState == 4) {
@@ -52,7 +52,7 @@ var ca=/^[ ]{1}/;
 var com=ca.test(valor);
 	if((!com=="") || (valor=="")){document.getElementById("resultado").innerHTML="";}else{
 	// Enviar la consulta
-	    objeto.open("GET", "paginas/busquedaMateriales.php?opc="+sel+"&usuario=" + valor + "&inscrito="+opcion, true);
+	    objeto.open("GET", "paginas/busqueda.php?opc="+sel+"&usuario=" + valor + "&inscrito="+opcion, true);
 	    objeto.send(null);
 	}
     
@@ -69,7 +69,7 @@ var ca=/^[ ]{1}/;
 var com=ca.test(valor);
 	if((!com=="") || (valor=="")){document.getElementById("resultado").innerHTML="";}else{
 	// Enviar la consulta
-	    objeto.open("GET", "paginas/busquedaMateriales.php?opc="+sel+"&usuario=" + valor + "&pagina="+pag+ "&inscrito="+opcion, true);
+	    objeto.open("GET", "paginas/busqueda.php?opc="+sel+"&usuario=" + valor + "&pagina="+pag+ "&inscrito="+opcion, true);
 	    objeto.send(null);
 	}
     
@@ -107,7 +107,7 @@ function seleccionar(){
     });
   });
 </script>
-<h2> HOJA DE MATERIALES</h2>
+<h2>SALIDA DE PRODUCTOS</h2>
 <h3>Sucursal: La Joya - Fecha actual: <?php echo date('d-m-Y H:i a'); ?></h3>
 <br /><br />
 <form name="hongkiat" id="hongkiat-form">
@@ -115,12 +115,42 @@ function seleccionar(){
   <section id="aligned" style='text-align:center;'>
         <label>Fecha de reporte a generar:</label>
         <input type="text" name="txtFecReporte" id="txtFecReporte" placeholder="Fecha" autocomplete="off" tabindex="1" class="txtinput calendar datepicker">
-	<h3>Digite t&eacute;rmino a buscar:</h3>
 	<div id="cargarCaja" style="clear:both;"></div>
-    <div id="dui" style='display:;clear:both;'> 
-		<input type="text" name="txtBuscar" onKeyPress="leerDatos(this.value);" class="search txtinput" id="txtBuscar" placeholder="Pedicurista" autocomplete="off" tabindex="1" style="width:25%;">
-	</div>
-    <div id="resultado" style='background:black;font-size:12pt;'>
+    <div id="resultado" style='background:black;font-size:15pt;'>
+    	<table width='100%'>
+    		<tr style="background:white;">
+    			<th>Codigo</th>
+    			<th>Cantidad ingresada</th>
+    			<th>Producto</th>
+    			<th>Fecha ultimo ingreso</th>
+    			<th>Fecha de vencimiento</th>
+          <th>Existencias</th>
+    		</tr>
+    		<tr style="background:silver;">
+    			<td>0101</td>
+    			<td>15</td>
+    			<td>Acetona</td>
+    			<td>24-08-2014</td>
+    			<td>29-11-2014</td>
+          <td>23</td>
+    		</tr>
+        <tr style="background:white;">
+          <td>0201</td>
+          <td>10</td>
+          <td>Agua oxigenada</td>
+          <td>24-08-2014</td>
+          <td>30-01-2015</td>
+          <td>12</td>
+        </tr>
+        <tr style="background:silver;">
+          <td>0301</td>
+          <td>8</td>
+          <td>Ablandador</td>
+          <td>22-07-2014</td>
+          <td>15-07-2015</td>
+          <td>17</td>
+        </tr>
+    	</table>
     </div>
     <img src="images/print.png" width="64px" />
   </section>

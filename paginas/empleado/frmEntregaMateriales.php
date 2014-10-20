@@ -107,7 +107,7 @@ function seleccionar(){
     });
   });
 </script>
-<h2>LISTADO DE PRODUCTOS</h2>
+<h2>ENTREGA DE MATERIAL</h2>
 <h3>Sucursal: La Joya - Fecha actual: <?php echo date('d-m-Y H:i a'); ?></h3>
 <br /><br />
 <form name="hongkiat" id="hongkiat-form">
