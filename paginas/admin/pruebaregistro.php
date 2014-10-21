@@ -4,8 +4,8 @@
   <link rel="stylesheet" href="/resources/demos/style.css">
   <script type="text/javascript" src="js/jquery.blockUI.js"></script>
 <script type="text/javascript">
-    $(function() {
-	$('.datepicker').datepicker({
+     $(function() {
+	$('#txtFechaRegistro').datepicker({
 	dateFormat: 'yy-mm-dd', 
 	changeMonth: true, 
 	changeYear: true, 
