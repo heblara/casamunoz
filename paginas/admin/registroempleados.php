@@ -101,7 +101,7 @@ function validar(){
       return false;
     }else{
       //enviarDatos();
-      return false;
+      return true;
     }
 }
 $(function() {
@@ -126,7 +126,10 @@ function enviarDatos(){
 }
 $(document).ready(function(){         
   $("#submitbtn").click(function(){
-      enviarDatos();
+    if(validar()){
+        enviarDatos();
+      }
+      return false;
   });
 });
 </script>
@@ -159,7 +162,7 @@ $(document).ready(function(){
      $("#txtNIT").mask("9999-999999-999-9");   
   });
 </script>
-<form name="hongkiat" id="hongkiat-form" method="post" action="#" onsubmit="return validar();">
+<form name="hongkiat" id="hongkiat-form" method="post" action="#" onsubmit="return false;">
     <div id="wrapping" class="clearfix">
         <section id="aligned">
             <h2>REGISTRO DE EMPLEADOS</h2>

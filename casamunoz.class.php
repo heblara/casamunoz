@@ -18,6 +18,21 @@ class CasaMunoz {
         unset($dbh);
         unset($query);
     }
+    function consultar_inventario($dato) {
+        $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
+        $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
+        $sql = "SELECT * FROM INVENTARIO WHERE cod_producto=:producto and cod_sucursal=:sucursal";
+        $query = $dbh->prepare($sql); // Preparamos la consulta para dejarla lista para su ejecucion
+        $query->bindParam(":producto",$dato[0]);
+        $query->bindParam(":sucursal",$dato[1]);
+        $query->execute(); // Ejecutamos la consulta
+        if ($query)
+            return $query; //pasamos el query para utilizarlo luego con fetch
+        else
+            return false;
+        unset($dbh);
+        unset($query);
+    }
     function mostrar_cliente($dato) {
         $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
         $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
@@ -267,33 +282,24 @@ class CasaMunoz {
     }
     
     function consultar_producto() { 
-	$con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager 
-	$dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL. 
-	$sql = "SELECT * FROM PRODUCTO"; $query = $dbh->prepare($sql); // Preparamos la consulta para dejarla lista para su ejecucion //
-	$query->execute(); // Ejecutamos la consulta 
-	if ($query) 
-	return $query; //pasamos el query para utilizarlo luego con fetch 
-	else 
-	return false; 
-	unset($dbh); 
-	unset($query); 
+    	$con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager 
+    	$dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL. 
+    	$sql = "SELECT * FROM PRODUCTO"; $query = $dbh->prepare($sql); // Preparamos la consulta para dejarla lista para su ejecucion //
+    	$query->execute(); // Ejecutamos la consulta 
+    	if ($query) 
+    	return $query; //pasamos el query para utilizarlo luego con fetch 
+    	else 
+    	return false; 
+    	unset($dbh); 
+    	unset($query); 
 	}
     
      function registrar_producto($dato) {
-
         $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
         $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
         $sql = "INSERT INTO `PRODUCTO`(`nom_producto`, `deta_producto`, `rendimiento`, `fec_registro_producto`) 
         VALUES (:nom_producto,:deta_producto,:rendimiento,:fec_registro_producto)";
         $query = $dbh->prepare($sql); // Preparamos la consulta para dejarla lista para su ejecucion
-        
-        /*if (!$query) {
-            echo "\nPDO::errorInfo():\n";
-            print_r($dbh->errorInfo());
-            return false;
-        }else{
-            return true;
-        }*/
         $query->bindParam(":nom_producto",$dato[0]);
         $query->bindParam(":deta_producto",$dato[1]);
         $query->bindParam(":rendimiento",$dato[2]);
@@ -302,17 +308,64 @@ class CasaMunoz {
             return $query;
         }else{
             return false;
-        } // Ejecutamos la consulta
-        //print_r($query);
-        /*if ($query){
-            return $query; //pasamos el query para utilizarlo luego con fetch
-
-        }else{
-           return false;
-        }*/
+        }
         unset($dbh);
         unset($query);
-
+    }
+    function guardar_entrada($dato) {
+        $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
+        $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
+        $sql = "INSERT INTO `DETALLE_INGRESO`(`fec_ingreso`, `cant_ingreso`, `cod_producto`, `cod_sucursal`) 
+        VALUES (:fecha,:cantidad,:producto,:sucursal)";
+        $query = $dbh->prepare($sql); // Preparamos la consulta para dejarla lista para su ejecucion
+        $hoy=date('Y-m-d H:i:s');
+        $query->bindParam(":fecha",$hoy);
+        $query->bindParam(":cantidad",$dato[1]);
+        $query->bindParam(":producto",$dato[0]);
+        $query->bindParam(":sucursal",$dato[2]);
+        if($query->execute()){
+            return $query;
+        }else{
+            return false;
+        }
+        unset($dbh);
+        unset($query);
+    }
+    function guardar_inventario($dato) {
+        $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
+        $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
+        $sql = "INSERT INTO `INVENTARIO`(`cod_sucursal`, `cod_producto`, `cant_inventario`) 
+        VALUES (:sucursal,:producto,:cantidad)";
+        $query = $dbh->prepare($sql); // Preparamos la consulta para dejarla lista para su ejecucion
+        $query->bindParam(":producto",$dato[0]);
+        $query->bindParam(":sucursal",$dato[1]);
+        $query->bindParam(":cantidad",$dato[2]);
+        if($query->execute()){
+            return $query;
+        }else{
+            echo "\nPDOStatement::errorInfo():\n";
+            $arr = $query->errorInfo();
+            print_r($arr);
+            return false;
+        }
+        unset($dbh);
+        unset($query);
+    }
+    function actualizar_inventario($dato) {
+        $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
+        $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
+        $sql = "UPDATE `INVENTARIO` SET `cant_inventario`=:cantidad WHERE `cod_sucursal`=:sucursal and `cod_producto`=:producto";
+        $query = $dbh->prepare($sql); // Preparamos la consulta para dejarla lista para su ejecucion
+        $query->bindParam(":producto",$dato[0]);
+        $query->bindParam(":sucursal",$dato[1]);
+        $query->bindParam(":cantidad",$dato[2]);
+        if($query->execute()){
+            return $query;
+        }else{
+            return false;
+        }
+        unset($dbh);
+        unset($query);
     }
 }
 ?>
