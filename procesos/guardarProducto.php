@@ -6,7 +6,7 @@ $respuesta = new stdClass();
 extract($_POST);
 //print_r($_POST);
 $prod=new CasaMunoz;
-$producto=array($txtNombreProducto,$txtNombre1);
+$producto=array($txtNombreProducto,$txtDetalle, $txtRendimiento,$txtFechaRegistro);
 //print_r($empleado);
 if($prod->registrar_producto($producto)){
 	$respuesta->mensaje = 1;
