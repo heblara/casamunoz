@@ -210,6 +210,20 @@ class CasaMunoz {
         unset($dbh);
         unset($query);
     }
+    function consultar_empleado_sucursal($sucursal) {
+        $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
+        $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
+        $sql = "SELECT *,CONCAT_WS(' ',primer_nom,segundo_nom,primer_ape,segundo_ape) as NombreCompleto FROM EMPLEADO WHERE cod_sucursal=:codigo";
+        $query = $dbh->prepare($sql); // Preparamos la consulta para dejarla lista para su ejecucion
+        $query->bindParam(":codigo",$sucursal);
+        $query->execute(); // Ejecutamos la consulta
+        if ($query)
+            return $query; //pasamos el query para utilizarlo luego con fetch
+        else
+            return false;
+        unset($dbh);
+        unset($query);
+    }
 	function mostrar_empleado($dato) {
         $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
         $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
@@ -306,6 +320,27 @@ class CasaMunoz {
     	unset($dbh); 
     	unset($query); 
 	}
+    function consultar_inventario_sucursal($sucursal){ 
+        $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager 
+        $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL. 
+        $sql = "SELECT * FROM INVENTARIO AS i
+        INNER JOIN PRODUCTO AS p ON i.cod_producto=p.cod_producto
+        WHERE i.cod_sucursal=".$sucursal; 
+        //echo $sql;
+        $query = $dbh->prepare($sql); // Preparamos la consulta para dejarla lista para su ejecucion //
+        //$query->bindParam(":sucursal",$sucursal);
+        $query->execute(); // Ejecutamos la consulta 
+        if($query->execute()){
+            return $query;
+        }else{
+            echo "\nPDOStatement::errorInfo():\n";
+            $arr = $query->errorInfo();
+            print_r($arr);
+            return false;
+        } 
+        unset($dbh); 
+        unset($query); 
+    }
     
      function registrar_producto($dato) {
         $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
