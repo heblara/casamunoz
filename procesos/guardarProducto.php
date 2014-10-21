@@ -10,6 +10,8 @@ $producto=array($txtNombreProducto,$txtDetalle, $txtRendimiento,$txtFechaRegistr
 //print_r($empleado);
 if($prod->registrar_producto($producto)){
 	$respuesta->mensaje = 1;
+}else{
+	$respuesta->mensaje = 2;
 }
 echo json_encode($respuesta);
 ?>

@@ -171,7 +171,7 @@ class CasaMunoz {
     function consultar_empleado_codigo($codigo) {
         $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
         $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
-        $sql = "SELECT * FROM empleado WHERE cod_emp=:codigo";
+        $sql = "SELECT * FROM EMPLEADO WHERE cod_emp=:codigo";
         $query = $dbh->prepare($sql); // Preparamos la consulta para dejarla lista para su ejecucion
         $query->bindParam(":codigo",$codigo);
         $query->execute(); // Ejecutamos la consulta
@@ -280,22 +280,36 @@ class CasaMunoz {
 	}
     
      function registrar_producto($dato) {
+
         $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
         $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
-        $sql = "INSERT INTO `producto`(`nom_producto`, `deta_producto`, `rendimiento`, `fec_registro_producto`) 
+        $sql = "INSERT INTO `PRODUCTO`(`nom_producto`, `deta_producto`, `rendimiento`, `fec_registro_producto`) 
         VALUES (:nom_producto,:deta_producto,:rendimiento,:fec_registro_producto)";
         $query = $dbh->prepare($sql); // Preparamos la consulta para dejarla lista para su ejecucion
+        
+        /*if (!$query) {
+            echo "\nPDO::errorInfo():\n";
+            print_r($dbh->errorInfo());
+            return false;
+        }else{
+            return true;
+        }*/
         $query->bindParam(":nom_producto",$dato[0]);
         $query->bindParam(":deta_producto",$dato[1]);
         $query->bindParam(":rendimiento",$dato[2]);
         $query->bindParam(":fec_registro_producto",$dato[3]);
-        
-        $query->execute(); // Ejecutamos la consulta
-        if ($query)
+        if($query->execute()){
+            return $query;
+        }else{
+            return false;
+        } // Ejecutamos la consulta
+        //print_r($query);
+        /*if ($query){
             return $query; //pasamos el query para utilizarlo luego con fetch
-        else
-            echo "\nPDO::errorInfo():\n";
-            print_r($dbh->errorInfo());
+
+        }else{
+           return false;
+        }*/
         unset($dbh);
         unset($query);
 

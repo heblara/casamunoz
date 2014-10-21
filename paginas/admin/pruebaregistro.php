@@ -46,7 +46,7 @@ $(document).ready(function(){
         <h2>REGISTRO DE PRODUCTO</h2>
         <label>Nombre de producto:</label>
         <input type="text" name="txtNombreProducto" id="txtNombreProducto" placeholder="Nombre del producto" autocomplete="off" tabindex="1" class="txtinput">  
-        <label>Nombre de Rendimiento:</label>
+        <label>Rendimiento:</label>
         <input type="text" name="txtRendimiento" id="txtRendimiento" placeholder="Rendimiento del producto" autocomplete="off" tabindex="1" class="txtinput">  
         <label>Fecha registro de producto:</label>
         <input type="text" name="txtFechaRegistro" id="txtFechaRegistro" placeholder="Fecha de registro del producto" autocomplete="off" tabindex="1" class="txtinput calendar datepicker">  
