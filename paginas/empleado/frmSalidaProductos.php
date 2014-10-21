@@ -79,7 +79,7 @@ $(document).ready(function(){
       echo "</select>";
    ?>  
     </br>
-    <label>Producto a ingresar</label>
+    <label>Producto a entregar:</label>
       <table width="100%" style="font-size:10pt;border-color:black;" border="1">
         <tr>
           <th>No.</th>

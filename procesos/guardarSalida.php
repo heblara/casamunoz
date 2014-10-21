@@ -8,7 +8,8 @@ extract($_POST);
 $obj=new CasaMunoz;
 //print_r($empleado);
 for ($i=0;$i<count($txtProducto);$i++){	
-	if($txtCantidadEntrega[$i]>$txtExistencias[$i]){
+	if($txtCantidadEntrega[$i] > $txtExistencia[$i]){
+		//echo $txtCantidadEntrega[$i]."- ".$txtExistencia[$i]."<br />";
 		$respuesta->mensaje = 3;
 	}else{
 		$salida=array($txtProducto[$i],$txtCantidadEntrega[$i], $lstEmpleadoSucursal);

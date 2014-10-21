@@ -213,7 +213,8 @@ class CasaMunoz {
     function consultar_empleado_sucursal($sucursal) {
         $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
         $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
-        $sql = "SELECT *,CONCAT_WS(' ',primer_nom,segundo_nom,primer_ape,segundo_ape) as NombreCompleto FROM EMPLEADO WHERE cod_sucursal=:codigo";
+        $sql = "SELECT *,CONCAT_WS(' ',primer_nom,segundo_nom,primer_ape,segundo_ape) as NombreCompleto 
+        FROM EMPLEADO WHERE cod_sucursal=:codigo";
         $query = $dbh->prepare($sql); // Preparamos la consulta para dejarla lista para su ejecucion
         $query->bindParam(":codigo",$sucursal);
         $query->execute(); // Ejecutamos la consulta
