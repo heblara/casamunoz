@@ -33,10 +33,10 @@ if($consEmpleado->rowCount()>0){
 $codigo=$letraApe.$letraNom.$cod;
 //$respuesta->mensaje=$codigo;
 //echo "Codigo: ".$codigo;
-$empleado=array($codigo,$txtNombre1,$txtNombre2,$txtApellido1,$txtApellido2,$txtDUI,$txtNIT,$lstGenero,$txtFecNac,$txtTelFijo,$txtTelMovil,$txtCorreo,$txtDireccion,"A",$txtFecIni,$txtFecFin,$lstCargo,$lstCubiculo,$estados,$lstSucursal);
+$empleado=array($codigo,$txtNombre1,$txtNombre2,$txtApellido1,$txtApellido2,$txtDUI,$txtNIT,$lstGenero,$txtFecNac,$txtTelFijo,$txtTelMovil,$txtCorreo,$txtDireccion,"A",$txtFecIni,$txtFecFin,$lstCargo,$estados,$lstSucursal);
 //print_r($empleado);
 if($ObjEmpleado->registrar_empleado($empleado)){
-	$conEmpleado=$ObjEmpleado->consultar_empleado_codigo($codigo);
+	$conEmpleado=$ObjEmpleado->mostrar_empleado($codigo);
 	//echo $conEmpleado->rowCount();
 	if($conEmpleado->rowCount()>0){
 		$respuesta->mensaje = 1;

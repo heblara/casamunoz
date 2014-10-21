@@ -18,7 +18,6 @@ function validar(){
     telfijo=document.getElementById('txtTelFijo').value;
     telmovil=document.getElementById('txtTelMovil').value;
     correo=document.getElementById('txtCorreo').value;
-    cubiculo=document.getElementById('lstCubiculo').value;
     fecini=document.getElementById('txtFecIni').value;
     fecfin=document.getElementById('txtFecFin').value;
     msg="";
@@ -89,47 +88,12 @@ function validar(){
         document.getElementsByName('txtDireccion').style="border-color:#F80303;";
         document.getElementById('txtDireccion').focus();
         error=true;
-    }else if(telmovil==null || telmovil==""){
-        msg+='* Telefono movil';
-        alert("Ingrese Numero de Telefono Movil");
-        //#hongkiat-form input.name
-        document.getElementsByName('txtTelMovil').style="border-color:#F80303;";
-        document.getElementById('txtTelMovil').focus();
-        error=true;
-    }else if(telfijo==null || telfijo==""){
-        msg+='* Telefono Fijo';
-        alert("Ingrese Numero de Telefono Fijo");
-        //#hongkiat-form input.name
-        document.getElementsByName('txtTelFijo').style="border-color:#F80303;";
-        document.getElementById('txtTelFijo').focus();
-        error=true;
-    }else if(correo==null || correo==""){
-        msg+='* Correo';
-        alert("Ingrese Correo electronico");
-        //#hongkiat-form input.name
-        document.getElementsByName('txtCorreo').style="border-color:#F80303;";
-        document.getElementById('txtCorreo').focus();
-        error=true;
-    }else if(cubiculo==0){
-        msg+='* Cubiculo';
-        alert("Seleccione cubiculo");
-        //#hongkiat-form input.name
-        document.getElementsByName('lstCubiculo').style="border-color:#F80303;";
-        document.getElementById('lstCubiculo').focus();
-        error=true;
     }else if(fecini==null || fecini==""){
         msg+='* Fecha inicio';
         alert("Ingrese fecha de inicio de contrato");
         //#hongkiat-form input.name
         document.getElementsByName('txtFecIni').style="border-color:#F80303;";
         document.getElementById('txtFecIni').focus();
-        error=true;
-    }else if(fecfin==null || fecfin==""){
-        msg+='* Fecha fin';
-        alert("Ingrese fecha fin de contrato");
-        //#hongkiat-form input.name
-        document.getElementsByName('txtFecFin').style="border-color:#F80303;";
-        document.getElementById('txtFecFin').focus();
         error=true;
     }
 
@@ -153,9 +117,9 @@ function enviarDatos(){
         url: "procesos/guardarEmpleado.php",
         data: formulario,
     }).done(function(respuesta){
-        if(respuesta.mensaje==1){
+        if(respuesta.mensaje==2){
           alert("No fue posible registrar el empleado");
-        }else if(respuesta.mensaje==2){
+        }else if(respuesta.mensaje==1){
           alert("Registro realizado con exito");
         }
     });
@@ -282,7 +246,7 @@ $(document).ready(function(){
         <input type="tel" name="txtTelMovil" id="txtTelMovil" placeholder="Telefono movil" tabindex="13" class="txtinput telephone">
         <label>Correo electr&oacute;nico:</label>
         <input type="email" name="txtCorreo" id="txtCorreo" placeholder="Direcci&oacute;n de correo" autocomplete="off" tabindex="14" class="txtinput email">
-        <label>Cubiculo:</label>
+        <!--<label>Cubiculo:</label>
         <?php 
           $objeto=new CasaMunoz;
           $consultarsucu=$objeto->consultar_cubiculo();
@@ -290,14 +254,14 @@ $(document).ready(function(){
           // Voy imprimiendo el primer select compuesto por los paises
           //echo $consultarDepartamentos->rowCount();
           echo "<select name='lstCubiculo' id='lstCubiculo' class='selmenu'>";
-          echo "<option value='0'>Elige</option>";
+          echo "<option value='NULL'>Elige</option>";
 
           while($sucu=$consultarsucu->fetch(PDO::FETCH_OBJ))
           {
             echo "<option value='".$sucu->cod_cubiculo."'>".$sucu->cod_cubiculo."</option>";
           }
           echo "</select>";
-       ?>
+       ?>-->
        <label>Fecha Inicio Contrato:</label>
         <input type="text" name="txtFecIni" id="txtFecIni" placeholder="Fecha Inicio de Contrato" autocomplete="off" tabindex="16" class="txtinput calendar datepicker">
         <label>Fecha Fin Contrato:</label>

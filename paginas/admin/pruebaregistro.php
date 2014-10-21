@@ -4,10 +4,6 @@
   <link rel="stylesheet" href="/resources/demos/style.css">
   <script type="text/javascript" src="js/jquery.blockUI.js"></script>
 <script type="text/javascript">
-
-
-
-<script>
     $(function() {
 	$('.datepicker').datepicker({
 	dateFormat: 'yy-mm-dd', 
@@ -16,40 +12,48 @@
 	yearRange: '-40:+0'
 	});
 		});
-</script>
-<script src="js/mask.js"></script>
-<script>
-  jQuery(function($){
-     $("#txtDUI").mask("99999999-9");   
-  });
-</script>
-<script>
-  jQuery(function($){
-     $("#txtNIT").mask("9999-999999-999-9");   
-  });
-</script>
 
-
-<form name="hongkiat" id="hongkiat-form" method="post" action="#">
+    $(function() {
+  //Se pone para que en todos los llamados ajax se bloquee la pantalla mostrando el mensaje Procesando...
+  $.blockUI.defaults.message = 'Procesando información, por favor espere... <br /><img src=\'img/load.gif\' /><br />';
+  $(document).ajaxStart($.blockUI).ajaxStop($.unblockUI);
+});
+function enviarDatos(){
+  var formulario = $("#hongkiat-form").serializeArray();
+    $.ajax({
+      type: "POST",
+      dataType: 'json',
+        url: "procesos/guardarProducto.php",
+        data: formulario,
+    }).done(function(respuesta){
+        if(respuesta.mensaje==1){
+          alert("No fue posible registrar el empleado");
+        }else if(respuesta.mensaje==2){
+          alert("Registro realizado con exito");
+        }
+    });
+}
+$(document).ready(function(){         
+  $("#submitbtn").click(function(){
+      enviarDatos();
+      return false;
+  });
+});
+</script>
+<form name="hongkiat" id="hongkiat-form" method="post">
     <div id="wrapping" class="clearfix">
         <section id="aligned">
         <h2>REGISTRO DE PRODUCTO</h2>
-        <label>nombre de producto:</label>
-        <input type="text" name="txtnombreproducto" id="txtnombreproducto" placeholder="nombreproducto" autocomplete="off" tabindex="1" >
-        <label>cantidad de producto:</label>
-        <input type="text" name="txtcantidaproducto" id="txtcantidadproducto" placeholder="cantidad producto" autocomplete="off" tabindex="1" >
-      
-      <label>rendimiento:</label>
-        <input type="text" name="txtredimientoproducto" id="txtrendimientoproducto" placeholder="rendimiento de producto" autocomplete="off" tabindex="1" >
-        </select>
-        <br>
-        <label>Fecha de ingreso:</label>
-        <input type="text" name="txtFecIngre" id="txtFecIngre" placeholder="Fecha de ingreso" autocomplete="off" tabindex="1" >
-		
-        <br>
-         <br>
-          <br>
-           <br>
+        <label>Nombre de producto:</label>
+        <input type="text" name="txtNombreProducto" id="txtNombreProducto" placeholder="Nombre del producto" autocomplete="off" tabindex="1" class="txtinput">  
+        <label>Nombre de Rendimiento:</label>
+        <input type="text" name="txtRendimiento" id="txtRendimiento" placeholder="Rendimiento del producto" autocomplete="off" tabindex="1" class="txtinput">  
+        <label>Fecha registro de producto:</label>
+        <input type="text" name="txtFechaRegistro" id="txtFechaRegistro" placeholder="Fecha de registro del producto" autocomplete="off" tabindex="1" class="txtinput calendar">  
+        <br/>
+      <label>Detalle del producto:</label>
+        <textarea name="txtDetalle" id="txtDetalle" placeholder="Detalle del producto" autocomplete="off" tabindex="1" class="txtblock">
+        </textarea>
     <section id="buttons">
         <input type="reset" name="reset" id="resetbtn" class="resetbtn" value="Limpiar">
         <input type="submit" name="submit" id="submitbtn" class="submitbtn" tabindex="" value="Guardar">
