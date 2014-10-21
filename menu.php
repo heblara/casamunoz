@@ -82,6 +82,7 @@ if(isset($_SESSION['autenticado'])){
       <ul>
          <li class='last'><a href='?mod=ingresoproductos'><span>Ingreso de productos</span></a></li>
           <li class='last'><a href='?mod=salidaproductos'><span>Salida de productos</span></a></li>
+          <li class='last'><a href='?mod=inventario'><span>Inventario</span></a></li>
       </ul>
     </li>
     <li><a href='?mod=factura'><span>Factura</span></a></li>

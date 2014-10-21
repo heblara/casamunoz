@@ -5,15 +5,11 @@
   <script type="text/javascript" src="js/jquery.blockUI.js"></script>
 <script type="text/javascript">
   function validar(){
-    producto=document.getElementById('lstProducto').value;
-    sucursal=document.getElementById('lstSucursal').value;
-    cantidad=document.getElementById('txtCantidadEntrega').value;
+    sucursal=document.getElementById('lstEmpleadoSucursal').value;
+    cantidad=document.getElementById('txtCantidadEntrega[]').value;
     error=false;
-    if(producto==0){
-        alert("Seleccione un producto");
-        error=true;
-    }else if(sucursal==0){
-        alert("Seleccione una sucursal");
+    if(sucursal==0){
+        alert("Seleccione un empleado");
         error=true;
     }else if(isNaN(cantidad)){
         alert("Ingrese un numero en la cantidad");
@@ -37,13 +33,15 @@ function enviarDatos(){
     $.ajax({
       type: "POST",
       dataType: 'json',
-        url: "procesos/guardarEntrada.php",
+        url: "procesos/guardarSalida.php",
         data: formulario,
     }).done(function(respuesta){
         if(respuesta.mensaje==2){
           alert("No fue posible registrar la entrada");
         }else if(respuesta.mensaje==1){
           alert("Registro realizado con exito");
+        }else if(respuesta.mensaje==3){
+          alert("Las cantidades no deben sobrepasar las existencias");
         }
     });
 }
@@ -63,29 +61,10 @@ $(document).ready(function(){
         <section id="aligned">
 		<h2>INGRESO PRODUCTO</h2>
 		<h3>Fecha actual: <?php echo date('d-m-Y H:i a'); ?> </h3>
-		<br></br>
-    <label>Producto a ingresar</label>
-       <?php 
-      $objeto=new CasaMunoz;
-      /*session_start();
-      echo "-- ".$_SESSION['sucursal'];*/
-      $consultarproducto=$objeto->consultar_inventario_sucursal($_SESSION['sucursal']);
-      //$consulta=mysql_query("SELECT cod_dpto, nom_dpto FROM DEPARTAMENTO");
-      // Voy imprimiendo el primer select compuesto por los paises
-      //echo $consultarproducto->rowCount();
-      echo "<select name='lstProducto' id='lstProducto' class='selmenu'>";
-      echo "<option value='0'>Elige</option>";
-
-      while($producto=$consultarproducto->fetch(PDO::FETCH_OBJ))
-      {
-        echo "<option value='".$producto->cod_producto."'>".$producto->nom_producto."</option>";
-      }
-      echo "</select>";
-   ?>
-    <label>Cantidad:</label>
-        <input type="text" name="txtCantidadEntrega" id="txtCantidadEntrega" placeholder="Cantidad a Entregar" autocomplete="off" tabindex="1" class="txtinput">
-		<label>Empleado: </label>
+		<br>
+    <label>Empleado: </label>
         <?php 
+        $objeto=new CasaMunoz;
       $consultarsucu=$objeto->consultar_empleado_sucursal($_SESSION['sucursal']);
       //$consulta=mysql_query("SELECT cod_dpto, nom_dpto FROM DEPARTAMENTO");
       // Voy imprimiendo el primer select compuesto por los paises
@@ -98,6 +77,53 @@ $(document).ready(function(){
         echo "<option value='".$sucu->cod_emp."'>".$sucu->NombreCompleto."</option>";
       }
       echo "</select>";
+   ?>  
+    </br>
+    <label>Producto a ingresar</label>
+      <table width="100%" style="font-size:10pt;border-color:black;" border="1">
+        <tr>
+          <th>No.</th>
+          <th>Producto</th>
+          <th>Existencia</th>
+          <th>Cantidad a entregar</th>
+        </tr>
+        <?php 
+        $i=0;
+        $consultarproducto=$objeto->consultar_inventario_sucursal($_SESSION['sucursal']);
+        while($producto=$consultarproducto->fetch(PDO::FETCH_OBJ))
+        {
+          $i++;
+          echo "<tr>
+            <td>$i</td>
+            <td>".$producto->nom_producto."</td>
+            <td>".$producto->cant_inventario."
+            <input type='hidden' name='txtExistencia[]' id='txtExistencia[]' value='".$producto->cant_inventario."' />
+            <input type='hidden' name='txtProducto[]' id='txtProducto[]' value='".$producto->cod_producto."' /></td>
+            <td><input type='number' name='txtCantidadEntrega[]' id='txtCantidadEntrega[]' /></td>
+          </tr>";
+        }
+        ?>
+      </table>
+       <?php 
+      /*$objeto=new CasaMunoz;
+      session_start();
+      echo "-- ".$_SESSION['sucursal'];
+      $consultarproducto=$objeto->consultar_inventario_sucursal($_SESSION['sucursal']);
+      while($producto=$consultarproducto->fetch(PDO::FETCH_OBJ))
+      {
+        echo "<option value='".$producto->cod_producto."'>".$producto->nom_producto."</option>";
+      }*/
+      //$consulta=mysql_query("SELECT cod_dpto, nom_dpto FROM DEPARTAMENTO");
+      // Voy imprimiendo el primer select compuesto por los paises
+      //echo $consultarproducto->rowCount();
+      /*echo "<select name='lstProducto' id='lstProducto' class='selmenu'>";
+      echo "<option value='0'>Elige</option>";
+
+      while($producto=$consultarproducto->fetch(PDO::FETCH_OBJ))
+      {
+        echo "<option value='".$producto->cod_producto."'>".$producto->nom_producto."</option>";
+      }
+      echo "</select>";*/
    ?>
   </section>
 </div>

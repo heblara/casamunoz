@@ -1,6 +1,7 @@
 <?php 
 	if(isset($_SESSION['autenticado'])){
 		$cm1=new CasaMunoz;
+		$sucursal="";
 		//echo "Sucursal: ".$_SESSION['sucursal'];
 		$consSucursal=$cm1->consultar_sucursal_unica($_SESSION['sucursal']);
 		$resSucursal=$consSucursal->fetch(PDO::FETCH_OBJ);

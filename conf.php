@@ -171,5 +171,8 @@ $conf['factura']=array(
 'archivo'=>'empleado/frmFactura.php',
 'layout'=>LAYOUT_INICIO
 );
-
+$conf['inventario']=array(
+'archivo'=>'empleado/inventario.php',
+'layout'=>LAYOUT_INICIO
+);
 ?>

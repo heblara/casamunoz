@@ -379,6 +379,25 @@ class CasaMunoz {
         unset($dbh);
         unset($query);
     }
+    function guardar_salida($dato) {
+        $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
+        $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
+        $sql = "INSERT INTO `DETALLE_SALIDA`(`fec_salida`, `cant_salida`, `cod_emp`,`cod_producto`) 
+        VALUES (:fecha,:cantidad,:empleado,:producto)";
+        $query = $dbh->prepare($sql); // Preparamos la consulta para dejarla lista para su ejecucion
+        $hoy=date('Y-m-d H:i:s');
+        $query->bindParam(":fecha",$hoy);
+        $query->bindParam(":cantidad",$dato[1]);
+        $query->bindParam(":producto",$dato[0]);
+        $query->bindParam(":empleado",$dato[2]);
+        if($query->execute()){
+            return $query;
+        }else{
+            return false;
+        }
+        unset($dbh);
+        unset($query);
+    }
     function guardar_inventario($dato) {
         $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
         $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
