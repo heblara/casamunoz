@@ -27,9 +27,9 @@ function enviarDatos(){
         data: formulario,
     }).done(function(respuesta){
         if(respuesta.mensaje==1){
-          alert("No fue posible registrar el empleado");
-        }else if(respuesta.mensaje==2){
           alert("Registro realizado con exito");
+        }else if(respuesta.mensaje==2){
+          alert("No fue posible registrar el producto");
         }
     });
 }
