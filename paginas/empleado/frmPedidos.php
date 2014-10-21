@@ -90,6 +90,7 @@ function seleccionar(){
 <form name="hongkiat" id="hongkiat-form">
 <div id="wrapping" class="clearfix">
   <section id="aligned" style='text-align:center;'>
+  <h2> HOJA DE PEDIDOS</h2>
     <h3>Nombre de supervisora:</h3>
     <div id="dui" style='display:;clear:both;'> 
   		<input type="text" name="txtSupervisora" class="search txtinput" id="txtSupervisora" placeholder="nombre, apellido, usuario" autocomplete="off" tabindex="1" style="width:25%;" value="SUPERVISORA ANDREA">
