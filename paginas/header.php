@@ -18,11 +18,11 @@
 		$nombre1=$resNombre1->NombreCompleto;
 		
 		if($_SESSION['tipo']==1){
-			echo "<p style='font-size:12pt;float:right;'>Bienvenido Administrador (<a href='?mod=logout'>Salir</a>)<br />Sucursal: $sucursal</p><br/><br />";
+			echo "<p style='font-size:12pt;float:right;'>Bienvenido Administrador (<a href='?mod=logout'>Salir</a>)<br /></p><br/><br />";
 		}else if($_SESSION['tipo']==2){
 			echo "<p style='font-size:12pt;float:right;'>Bienvenido $nombre (<a href='?mod=logout'>Salir</a>)<br />Sucursal: $sucursal</p><br/><br />";
 		}else if($_SESSION['tipo']==3){
-			echo "<p style='font-size:12pt;float:right;'>Bienvenido $nombre1 (<a href='?mod=logout'>Salir</a>)<br />Sucursal: $sucursal</p><br/><br />";
+			echo "<p style='font-size:12pt;float:right;'>Bienvenido $nombre1 (<a href='?mod=logout'>Salir</a>)<br /></p><br/><br />";
 		}
 	}
 ?>
