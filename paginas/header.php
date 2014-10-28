@@ -4,6 +4,7 @@
 		$sucursal="";
 		$nombre="";
 		$nombre1="";
+		$nombre2="";
 		//echo "Sucursal: ".$_SESSION['sucursal'];
 		$consSucursal=$cm1->consultar_sucursal_unica($_SESSION['sucursal']);
 		$resSucursal=$consSucursal->fetch(PDO::FETCH_OBJ);
