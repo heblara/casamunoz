@@ -65,7 +65,7 @@ $(document).ready(function(){
     <label>Empleado: </label>
         <?php 
         $objeto=new CasaMunoz;
-      $consultarsucu=$objeto->consultar_empleado_sucursal($_SESSION['sucursal']);
+      $consultarsucu=$objeto->consultar_empleados_sucursal($_SESSION['sucursal']);
       //$consulta=mysql_query("SELECT cod_dpto, nom_dpto FROM DEPARTAMENTO");
       // Voy imprimiendo el primer select compuesto por los paises
       //echo $consultarDepartamentos->rowCount();

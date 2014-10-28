@@ -224,13 +224,29 @@ class CasaMunoz {
         unset($dbh);
         unset($query);
     }
-    function consultar_empleado_sucursal($sucursal) {
+    function consultar_empleados_sucursal($sucursal) {
         $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
         $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
         $sql = "SELECT *,CONCAT_WS(' ',primer_nom,segundo_nom,primer_ape,segundo_ape) as NombreCompleto 
         FROM EMPLEADO WHERE cod_sucursal=:codigo";
         $query = $dbh->prepare($sql); // Preparamos la consulta para dejarla lista para su ejecucion
         $query->bindParam(":codigo",$sucursal);
+        $query->execute(); // Ejecutamos la consulta
+        if ($query)
+            return $query; //pasamos el query para utilizarlo luego con fetch
+        else
+            return false;
+        unset($dbh);
+        unset($query);
+    }
+    function consultar_empleado_sucursal($sucursal,$empleado) {
+        $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
+        $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
+        $sql = "SELECT *,CONCAT_WS(' ',primer_nom,segundo_nom,primer_ape,segundo_ape) as NombreCompleto 
+        FROM EMPLEADO WHERE cod_emp=:empleado and cod_sucursal=:codigo";
+        $query = $dbh->prepare($sql); // Preparamos la consulta para dejarla lista para su ejecucion
+        $query->bindParam(":codigo",$sucursal);
+        $query->bindParam(":empleado",$empleado);
         $query->execute(); // Ejecutamos la consulta
         if ($query)
             return $query; //pasamos el query para utilizarlo luego con fetch
@@ -450,11 +466,12 @@ class CasaMunoz {
         unset($query);
     }
     
-    function consultar_nombre2() { 
+    function consultar_nombre2($usuario) { 
     	$con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager 
     	$dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL. 
-    	$sql = "SELECT *,CONCAT_WS(' ',primer_nom,segundo_nom,primer_ape,segundo_ape) as NombreCompleto FROM EMPLEADO WHERE cod_cargo='1'"; 
+    	$sql = "SELECT *,CONCAT_WS(' ',primer_nom,segundo_nom,primer_ape,segundo_ape) as NombreCompleto FROM EMPLEADO WHERE cod_cargo='1' and cod_emp=:usuario"; 
     	$query = $dbh->prepare($sql); // Preparamos la consulta para dejarla lista para su ejecucion 
+        $query->bindParam(":usuario",$usuario);
     	$query->execute(); // Ejecutamos la consulta 
     	if ($query) 
     	return $query; //pasamos el query para utilizarlo luego con fetch 

@@ -11,14 +11,16 @@ if ($consulta->rowCount()>0){
 	  if($resUser->estado_usuario=='Activo'){   
 	  	$_SESSION['sucursal']=$resEmpleado->cod_sucursal;
 		$_SESSION['nombre1']=$resUser->cod_usuario;
+		$_SESSION['usuario']=$resUser->usuario;
 	  	$_SESSION['autenticado']='si'; 
-	    if( $resUser->ROL_cod_rol == 1)     {
+	  	$_SESSION["tipo"]=$resUser->ROL_cod_rol;
+	    /*if( $resUser->ROL_cod_rol == 1)     {
 	    	$_SESSION['tipo']=1;
 	    } elseif($resUser->ROL_cod_rol == 2) {
-	    	$_SESSION['tipo']=2	;
+	    	$_SESSION['tipo']=2;
 	    } elseif($resUser->ROL_cod_rol == 3) {
 	    	$_SESSION['tipo']=3;
-	    }
+	    }*/
 		header("Location:?mod=home");
 	  }else  {
 	    	echo "USUARIO INACTIVO";

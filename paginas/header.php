@@ -9,7 +9,7 @@
 		$resSucursal=$consSucursal->fetch(PDO::FETCH_OBJ);
 		$sucursal=$resSucursal->nom_sucursal;
 		
-		$consEmpleado=$cm1->consultar_empleado_sucursal($_SESSION['sucursal']);
+		$consEmpleado=$cm1->consultar_empleado_sucursal($_SESSION['sucursal'],$_SESSION['usuario']);
 		$resEmpleado=$consEmpleado->fetch(PDO::FETCH_OBJ);
 		$nombre=$resEmpleado->NombreCompleto;
 		
@@ -17,7 +17,7 @@
 		$resNombre1=$consNombre1->fetch(PDO::FETCH_OBJ);
 		$nombre1=$resNombre1->NombreCompleto;
 		
-		$consNombre2=$cm1->consultar_nombre2($_SESSION['nombre1']);
+		$consNombre2=$cm1->consultar_nombre2($_SESSION['usuario']);
 		$resNombre2=$consNombre2->fetch(PDO::FETCH_OBJ);
 		$nombre2=$resNombre2->NombreCompleto;
 		
