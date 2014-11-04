@@ -470,16 +470,16 @@ class CasaMunoz {
 function registrar_servicio($dato) {
         $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
         $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
-        $sql = "INSERT INTO `servicio`(`nom_servicio`, `desc_servicio`, `fec_registro`, `durracion_servicio`,`cod_tipo_servicio`,`cod_costo`,`EMPLEADO_cod_emp`)   
-        VALUES (:nom_servicio,:desc_servicio,:fec_registro,:durracion_servicio,:cod_tipo_servicio,:cod_costo,:`EMPLEADO_cod_emp`)";
+        $sql = "INSERT INTO `servicio`(`nom_servicio`, `desc_servicio`, `fec_registro`,`cod_costo`, `duracion_servicio`)   
+        VALUES (:nom_servicio,:desc_servicio,:fec_registro,:cod_costo,:duracion_servicio)";
         $query = $dbh->prepare($sql); // Preparamos la consulta para dejarla lista para su ejecucion
         $query->bindParam(":nom_servicio",$dato[0]);
         $query->bindParam(":desc_servicio",$dato[1]);
-        $query->bindParam(":rendimiento",$dato[2]);
-        $query->bindParam(":fec_registro",$dato[3]);
+        $query->bindParam(":fec_registro",$dato[2]);
+        $query->bindParam(":cod_costo",$dato[3]);
         $query->bindParam(":duracion_servicio",$dato[4]);
-        $query->bindParam(":cod_tipo_servicio",$dato[5]);
-        $query->bindParam(":EMPLEADO_cod_emp",$dato[6]);
+
+
         if($query->execute()){
             return $query;
         }else{
