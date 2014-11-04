@@ -1,0 +1,20 @@
+<?php
+include("header.php");
+sleep(1);
+session_start();
+$respuesta = new stdClass();
+extract($_POST);
+//print_r($_POST);
+$codigo="";
+$cod="";
+$prod=new CasaMunoz;
+$servicio=array($codigo,$txtnom_servicio,$desc_servicio,$fec_registro, $durracion_servicio,$cod_tipo_servicio,$cod_costo,$EMPLEADO_cod_emp);
+//print_r($empleado);
+if($prod->registrar_costo($servicio)){
+
+	$respuesta->mensaje = 1;
+}else{
+	$respuesta->mensaje = 2;
+}
+echo json_encode($respuesta);
+?>
