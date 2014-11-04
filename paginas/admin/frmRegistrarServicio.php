@@ -2,26 +2,51 @@
   <script src="//code.jquery.com/jquery-1.10.2.js"></script>
   <script src="//code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
   <link rel="stylesheet" href="/resources/demos/style.css">
-<script>
- $(function() {
-	$('.datepicker').datepicker({
-	dateFormat: 'yy-mm-dd', 
-	changeMonth: true, 
-	changeYear: true, 
-	yearRange: '-40:+0'
-	});
-		});
-</script>
-<script src="js/mask.js"></script>
-<script>
-  jQuery(function($){
-     $("#txtDUI").mask("99999999-9");   
+
+<script type="text/javascript">
+     $(function() {
+    $('#txtFechaRegistro').datepicker({
+    dateFormat: 'yy-mm-dd', 
+    changeMonth: true, 
+    changeYear: true, 
+    yearRange: '-40:+0'
+    });
+        });
+
+    $(function() {
+  //Se pone para que en todos los llamados ajax se bloquee la pantalla mostrando el mensaje Procesando...
+  $.blockUI.defaults.message = 'Procesando información, por favor espere... <br /><img src=\'img/load.gif\' /><br />';
+  $(document).ajaxStart($.blockUI).ajaxStop($.unblockUI);
+});
+function enviarDatos(){
+  var formulario = $("#hongkiat-form").serializeArray();
+    $.ajax({
+      type: "POST",
+      dataType: 'json',
+        url: "procesos/guardarservicio.php",
+        data: formulario,
+    }).done(function(respuesta){
+        if(respuesta.mensaje==1){
+          alert("Registro realizado con exito");
+        }else if(respuesta.mensaje==2){
+          alert("No fue posible registrar el producto");
+        }
+    });
+}
+$(document).ready(function(){         
+  $("#submitbtn").click(function(){
+      enviarDatos();
+      return false;
   });
+});
 </script>
-<script>
-  jQuery(function($){
-     $("#txtNIT").mask("9999-999999-999-9");   
-  });
+
+
+
+
+
+
+
 </script>
 <form name="hongkiat" id="hongkiat-form" method="post" action="#">
     <div id="wrapping" class="clearfix">
@@ -31,28 +56,37 @@
         <input type="text" name="txtNombre" id="txtNombre" placeholder="Nombre de servicio" autocomplete="off" tabindex="1" class="txtinput offer">
         <br />
         <label>Descripcion:</label>
-        <textarea name="message" id="message" style="width:40%;" placeholder="Descripcion..." tabindex="5" class="txtblock"></textarea>
+       <textarea name="message" id="message" style="width:40%;" placeholder="Descripcion..." tabindex="5" class="txtblock"></textarea>
+        <label>Fecha registro de servicio:</label>
+        <input type="text" name="txtFechaRegistro" id="txtFechaRegistro" placeholder="Fecha de registro de producto" autocomplete="off" tabindex="1" class="txtinput calendar datepicker">  
+        <br/>
+        <label>precio de servicio:</label>
+        <input type="text" name="txtprecio" id="txtprecio" placeholder="precio de servicio" autocomplete="off" tabindex="1" class="txtinput money">
+        <br />
+
         <label>Duraci&oacute;n (En minutos):</label>
-        <input type="text" name="txtDuracion" id="txtDuracion" placeholder="Tiempo que dura el servicio (en minutos)" autocomplete="off" tabindex="1" class="txtinput time">
-        <label>Precio:</label>
-        <input type="text" name="txtPrecio" id="txtPrecio" placeholder="Precio del servicio" autocomplete="off" tabindex="1" class="txtinput money">
+        <input type="time" name="txtDuracion" id="txtDuracion" placeholder="Tiempo que dura el servicio (en minutos)" property="readOnly" autocomplete="off" tabindex="1" class="txtinput time">
+        
         <fieldset>
-        <legend>Sucursal(es): </legend>
-        <input type="checkbox" name="chkSucursal1" id="chkSucursal1" value="1">
-        <label for="chkSucursal1" class='checkbox'>La Joya</label>
-        <br />
-        <input type="checkbox" name="chkSucursal2" id="chkSucursal2" value="2">
-        <label for="chkSucursal2" class='checkbox'>Merliot</label>
-        <br />
-        <input type="checkbox" name="chkSucursal3" id="chkSucursal3" value="3">
-        <label for="chkSucursal3" class='checkbox'>Autopista Sur</label>
-        <br />
-        <input type="checkbox" name="chkSucursal4" id="chkSucursal4" value="4">
-        <label for="chkSucursal4" class='checkbox'>Metro Sur</label>
-        <br />
-        <input type="checkbox" name="chkSucursal5" id="chkSucursal5" value="5">
-        <label for="chkSucursal5" class='checkbox'>Las Cascadas</label>
-        </fieldset>
+        <br><label>Sucursal: </label>
+        <?php 
+      $objeto=new CasaMunoz;
+      $consultarsucu=$objeto->consultar_sucursal();
+      //$consulta=mysql_query("SELECT cod_dpto, nom_dpto FROM DEPARTAMENTO");
+      // Voy imprimiendo el primer select compuesto por los paises
+      //echo $consultarDepartamentos->rowCount();
+      echo "<select name='lstSucursal' id='lstSucursal' class='selmenu'>";
+      echo "<option value='0'>Elige</option>";
+
+      while($sucu=$consultarsucu->fetch(PDO::FETCH_OBJ))
+      {
+        echo "<option value='".$sucu->cod_sucursal."'>".$sucu->nom_sucursal."</option>";
+      }
+      echo "</select>";
+   ?>
+
+
+
         <br />
         </section>
         <section id="aside" class="clearfix">
