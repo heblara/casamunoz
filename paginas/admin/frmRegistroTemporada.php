@@ -32,7 +32,7 @@
         <label>Fecha inicial:</label>
         <input type="text" name="txtFechaIni" id="txtFechaIni" placeholder="Fecha inicial" autocomplete="off" tabindex="1" class="txtinput calendar datepicker">
         <br />
-        <label>Fecha inicial:</label>
+        <label>Fecha Fin:</label>
         <input type="text" name="txtFechaFin" id="txtFechaFin" placeholder="Fecha final" autocomplete="off" tabindex="1" class="txtinput calendar datepicker">
         <fieldset>
         <legend>Sucursal(es): </legend>
