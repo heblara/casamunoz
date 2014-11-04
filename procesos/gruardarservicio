@@ -5,12 +5,12 @@ session_start();
 $respuesta = new stdClass();
 extract($_POST);
 //print_r($_POST);
-$codigo="";
-$cod="";
-$prod=new CasaMunoz;
-$servicio=array($codigo,$txtnom_servicio,$desc_servicio,$fec_registro, $durracion_servicio,$cod_tipo_servicio,$cod_costo,$EMPLEADO_cod_emp);
+$_SESSION['empleado']=$_REQUEST[''];
+
+$ser=new CasaMunoz;
+$ser=array($txtnombre,$message,$txtFechaRegistro,$txtprecio, $txtDuracion);
 //print_r($empleado);
-if($prod->registrar_costo($servicio)){
+if($ser->registrar_costo($servicio)){
 
 	$respuesta->mensaje = 1;
 }else{
