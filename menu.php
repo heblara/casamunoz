@@ -22,9 +22,10 @@ if(isset($_SESSION['autenticado'])){
           <li class='last'><a href='?mod=registroimagenes'><span>Imagenes slide</span></a></li>
       </ul>
     </li>
-    <li class='active has-sub'><a href='#'><span>Reporte</span></a>
+    <li class='active has-sub'><a href='#'><span>Control</span></a>
       <ul>
          <li><a href='?mod=buscarreporteventa'><span>Reportes de ventas</span></a></li>
+		 <li><a href='?mod=log'><span>Log</span></a></li>
       </ul>
     </li>
     <li class='active has-sub'><a href='#'><span>Servicio</span></a>
@@ -35,6 +36,7 @@ if(isset($_SESSION['autenticado'])){
     </li>
     <li class='active has-sub'><a href='#'><span>Sucursal</span></a>
       <ul>
+	   <li class='last'><a href='?mod=nuevasucursal'><span>Registrar sucursal</span></a></li>
           <li class='last'><a href='?mod=registrartemporada'><span>Temporadas</span></a></li>
       </ul>
     </li>
