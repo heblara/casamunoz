@@ -17,7 +17,7 @@ if(isset($_GET['valor'])){
 			echo "<tr>
 			<td>".$i."</td>
 			<td>".$resEmpleado->NombreCompleto."</td>
-			<td><a href='?mod=buscaremp&id=".base64_encode($resEmpleado->cod_emp)."'><img src='img/edit.png' /></a></td>
+			<td><a href='?mod=consultaempleado&id=".base64_encode($resEmpleado->cod_emp)."'><img src='img/edit.png' /></a></td>
 			</tr>";
 		}
 		echo "</table>";
