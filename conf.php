@@ -175,4 +175,8 @@ $conf['inventario']=array(
 'archivo'=>'empleado/inventario.php',
 'layout'=>LAYOUT_INICIO
 );
+$conf['consultaempleado']=array(
+'archivo'=>'admin/actualizarempleado.php',
+'layout'=>LAYOUT_INICIO
+);
 ?>
