@@ -18,6 +18,25 @@ class CasaMunoz {
         unset($dbh);
         unset($query);
     }
+    function registrar_temporada($dato) {
+        $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
+        $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
+        $sql = "INSERT INTO `TEMPORADA` (`nom_temp`, `fec_ini`, `fec_fin`) 
+        VALUES (:nombre,:fechainicio,:fechafin)";
+        $query = $dbh->prepare($sql); // Preparamos la consulta para dejarla lista para su ejecucion
+        $hoy=date('Y-m-d H:i:s');
+        $query->bindParam(":nombre",$dato[0]);
+        $query->bindParam(":fechainicio",$dato[1]);
+        $query->bindParam(":fechafin",$dato[2]);
+		
+        if($query->execute()){
+            return $query;
+        }else{
+            return false;
+        }
+        unset($dbh);
+        unset($query);
+    }
     function consultar_sucursal_unica($sucursal) {
         $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
         $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
