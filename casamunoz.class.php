@@ -542,5 +542,25 @@ function registrar_servicio($dato) {
     	unset($dbh); 
     	unset($query); 
     }
+    
+    function insertar_imagen($dato) {
+		$con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager 
+    	$dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL. 
+    	$sql = "INSERT INTO `IMAGEN`(`fec_limite`, `ruta_img`,`cod_emp`)   
+        VALUES (:fec_limite,:ruta_img,:cod_emp)";
+        $query = $dbh->prepare($sql); // Preparamos la consulta para dejarla lista para su ejecucion
+        $hoy=date('Y-m-d H:i:s');
+        $query->bindParam(":fec_limite",$dato[0]);
+        $query->bindParam(":ruta_img",$dato[1]);
+        $query->bindParam(":cod_emp",$dato[2]);
+
+        if($query->execute()){
+            return $query;
+        }else{
+            return false;
+        }
+        unset($dbh);
+        unset($query);
+	}
 }
 ?>
