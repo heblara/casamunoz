@@ -37,6 +37,43 @@ class CasaMunoz {
         unset($dbh);
         unset($query);
     }
+    function registrar_costo($dato) {
+        try{
+            $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
+            $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
+            $sql = "INSERT INTO `COSTO` (`precio_Costo`, `fec_registro`) 
+            VALUES (:costo,:fecha)";
+            $query = $dbh->prepare($sql); // Preparamos la consulta para dejarla lista para su ejecucion
+            $hoy=date('Y-m-d H:i:s');
+            $query->bindParam(":costo",$dato);
+            $query->bindParam(":fecha",$hoy);
+            if($query->execute()){            
+                return $query;
+            }
+            //else{
+                //print "Error!: " . $e->getMessage() . "</br>"; 
+             //   return false;
+           // }
+        } catch(PDOExecption $e) {
+            print "Error!: " . $e->getMessage() . "</br>"; 
+        }
+        /*$con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
+        $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
+        $sql = "INSERT INTO `COSTO` (`precio_costo`, `fec_registro`) 
+        VALUES (:costo,:fecha)";
+        $query = $dbh->prepare($sql); // Preparamos la consulta para dejarla lista para su ejecucion
+        $hoy=date('Y-m-d H:i:s');
+        $query->bindParam(":costo",$dato);
+        $query->bindParam(":fecha",$hoy);
+        if($query->execute()){            
+            return $query;
+        }else{
+            print "Error!: " . $e->getMessage() . "</br>"; 
+            return false;
+        }
+        unset($dbh);
+        unset($query);*/
+    }
     function consultar_sucursal_unica($sucursal) {
         $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
         $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
@@ -190,15 +227,16 @@ class CasaMunoz {
     function consultar_usuario($username, $password){
         $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
         $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
-        $sql = "SELECT *, COUNT(*) as count FROM USUARIO where usuario='".$username."' and contra_usuario=md5('".$password."')";
+        $sql = "SELECT * FROM USUARIO where usuario=:usuario and contra_usuario=md5(:contra)";
         $query = $dbh->prepare($sql); // Preparamos la consulta para dejarla lista para su ejecucion
         $query->bindParam(":usuario",$username);
         $query->bindParam(":contra",$password);
         $query->execute(); // Ejecutamos la consulta
-        if ($query)
-            return $query; //pasamos el query para utilizarlo luego con fetch
-        else
+        if($query->execute()){
+            return $query;
+        }else{
             return false;
+        }
         unset($dbh);
         unset($query);
     }
@@ -429,6 +467,38 @@ class CasaMunoz {
         unset($dbh);
         unset($query);
     }
+    function guardar_sucursal_servicio($dato) {
+        $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
+        $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
+        $sql = "INSERT INTO `DISPONIBILIDAD_SERVICIO`(`cod_sucursal`, `cod_servicio`) 
+        VALUES (:sucursal,:servicio)";
+        $query = $dbh->prepare($sql); // Preparamos la consulta para dejarla lista para su ejecucion
+        $query->bindParam(":sucursal",$dato[0]);
+        $query->bindParam(":servicio",$dato[1]);
+        if($query->execute()){
+            return $query;
+        }else{
+            return false;
+        }
+        unset($dbh);
+        unset($query);
+    }
+    function guardar_sucursal_temporada($dato) {
+        $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
+        $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
+        $sql = "INSERT INTO `SUCURSAL_TEMPORADA`(`cod_sucursal`, `cod_temp`) 
+        VALUES (:sucursal,:temporada)";
+        $query = $dbh->prepare($sql); // Preparamos la consulta para dejarla lista para su ejecucion
+        $query->bindParam(":sucursal",$dato[0]);
+        $query->bindParam(":temporada",$dato[1]);
+        if($query->execute()){
+            return $query;
+        }else{
+            return false;
+        }
+        unset($dbh);
+        unset($query);
+    }
     function guardar_salida($dato) {
         $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
         $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
@@ -486,30 +556,7 @@ class CasaMunoz {
     }
     
     
-function registrar_servicio($dato) {
-        $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
-        $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
-        $sql = "INSERT INTO `servicio`(`nom_servicio`, `desc_servicio`, `fec_registro`,`cod_costo`, `duracion_servicio`)   
-        VALUES (:nom_servicio,:desc_servicio,:fec_registro,:cod_costo,:duracion_servicio)";
-        $query = $dbh->prepare($sql); // Preparamos la consulta para dejarla lista para su ejecucion
-        $query->bindParam(":nom_servicio",$dato[0]);
-        $query->bindParam(":desc_servicio",$dato[1]);
-        $query->bindParam(":fec_registro",$dato[2]);
-        $query->bindParam(":cod_costo",$dato[3]);
-        $query->bindParam(":duracion_servicio",$dato[4]);
-
-
-        if($query->execute()){
-            return $query;
-        }else{
-            return false;
-        }
-        unset($dbh);
-        unset($query);
-    }
-
-
- function consultar_costo() {
+    function consultar_costo() {
         $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
         $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
         $sql = "SELECT * FROM costo";
@@ -522,12 +569,56 @@ function registrar_servicio($dato) {
             return false;
         unset($dbh);
         unset($query);
+    }
+    function consultar_ultimo_costo() {
+        $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
+        $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
+        $sql = "SELECT LAST_INSERT_ID( cod_costo ) AS last_id
+        FROM COSTO
+        ORDER BY last_id DESC ";
+        $query = $dbh->prepare($sql); // Preparamos la consulta para dejarla lista para su ejecucion
+        //$query->bindParam(":nombre",$dato);
+        $query->execute(); // Ejecutamos la consulta
+        if ($query)
+            return $query; //pasamos el query para utilizarlo luego con fetch
+        else
+            return false;
+        unset($dbh);
+        unset($query);
+    }
+    function consultar_ultima_temporada() {
+        $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
+        $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
+        $sql = "SELECT LAST_INSERT_ID( cod_temp ) AS last_id
+        FROM TEMPORADA
+        ORDER BY last_id DESC ";
+        $query = $dbh->prepare($sql); // Preparamos la consulta para dejarla lista para su ejecucion
+        //$query->bindParam(":nombre",$dato);
+        $query->execute(); // Ejecutamos la consulta
+        if ($query)
+            return $query; //pasamos el query para utilizarlo luego con fetch
+        else
+            return false;
+        unset($dbh);
+        unset($query);
+    }
+    function consultar_ultimo_servicio() {
+        $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
+        $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
+        $sql = "SELECT LAST_INSERT_ID( cod_servicio ) AS last_id
+        FROM SERVICIO
+        ORDER BY last_id DESC ";
+        $query = $dbh->prepare($sql); // Preparamos la consulta para dejarla lista para su ejecucion
+        //$query->bindParam(":nombre",$dato);
+        $query->execute(); // Ejecutamos la consulta
+        if ($query)
+            return $query; //pasamos el query para utilizarlo luego con fetch
+        else
+            return false;
+        unset($dbh);
+        unset($query);
     } 
 
-
-
-    
-    
     function consultar_nombre2($usuario) { 
     	$con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager 
     	$dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL. 
@@ -562,5 +653,31 @@ function registrar_servicio($dato) {
         unset($dbh);
         unset($query);
 	}
+    function registrar_servicio($dato) {
+        $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
+        $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
+        $sql = "INSERT INTO `SERVICIO`(`nom_servicio`, `desc_servicio`, `fec_registro`, `duracion_servicio`,`cod_tipo_servicio`,`cod_costo`,`EMPLEADO_cod_emp`)   
+                                 VALUES (:nom_servicio,:desc_servicio,:fec_registro,:duracion_servicio,:cod_tipo_servicio,:cod_costo,:usuario)";
+        $query = $dbh->prepare($sql);
+        $hoy=date('Y-m-d H:i:s'); // Preparamos la consulta para dejarla lista para su ejecucion
+        $query->bindParam(":nom_servicio",$dato[0]);
+        $query->bindParam(":desc_servicio",$dato[1]);
+        $query->bindParam(":fec_registro",$hoy);
+        $query->bindParam(":duracion_servicio",$dato[3]);
+        $query->bindParam(":cod_tipo_servicio",$dato[4]);
+        $query->bindParam(":cod_costo",$dato[5]);
+        $query->bindParam(":usuario",$dato[6]);
+
+
+        if($query->execute()){
+            return $query;
+        }else{
+            /*echo "\nPDO::errorInfo():\n";
+            print_r($dbh->errorInfo());*/
+            return false;
+        }
+        unset($dbh);
+        unset($query);
+    }
 }
 ?>

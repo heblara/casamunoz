@@ -36,14 +36,12 @@ $(document).ready(function(){
 			//$("#mensaje").html(respuesta.mensaje);
 			//alert(respuesta.mensaje);
 			if(respuesta.mensaje==1){
-				error("Por favor llene todos los campos");
+				alert("Usuario inactivo");
 			}else if(respuesta.mensaje==2){
-				error("Combinacion de usuario y contraseña incorrecta");
+				alert("Usuario o contrasena incorrecta");
 			}else if(respuesta.mensaje==3){
-				ok("Datos correctos");
-				location.href="?mod=home";
-			}else if(respuesta.mensaje==4){
-				error("Usuario aun no ha validado su correo.");
+				alert("Acceso correcto");
+				location.href='?mod=home';
 			}
 		});
 	});
@@ -53,7 +51,7 @@ $(document).ready(function(){
 <div id="box" style="">
 <div class="elements">
 <div class="avatar"></div>
-<form id="frmLogin" action="?mod=autenticar" method="post">
+<form id="frmLogin" action="#" method="post" onsubmit="return false;">
 <input type="text" name="username" class="username" placeholder="Usuario" autocomplete='off' value="" />
 <input type="password" name="password" class="password" placeholder="Contrase&ntilde;a" autocomplete='off' />
 <input type="submit" name="login" class="submit" id="submit" value="Ingresar" />

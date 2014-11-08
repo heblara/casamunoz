@@ -87,7 +87,7 @@ $(document).ready(function(){
       $consultarsucu=$objeto->consultar_sucursal();
 	  while($sucu=$consultarsucu->fetch(PDO::FETCH_OBJ))
       {
-       echo "<input type=\"checkbox\" name=\"seleccion[]\" value=\'".$sucu->cod_sucursal."'>".$sucu->nom_sucursal."</option>";
+       echo "<input type='checkbox' name='seleccion[]' value='".$sucu->cod_sucursal."'>".$sucu->nom_sucursal."</option>";
       }
    ?>
    </fieldset>
