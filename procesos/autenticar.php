@@ -11,7 +11,7 @@
 	  	  $resUser = $consulta->fetch(PDO::FETCH_OBJ);
 	  	  $consEmpleado=$objeto->consultar_empleado_codigo($username);
 	  	  $resEmpleado=$consEmpleado->fetch(PDO::FETCH_OBJ);
-	  	  session_start();
+	  	  @session_start();
 		  if($resUser->estado_usuario=='Activo'){   
 		  	$_SESSION['sucursal']=$resEmpleado->cod_sucursal;
 			$_SESSION['nombre1']=$resUser->cod_usuario;
