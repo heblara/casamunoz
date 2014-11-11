@@ -8,12 +8,12 @@
 if(isset($_SESSION['autenticado'])){
     if($_SESSION['tipo']==1){
     ?>
-    <li><a href='index.php'><span>Inicio</span></a></li>
+   <li><a href='index.php'><span>Inicio</span></a></li>
     <li class='active has-sub'><a href='#'><span>Empleado</span></a>
       <ul>
          <li><a href='?mod=registroempleado'><span>Agregar</span></a></li>
           <li class='last'><a href='?mod=buscarempleado'><span>Buscar</span></a></li>
-          <li><a href='?mod=registroproducto'><span>Registro de producto</span></a></li>
+		  <li><a href='?mod=registrocargo'><span>Agregar cargo</span></a></li>
       </ul>
     </li>
     <li class='active has-sub'><a href='#'><span>Promocion</span></a>
@@ -25,6 +25,7 @@ if(isset($_SESSION['autenticado'])){
     <li class='active has-sub'><a href='#'><span>Control</span></a>
       <ul>
          <li><a href='?mod=buscarreporteventa'><span>Reportes de ventas</span></a></li>
+		  <li><a href='?mod=registroproducto'><span>Registro de producto</span></a></li>
 		 <li><a href='?mod=log'><span>Log</span></a></li>
       </ul>
     </li>
