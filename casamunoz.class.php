@@ -793,5 +793,43 @@ class CasaMunoz {
         unset($dbh);
         unset($query);
     }
+    
+    function registrar_cargo($dato) {
+        $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
+        $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
+        $sql = "INSERT INTO `CARGO` (`nom_cargo`, `desc_cargo`) 
+        VALUES (:nombre,:descripcion)";
+        $query = $dbh->prepare($sql); // Preparamos la consulta para dejarla lista para su ejecucion
+        $query->bindParam(":nombre",$dato[0]);
+        $query->bindParam(":descripcion",$dato[1]);
+       	
+        if($query->execute()){
+            return $query;
+        }else{
+            return false;
+        }
+        unset($dbh);
+        unset($query);
+    }
+	function registrar_sucursal($dato) {
+        $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
+        $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
+        $sql = "INSERT INTO `SUCURSAL` (`nom_sucursal`, `direc_sucursal`, `tel_sucursal`, `correo_sucursal`, `cod_municipio`) 
+        VALUES (:nombre,:direccion,:telefono,:correo,:municipio)";
+        $query = $dbh->prepare($sql); // Preparamos la consulta para dejarla lista para su ejecucion
+        $query->bindParam(":nombre",$dato[0]);
+        $query->bindParam(":direccion",$dato[1]);
+        $query->bindParam(":telefono",$dato[2]);
+		$query->bindParam(":correo",$dato[3]);
+		$query->bindParam(":municipio",$dato[4]);
+		
+        if($query->execute()){
+            return $query;
+        }else{
+            return false;
+        }
+        unset($dbh);
+        unset($query);
+		}
 }
 ?>
