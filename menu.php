@@ -8,12 +8,12 @@
 if(isset($_SESSION['autenticado'])){
     if($_SESSION['tipo']==1){
     ?>
-   <li><a href='index.php'><span>Inicio</span></a></li>
+    <li><a href='index.php'><span>Inicio</span></a></li>
     <li class='active has-sub'><a href='#'><span>Empleado</span></a>
       <ul>
          <li><a href='?mod=registroempleado'><span>Agregar</span></a></li>
           <li class='last'><a href='?mod=buscarempleado'><span>Buscar</span></a></li>
-		  <li><a href='?mod=registrocargo'><span>Agregar cargo</span></a></li>
+		  <li><a href='#'><span>Agregar cargo</span></a></li>
       </ul>
     </li>
     <li class='active has-sub'><a href='#'><span>Promocion</span></a>
@@ -144,7 +144,6 @@ if(isset($_SESSION['autenticado'])){
 </li>-->
 <li><a href='?mod=servicios'><span>Servicios</span></a></li>
 <li><a href='?mod=sucursales'><span>Sucursales</span></a></li>
-<li><a href='?mod=login'><span>Iniciar Sesi&oacute;n</span></a>
 <li class="last" style="float:right;"><link rel="stylesheet" type="text/css" href="css/menu-login.css">
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
 <script type="text/javascript">
@@ -168,6 +167,30 @@ $('.active-links').click(function () {
     });
 });     
 </script>
+<script>
+$(document).ready(function(){					
+	$("#submit").click(function(){
+		var formulario = $("#frmLogin").serializeArray();
+		$.ajax({
+			type: "POST",
+			dataType: 'json',
+				url: "procesos/autenticar.php",
+				data: formulario,
+		}).done(function(respuesta){
+			//$("#mensaje").html(respuesta.mensaje);
+			//alert(respuesta.mensaje);
+			if(respuesta.mensaje==1){
+				alert("Usuario inactivo");
+			}else if(respuesta.mensaje==2){
+				alert("Usuario o contrasena incorrecta");
+			}else if(respuesta.mensaje==3){
+				//alert("Acceso correcto");
+				location.href='?mod=home';
+			}
+		});
+	});
+});
+</script>
         <div class="active-links">
             <div id="session">
             <a id="signin-link" href="#">
@@ -175,20 +198,20 @@ $('.active-links').click(function () {
             </a>
             </div>
               <div id="signin-dropdown">
-            <form method="post" class="signin" action="?mod=autenticar">
+			  <form id="frmLogin" action="#" method="post" onsubmit="return false;" class="signin">
                 <fieldset class="textbox">
               <label class="username">
                 <span>Usuario o correo</span>
-                <input name="username" value="" type="text" autocomplete="on">
+                <input type="text" name="username" class="username" placeholder="Usuario" autocomplete='off' value="" >
                 </label>
                 <label class="password">
                 <span>Contrase&ntilde;a</span>
-                <input name="password" value="" type="password">
+                <input type="password" name="password" class="password" placeholder="Contrase&ntilde;a" autocomplete='off' >
                 </label>
                 </fieldset>
                 
                 <fieldset class="remb">
-                <button class="button" type="submit" name="login">Iniciar Sesi&oacute;n</button>
+                <input type="submit" name="login" class="submit" id="submit" value="Iniciar sesión" >
                 </fieldset>
                 <p>
                 <a class="forgot" href="#">Olvid&oacute; su contrase&ntilde;a</a>
