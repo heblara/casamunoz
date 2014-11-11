@@ -64,8 +64,8 @@ if(isset($_GET['id'])){
         $cargo1='';
 		  while($cargo=$consultarcargos->fetch(PDO::FETCH_OBJ))
 		  {
-			if($resEmpleado->cod_cargo==$cargo->cod_cargo)$cargo1='selected';
-			echo "<option value='".$cargo->cod_cargo."' $cargo1>".$cargo->desc_cargo."</option>";
+			if($resEmpleado->cod_cargo==$cargo->cod_cargo){$cargo1='selected';
+			echo "<option value='".$cargo->cod_cargo."' $cargo1>".$cargo->desc_cargo."</option>";}
 		  }
 		  echo "</select>";
    ?>
@@ -81,8 +81,8 @@ if(isset($_GET['id'])){
 		 $sucursal='';
 		 while($sucu=$consultarsucu->fetch(PDO::FETCH_OBJ))
 		  {
-		  if($resEmpleado->cod_sucursal==$sucu->cod_sucursal)$sucursal='selected';
-			echo "<option value='".$sucu->cod_sucursal."' $sucursal>".$sucu->nom_sucursal."</option>";
+		    if($resEmpleado->cod_sucursal==$sucu->cod_sucursal){$sucursal='selected';
+			echo "<option value='".$sucu->cod_sucursal."' $sucursal>".$sucu->nom_sucursal."</option>";}
 		  }
 		  echo "</select>";
 	   ?>
