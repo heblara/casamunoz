@@ -87,7 +87,7 @@ if(isset($_GET['id'])){
 		  echo "</select>";
 	   ?>
         <label>Direcci&oacute;n:</label>
-        <textarea name="message" id="message" placeholder="Direcci&oacute;n..." tabindex="5" class="txtblock">San Salvador</textarea>
+        <textarea name="message" id="message" placeholder="Direcci&oacute;n..." tabindex="5" class="txtblock"><?php echo $resEmpleado->direc_emp; ?></textarea>
         <label>Tel&eacute;fono fijo:</label>
         <input type="tel" name="txtTelFijo" id="txtTelFijo" placeholder="Telefono fijo" tabindex="4" class="txtinput telephone" value="<?php echo $resEmpleado->tel_fijo; ?>">
         <label>Tel&eacute;fono movil:</label>
