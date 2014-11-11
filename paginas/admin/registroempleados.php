@@ -196,9 +196,9 @@ $(document).ready(function(){
       echo "<select name='lstCargo' id='lstCargo' class='selmenu'>";
       echo "<option value='0'>Elige</option>";
 
-      while($cargo=$consultarcargos->fetch(PDO::FETCH_OBJ))
+   while($cargo=$consultarcargos->fetch(PDO::FETCH_OBJ))
       {
-        echo "<option value='".$cargo->cod_cargo."'>".$cargo->desc_cargo."</option>";
+        echo "<option value='".$cargo->cod_cargo."'>".$cargo->nom_cargo."</option>";
       }
       echo "</select>";
    ?>
