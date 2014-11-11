@@ -71,10 +71,6 @@ $conf['buscarreporteventa']=array(
 'archivo'=>'admin/buscarreporteventa.php',
 'layout'=>LAYOUT_INICIO
 );
-$conf['buscarreportefestivo']=array(
-'archivo'=>'admin/buscarreportefestivo.php',
-'layout'=>LAYOUT_INICIO
-);
 $conf['registrarservicios']=array(
 'archivo'=>'admin/frmRegistrarServicio.php',
 'layout'=>LAYOUT_INICIO
@@ -85,10 +81,6 @@ $conf['buscarservicio']=array(
 );
 $conf['actualizarservicio']=array(
 'archivo'=>'admin/frmActualizarServicio.php',
-'layout'=>LAYOUT_INICIO
-);
-$conf['registrarfestivo']=array(
-'archivo'=>'admin/frmRegistrarFestivo.php',
 'layout'=>LAYOUT_INICIO
 );
 $conf['registrartemporada']=array(
@@ -109,6 +101,10 @@ $conf['log']=array(
 );
 $conf['nuevasucursal']=array(
 'archivo'=>'admin/frmRegistroSucursal.php',
+'layout'=>LAYOUT_INICIO
+);
+$conf['registrocargo']=array(
+'archivo'=>'admin/frmRegistroCargo.php',
 'layout'=>LAYOUT_INICIO
 );
 
