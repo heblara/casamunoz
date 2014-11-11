@@ -51,6 +51,74 @@ class CasaMunoz {
         unset($dbh);
         unset($query);
     }
+    function registrar_oferta($dato) {
+        $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
+        $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
+        $sql = "INSERT INTO `OFERTA` (`nom_oferta`, `desc_oferta`, `fec_publi`, `fec_limite`, `desct_oferta`, `cod_servicio`) 
+        VALUES (:nom_oferta,:desc_oferta,:fec_publi,:fec_limite,:desct_oferta,:cod_servicio)";
+        $query = $dbh->prepare($sql);
+        $hoy=date('Y-m-d H:i:s'); // Preparamos la consulta para dejarla lista para su ejecucion
+        $query->bindParam(":nom_oferta",$dato[0]);
+        $query->bindParam(":desc_oferta",$dato[1]);
+        $query->bindParam(":fec_publi",$hoy);
+        $query->bindParam(":fec_limite",$dato[3]);
+        $query->bindParam(":desct_oferta",$dato[4]);
+        $query->bindParam(":cod_servicio",$dato[5]);
+		
+        if($query->execute()){
+            return $query;
+        }else{
+            return false;
+        }
+        unset($dbh);
+        unset($query);
+    }
+	function guardar_oferta_sucursal($dato) {
+        $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
+        $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
+        $sql = "INSERT INTO `DISPONIBILIDAD_OFERTA`(`cod_sucursal`, `cod_oferta`) 
+        VALUES (:sucursal,:oferta)";
+        $query = $dbh->prepare($sql); // Preparamos la consulta para dejarla lista para su ejecucion
+        $query->bindParam(":sucursal",$dato[0]);
+        $query->bindParam(":oferta",$dato[1]);
+        if($query->execute()){
+            return $query;
+        }else{
+            return false;
+        }
+        unset($dbh);
+        unset($query);
+    }
+	function consultar_ultima_oferta() {
+        $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
+        $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
+        $sql = "SELECT LAST_INSERT_ID( cod_oferta ) AS last_id
+        FROM OFERTA
+        ORDER BY last_id DESC ";
+        $query = $dbh->prepare($sql); // Preparamos la consulta para dejarla lista para su ejecucion
+        //$query->bindParam(":nombre",$dato);
+        $query->execute(); // Ejecutamos la consulta
+        if ($query)
+            return $query; //pasamos el query para utilizarlo luego con fetch
+        else
+            return false;
+        unset($dbh);
+        unset($query);
+    }
+	function consultar_servicio() {
+        $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
+        $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
+        $sql = "SELECT * FROM SERVICIO";
+        $query = $dbh->prepare($sql); // Preparamos la consulta para dejarla lista para su ejecucion
+        //$query->bindParam(":nombre",$dato);
+        $query->execute(); // Ejecutamos la consulta
+        if ($query)
+            return $query; //pasamos el query para utilizarlo luego con fetch
+        else
+            return false;
+        unset($dbh);
+        unset($query);
+    }  
     function registrar_cliente($dato) {
         $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
         $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
