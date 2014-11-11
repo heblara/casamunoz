@@ -93,7 +93,7 @@ if(isset($_GET['id'])){
         <label>Tel&eacute;fono movil:</label>
         <input type="tel" name="txtTelMovil" id="txtTelMovil" placeholder="Telefono movil" tabindex="4" class="txtinput telephone" value="<?php echo $resEmpleado->tel_movil; ?>">
         <label>Correo electr&oacute;nico:</label>
-        <input type="email" name="txtCorreo" id="txtCorreo" placeholder="Direcci&oacute;n de correo" autocomplete="off" tabindex="2" class="txtinput email" value="<?php echo $resEmpleado->direc_emp; ?>">
+        <input type="email" name="txtCorreo" id="txtCorreo" placeholder="Direcci&oacute;n de correo" autocomplete="off" tabindex="2" class="txtinput email" value="<?php echo $resEmpleado->correo_emp; ?>">
         <label>Cubiculo:</label>
         <input type="text" name="txtCubiculo" id="txtCubiculo" placeholder="Cubiculo" autocomplete="off" tabindex="2" class="txtinput desk" value="<?php echo $resEmpleado->cod_cubiculo; ?>">
         </section>
