@@ -39,6 +39,16 @@ $(document).ready(function(){
   });
 });
 </script>
+<?php 
+if(isset($_GET['id'])){
+    $id=base64_decode($_GET['id']);
+    $obj=new CasaMunoz;
+    $consServicio=$obj->mostrar_servicio($id);
+    $resServicio=$consServicio->fetch(PDO::FETCH_OBJ);
+	
+	$consCosto=$obj->mostrar_costo($id);
+    $resCosto=$consCosto->fetch(PDO::FETCH_OBJ);
+}
 <form name="hongkiat" id="hongkiat-form" method="post" action="#" onsubmit="return false;">
     <div id="wrapping" class="clearfix">
         <section id="aligned">
@@ -57,10 +67,10 @@ $(document).ready(function(){
         <input type="text" name="txtNombre" id="txtNombre" placeholder="Nombre de servicio" autocomplete="off" tabindex="1" class="txtinput offer" value= "<?php echo $resServicio->nom_servicio ?>"  >
         <br />
         <label>Descripcion:</label>
-       <textarea name="message" id="message" style="width:40%;" placeholder="Descripcion..." tabindex="5" value= "<?php echo $resServicio->desc_servicio ?>"   class="txtblock"></textarea>
+       <textarea name="message" id="message" style="width:40%;" placeholder="Descripcion..." tabindex="5"  class="txtblock"><?php echo $resServicio->desc_servicio ?></textarea>
         
         <label>precio de servicio:</label>
-        <input type="text" name="txtprecio" id="txtprecio" placeholder="precio de servicio" autocomplete="off" tabindex="1" value= "<?php echo $resServicio->cod_costo  ?>" class="txtinput money">
+        <input type="text" name="txtprecio" id="txtprecio" placeholder="precio de servicio" autocomplete="off" tabindex="1" value= "<?php echo $resCosto->precio_Costo  ?>" class="txtinput money">
         <br />
 
         <label>Duraci&oacute;n (En minutos):</label>
