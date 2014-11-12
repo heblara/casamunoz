@@ -8,7 +8,7 @@ $respuesta = new stdClass();
 extract($_POST); //Extrae todos los elementos del array POST
 $ObjEmpleado=new CasaMunoz;
 $empleado=array($txtCodigo,$txtPrimerNombre,$txtSegundoNombre,$txtPrimerApellido,$txtSegundoApellido,$txtDUI,$txtNIT,
-	$txtFecNac,$txtTelFijo,$txtTelMovil,$txtCorreo,$message,$lstEstado,$lstCargo,$estados,
+	$txtFecNac,$txtContrato,$txtFinContrato,$txtTelFijo,$txtTelMovil,$txtCorreo,$message,$lstEstado,$lstCargo,$estados,
 	$lstSucursal);
 //print_r($empleado);
 if($ObjEmpleado->actualizar_empleado($empleado)){
