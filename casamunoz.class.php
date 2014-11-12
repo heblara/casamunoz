@@ -282,6 +282,47 @@ class CasaMunoz {
         unset($dbh);
         unset($query);
     }
+    function actualizar_empleado($dato) {
+        $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
+        $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
+        $sql = "UPDATE `EMPLEADO` SET `primer_nom` = :primer_nombre, `segundo_nom`=:segundo_nombre, `primer_ape`=:primer_apellido, 
+        `segundo_ape`=:segundo_apellido, `dui_emp`=:dui, 
+            `nit_emp`=:nit, `fec_nac`=:fechanac, `tel_fijo`=:telfijo, `tel_movil`=:telmovil, 
+            `correo_emp`=:correo, `direc_emp`=:direccion, `estado_emp`=:estado,`cod_cargo`=:cargo, `cod_municipio`=:municipio,
+            `cod_sucursal`=:sucursal WHERE `cod_emp`=:cod_emp";
+        $query = $dbh->prepare($sql); // Preparamos la consulta para dejarla lista para su ejecucion
+        $query->bindParam(":cod_emp",$dato[0]);
+        $query->bindParam(":primer_nombre",$dato[1]);
+        $query->bindParam(":segundo_nombre",$dato[2]);
+        $query->bindParam(":primer_apellido",$dato[3]);
+        $query->bindParam(":segundo_apellido",$dato[4]);
+        $query->bindParam(":dui",$dato[5]);
+        $query->bindParam(":nit",$dato[6]);
+        //$query->bindParam(":genero",$dato[7]);
+        $query->bindParam(":fechanac",$dato[7]);
+        $query->bindParam(":telfijo",$dato[8]);
+        $query->bindParam(":telmovil",$dato[9]);
+        $query->bindParam(":correo",$dato[10]);
+        $query->bindParam(":direccion",$dato[11]);
+        $query->bindParam(":estado",$dato[12]);
+        //$query->bindParam(":fecha_ini_cont",$dato[14]);
+        //$query->bindParam(":fecha_fin_cont",$dato[15]);
+        $query->bindParam(":cargo",$dato[13]);
+        $query->bindParam(":municipio",$dato[14]);
+        $query->bindParam(":sucursal",$dato[15]);
+         // Ejecutamos la consulta
+        if ($query->execute()){
+            return $query; //pasamos el query para utilizarlo luego con fetch
+        }
+        else{
+            echo "\nPDO::errorInfo():\n";
+            print_r($dbh->errorInfo());
+            return false;
+        }
+            
+        unset($dbh);
+        unset($query);
+    }
     function consultar_departamentos() {
         $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
         $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
@@ -371,7 +412,7 @@ class CasaMunoz {
 	function consultar_empleado($dato) {
         $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
         $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
-        $sql = "SELECT *,CONCAT_WS(' ',primer_nom,segundo_nom,primer_ape,segundo_ape) as NombreCompleto FROM EMPLEADO WHERE CONCAT_WS(' ',primer_nom,segundo_nom,primer_ape,segundo_ape) LIKE'%".$dato."%'";
+        $sql = "SELECT *,CONCAT_WS(' ',primer_nom,segundo_nom,primer_ape,segundo_ape) as NombreCompleto FROM EMPLEADO WHERE CONCAT_WS(' ',primer_nom,segundo_nom,primer_ape,segundo_ape) LIKE'%".$dato."%' and estado_emp='A'";
         $query = $dbh->prepare($sql); // Preparamos la consulta para dejarla lista para su ejecucion
         $query->bindParam(":nombre",$dato);
         $query->execute(); // Ejecutamos la consulta

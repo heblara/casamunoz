@@ -2,6 +2,44 @@
   <script src="//code.jquery.com/jquery-1.10.2.js"></script>
   <script src="//code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
   <link rel="stylesheet" href="/resources/demos/style.css">
+<script type="text/javascript" src="js/jquery.blockUI.js"></script>
+<script type="text/javascript">
+  $(function() {
+    $('.datepicker').datepicker({
+      dateFormat: 'yy-mm-dd', 
+      changeMonth: true, 
+      changeYear: true, 
+      yearRange: '-40:+0'
+      });
+    });
+
+    $(function() {
+  //Se pone para que en todos los llamados ajax se bloquee la pantalla mostrando el mensaje Procesando...
+  $.blockUI.defaults.message = 'Procesando información, por favor espere... <br /><img src=\'img/load.gif\' /><br />';
+  $(document).ajaxStart($.blockUI).ajaxStop($.unblockUI);
+});
+function enviarDatos(){
+  var formulario = $("#hongkiat-form").serializeArray();
+    $.ajax({
+      type: "POST",
+      dataType: 'json',
+        url: "procesos/actualizarEmpleado.php",
+        data: formulario,
+    }).done(function(respuesta){
+        if(respuesta.mensaje==1){
+          alert("Actualizacion realizado con exito");
+        }else if(respuesta.mensaje==2){
+          alert("No fue posible actualizar el empleado");
+        }
+    });
+}
+$(document).ready(function(){         
+  $("#submitbtn").click(function(){
+      enviarDatos();
+      return false;
+  });
+});
+</script>
 <script>
    $(function() {
 	$('.datepicker').datepicker({
@@ -35,39 +73,37 @@ if(isset($_GET['id'])){
     <div id="wrapping" class="clearfix">
         <section id="aligned">
         <h2>ACTUALIZAR EMPLEADO</h2>
+        <label>Codigo:</label>
+        <input type="text" name="txtCodigo" id="txtCodigo" value="<?php echo $resEmpleado->cod_emp ?>" class="txtinput id" readonly="readonly">
 		<label>Primer Nombre:</label>
-        <input type="text" name="txtNombres" id="txtNombres" placeholder="Primer nombre" autocomplete="off" tabindex="1" class="txtinput name" value="<?php echo $resEmpleado->primer_nom; ?>">
+        <input type="text" name="txtPrimerNombre" id="txtNombres" placeholder="Primer nombre" autocomplete="off" tabindex="1" class="txtinput name" value="<?php echo $resEmpleado->primer_nom; ?>" required>
         <label>Segundo Nombre:</label>
-        <input type="text" name="txtNombres" id="txtNombres" placeholder="Segundo nombre" autocomplete="off" tabindex="1" class="txtinput name" value="<?php echo $resEmpleado->segundo_nom; ?>">
+        <input type="text" name="txtSegundoNombre" id="txtNombres" placeholder="Segundo nombre" autocomplete="off" tabindex="1" class="txtinput name" value="<?php echo $resEmpleado->segundo_nom; ?>"  required>
         <label>Primero Apellido:</label>
-        <input type="text" name="txtApellidos" id="txtApellidos" placeholder="Primer apellido" autocomplete="off" tabindex="1" class="txtinput name" value="<?php echo $resEmpleado->primer_ape; ?>">
+        <input type="text" name="txtPrimerApellido" id="txtApellidos" placeholder="Primer apellido" autocomplete="off" tabindex="1" class="txtinput name" value="<?php echo $resEmpleado->primer_ape; ?>"  required>
         <label>Segundo Apellido:</label>
-        <input type="text" name="txtApellidos" id="txtApellidos" placeholder="Segundo apellido" autocomplete="off" tabindex="1" class="txtinput name" value="<?php echo $resEmpleado->segundo_ape; ?>">
+        <input type="text" name="txtSegundoApellido" id="txtApellidos" placeholder="Segundo apellido" autocomplete="off" tabindex="1" class="txtinput name" value="<?php echo $resEmpleado->segundo_ape; ?>">
         <label>DUI:</label>
         <input type="text" name="txtDUI" id="txtDUI" placeholder="Documento &Uacute;nico de Identidad" autocomplete="off" tabindex="2" class="txtinput id" value="<?php echo $resEmpleado->dui_emp; ?>">
         <label>NIT:</label>
         <input type="text" name="txtNIT" id="txtNIT" placeholder="N&uacute;mero de NIT" autocomplete="off" tabindex="2" class="txtinput id" value="<?php echo $resEmpleado->nit_emp; ?>">
-        
-        </select>
         <label>Fecha de Nacimiento:</label>
         <input type="text" name="txtFecNac" id="txtFecNac" placeholder="Fecha de Nacimiento" autocomplete="off" tabindex="1" class="txtinput calendar datepicker" value="<?php echo $resEmpleado->fec_nac; ?>">
-        <label>Cargo: </label>
-        <?php 
-		  $objeto=new CasaMunoz;
-		  $consultarcargos=$objeto->consultar_cargos();
-		  //$consulta=mysql_query("SELECT cod_dpto, nom_dpto FROM DEPARTAMENTO");
-		  // Voy imprimiendo el primer select compuesto por los paises
-		  //echo $consultarDepartamentos->rowCount();
-		  echo "<select name='lstCargo' id='lstCargo' class='selmenu'>";
-		  echo "<option value='0'>Elige</option>";
-		
-        $cargo1='';
-		  while($cargo=$consultarcargos->fetch(PDO::FETCH_OBJ))
-		  {
-			if($resEmpleado->cod_cargo==$cargo->cod_cargo){$cargo1='selected';
-			echo "<option value='".$cargo->cod_cargo."' $cargo1>".$cargo->desc_cargo."</option>";}
-		  }
-		  echo "</select>";
+       <label>Cargo: </label>
+            <?php 
+      $objeto=new CasaMunoz;
+      $consultarcargos=$objeto->consultar_cargos();
+      //$consulta=mysql_query("SELECT cod_dpto, nom_dpto FROM DEPARTAMENTO");
+      // Voy imprimiendo el primer select compuesto por los paises
+      //echo $consultarDepartamentos->rowCount();
+      echo "<select name='lstCargo' id='lstCargo' class='selmenu'>";
+      echo "<option value='0'>Elige</option>";
+
+   while($cargo=$consultarcargos->fetch(PDO::FETCH_OBJ))
+      {
+        echo "<option value='".$cargo->cod_cargo."'>".$cargo->nom_cargo."</option>";
+      }
+      echo "</select>";
    ?>
         <label>Sucursal: </label>
        <?php 
@@ -94,8 +130,36 @@ if(isset($_GET['id'])){
         <input type="tel" name="txtTelMovil" id="txtTelMovil" placeholder="Telefono movil" tabindex="4" class="txtinput telephone" value="<?php echo $resEmpleado->tel_movil; ?>">
         <label>Correo electr&oacute;nico:</label>
         <input type="email" name="txtCorreo" id="txtCorreo" placeholder="Direcci&oacute;n de correo" autocomplete="off" tabindex="2" class="txtinput email" value="<?php echo $resEmpleado->correo_emp; ?>">
+        <label>Estado:</label>
+        <select name="lstEstado" id="lstEstado" class="selmenu">
+        <?php 
+        $activo="";
+        $inactivo="";
+        if($resEmpleado->estado_emp=="A"){
+          $activo=" selected ";
+        }else{
+          $inactivo=" selected ";
+        }
+        ?>
+          <option value="A">Activo</option>
+          <option value="I">Inactivo</option>
+        </select>
         <label>Cubiculo:</label>
-        <input type="text" name="txtCubiculo" id="txtCubiculo" placeholder="Cubiculo" autocomplete="off" tabindex="2" class="txtinput desk" value="<?php echo $resEmpleado->cod_cubiculo; ?>">
+        <?php 
+          $objeto=new CasaMunoz;
+          $consultarsucu=$objeto->consultar_cubiculo();
+          //$consulta=mysql_query("SELECT cod_dpto, nom_dpto FROM DEPARTAMENTO");
+          // Voy imprimiendo el primer select compuesto por los paises
+          //echo $consultarDepartamentos->rowCount();
+          echo "<select name='lstCubiculo' id='lstCubiculo' class='selmenu'>";
+          echo "<option value='NULL'>Elige</option>";
+
+          while($sucu=$consultarsucu->fetch(PDO::FETCH_OBJ))
+          {
+            echo "<option value='".$sucu->cod_cubiculo."'>".$sucu->cod_cubiculo."</option>";
+          }
+          echo "</select>";
+          ?>
         </section>
         <section id="aside" class="clearfix">
         </section>
