@@ -3,56 +3,81 @@
   <script src="//code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
   <link rel="stylesheet" href="/resources/demos/style.css">
 <script>
- $(function() {
-	$('.datepicker').datepicker({
-	dateFormat: 'yy-mm-dd', 
-	changeMonth: true, 
-	changeYear: true, 
-	yearRange: '-40:+0'
-	});
-		});
-</script>
-<script src="js/mask.js"></script>
-<script>
-  jQuery(function($){
-     $("#txtDUI").mask("99999999-9");   
+$(function() {
+    $('.datepicker').datepicker({
+      dateFormat: 'yy-mm-dd', 
+      changeMonth: true, 
+      changeYear: true, 
+      yearRange: '-40:+0'
+      });
+    });
+
+    $(function() {
+  //Se pone para que en todos los llamados ajax se bloquee la pantalla mostrando el mensaje Procesando...
+  $.blockUI.defaults.message = 'Procesando información, por favor espere... <br /><img src=\'img/load.gif\' /><br />';
+  $(document).ajaxStart($.blockUI).ajaxStop($.unblockUI);
+});
+function enviarDatos(){
+  var formulario = $("#hongkiat-form").serializeArray();
+    $.ajax({
+      type: "POST",
+      dataType: 'json',
+        url: "procesos/actualizarservicio.php",
+        data: formulario,
+    }).done(function(respuesta){
+        if(respuesta.mensaje==1){
+          alert("Registro realizado con exito");
+        }else if(respuesta.mensaje==2){
+          alert("No fue posible registrar el servicio");
+        }
+    });
+}
+$(document).ready(function(){         
+  $("#submitbtn").click(function(){
+      enviarDatos();
+      return false;
   });
+});
 </script>
-<script>
-  jQuery(function($){
-     $("#txtNIT").mask("9999-999999-999-9");   
-  });
-</script>
-<form name="hongkiat" id="hongkiat-form" method="post" action="#">
+<form name="hongkiat" id="hongkiat-form" method="post" action="#" onsubmit="return false;">
     <div id="wrapping" class="clearfix">
         <section id="aligned">
-        <h2>REGISTRO DE SERVICIOS</h2>
+        <h2>ACTUALIZAR SERVICIOS</h2>
+        <?php
+      $objeto=new CasaMunoz;
+      $id=base64_decode($_GET["id"]);
+      $consultarserv=$objeto->mostrar_servicio($id);
+      $resServicio=$consultarserv->fetch(PDO::FETCH_OBJ);
+?>  
+         <label>Codigo:</label>
+        <input type="hidden" name="txtcodigo" id="txtcodigo" placeholder="codigo  de servicio" autocomplete="off" tabindex="1" class="txtinput offer" value= "<?php echo $resServicio->cod_servicio ?>" >
+        <br />
+
         <label>Nombre del servicio:</label>
-        <input type="text" name="txtNombre" id="txtNombre" placeholder="Nombre de servicio" autocomplete="off" tabindex="1" class="txtinput offer" value="Extracci&oacute;n de u&ntilde;eros">
+        <input type="text" name="txtNombre" id="txtNombre" placeholder="Nombre de servicio" autocomplete="off" tabindex="1" class="txtinput offer" value= "<?php echo $resServicio->nom_servicio ?>"  >
         <br />
         <label>Descripcion:</label>
-        <textarea name="message" id="message" style="width:40%;" placeholder="Descripcion..." tabindex="5" class="txtblock">Limpieza de U&ntilde;as</textarea>
+       <textarea name="message" id="message" style="width:40%;" placeholder="Descripcion..." tabindex="5" value= "<?php echo $resServicio->desc_servicio ?>"   class="txtblock"></textarea>
+        
+        <label>precio de servicio:</label>
+        <input type="text" name="txtprecio" id="txtprecio" placeholder="precio de servicio" autocomplete="off" tabindex="1" value= "<?php echo $resServicio->cod_costo  ?>" class="txtinput money">
+        <br />
+
         <label>Duraci&oacute;n (En minutos):</label>
-        <input type="text" name="txtDuracion" id="txtDuracion" placeholder="Tiempo que dura el servicio (en minutos)" autocomplete="off" tabindex="1" class="txtinput time" value="35">
-        <label>Precio:</label>
-        <input type="text" name="txtPrecio" id="txtPrecio" placeholder="Precio del servicio" autocomplete="off" tabindex="1" class="txtinput money" value="15">
-        <fieldset>
-        <legend>Sucursal(es): </legend>
-        <input type="checkbox" name="chkSucursal1" id="chkSucursal1" value="1" checked='checked'>
-        <label for="chkSucursal1" class='checkbox'>La Joya</label>
-        <br />
-        <input type="checkbox" name="chkSucursal2" id="chkSucursal2" value="2" checked='checked'>
-        <label for="chkSucursal2" class='checkbox' checked='checked'>Merliot</label>
-        <br />
-        <input type="checkbox" name="chkSucursal3" id="chkSucursal3" value="3" checked='checked'>
-        <label for="chkSucursal3" class='checkbox' checked='checked'>Autopista Sur</label>
-        <br />
-        <input type="checkbox" name="chkSucursal4" id="chkSucursal4" value="4">
-        <label for="chkSucursal4" class='checkbox'>Metro Sur</label>
-        <br />
-        <input type="checkbox" name="chkSucursal5" id="chkSucursal5" value="5" checked='checked'>
-        <label for="chkSucursal5" class='checkbox' checked='checked'>Las Cascadas</label>
-        </fieldset>
+        <input type="time" name="txtDuracion" id="txtDuracion" placeholder="Tiempo que dura el servicio (en minutos)" property="readOnly" autocomplete="off" tabindex="1" class="txtinput time"  value= "<?php echo $resServicio->duracion_servicio ?>" >
+        
+     <?php 
+      $objeto=new CasaMunoz;
+      $consultarsucu=$objeto->consultar_sucursal();
+    while($sucu=$consultarsucu->fetch(PDO::FETCH_OBJ))
+      {
+       echo "<input type='checkbox' name='seleccion[]' value='".$sucu->cod_sucursal."'>".$sucu->nom_sucursal."</option>";
+      }
+   ?>
+
+
+
+</fieldset>
         <br />
         </section>
         <section id="aside" class="clearfix">
