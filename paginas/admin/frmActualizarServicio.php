@@ -48,7 +48,11 @@ if(isset($_GET['id'])){
 	
 	$consCosto=$obj->mostrar_costo($id);
     $resCosto=$consCosto->fetch(PDO::FETCH_OBJ);
+	
+	$consSucursal=$obj->mostrar_sucursal_servicio($id);
+    $resSucursal=$consSucursal->fetch(PDO::FETCH_OBJ);
 }
+?> 
 <form name="hongkiat" id="hongkiat-form" method="post" action="#" onsubmit="return false;">
     <div id="wrapping" class="clearfix">
         <section id="aligned">
@@ -75,17 +79,22 @@ if(isset($_GET['id'])){
 
         <label>Duraci&oacute;n (En minutos):</label>
         <input type="time" name="txtDuracion" id="txtDuracion" placeholder="Tiempo que dura el servicio (en minutos)" property="readOnly" autocomplete="off" tabindex="1" class="txtinput time"  value= "<?php echo $resServicio->duracion_servicio ?>" >
-        
-     <?php 
-      $objeto=new CasaMunoz;
+       
+       <?php 
+    
+	 $objeto=new CasaMunoz;
       $consultarsucu=$objeto->consultar_sucursal();
-    while($sucu=$consultarsucu->fetch(PDO::FETCH_OBJ))
-      {
-       echo "<input type='checkbox' name='seleccion[]' value='".$sucu->cod_sucursal."'>".$sucu->nom_sucursal."</option>";
-      }
-   ?>
+	$sucursal='';
+		 while($sucu=$consultarsucu->fetch(PDO::FETCH_OBJ))
+		  {
+		    if($resSucursal->cod_sucursal==$sucu->cod_sucursal){$sucursal='checked';
+			echo "<input type='checkbox' name='seleccion[]' value='".$sucu->cod_sucursal."' $sucursal>".$sucu->nom_sucursal."</option>";
+			} else {
+			echo "<input type='checkbox' name='seleccion[]' value='".$sucu->cod_sucursal."'>".$sucu->nom_sucursal."</option>";
+			}
+		  }
 
-
+	   ?> 
 
 </fieldset>
         <br />
