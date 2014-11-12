@@ -76,13 +76,13 @@ if(isset($_GET['id'])){
 		<label>Codigo:</label>
         <input type="text" name="txtCodigo" id="txtCodigo" value="<?php echo $resCliente->cod_cliente ?>" class="txtinput id" readonly="readonly">
         <label>Primer Nombre:</label>
-        <input type="text" name="txtNombres" id="txtNombres" placeholder="Primer nombre" autocomplete="off" tabindex="1" class="txtinput name" value="<?php echo $resCliente->primer_nom; ?>">
+        <input type="text" name="txtNombre1" id="txtNombre1" placeholder="Primer nombre" autocomplete="off" tabindex="1" class="txtinput name" value="<?php echo $resCliente->primer_nom; ?>">
         <label>Segundo Nombre:</label>
-        <input type="text" name="txtNombres" id="txtNombres" placeholder="Segundo nombre" autocomplete="off" tabindex="1" class="txtinput name" value="<?php echo $resCliente->segundo_nom; ?>">
+        <input type="text" name="txtNombre2" id="txtNombre2" placeholder="Segundo nombre" autocomplete="off" tabindex="1" class="txtinput name" value="<?php echo $resCliente->segundo_nom; ?>">
         <label>Primero Apellido:</label>
-        <input type="text" name="txtApellidos" id="txtApellidos" placeholder="Primer apellido" autocomplete="off" tabindex="1" class="txtinput name" value="<?php echo $resCliente->primer_ape; ?>">
+        <input type="text" name="txtApellido1" id="txtApellido1" placeholder="Primer apellido" autocomplete="off" tabindex="1" class="txtinput name" value="<?php echo $resCliente->primer_ape; ?>">
         <label>Segundo Apellido:</label>
-        <input type="text" name="txtApellidos" id="txtApellidos" placeholder="Segundo apellido" autocomplete="off" tabindex="1" class="txtinput name" value="<?php echo $resCliente->segundo_ape; ?>">
+        <input type="text" name="txtApellido2" id="txtApellido2" placeholder="Segundo apellido" autocomplete="off" tabindex="1" class="txtinput name" value="<?php echo $resCliente->segundo_ape; ?>">
         <label>Genero:</label>
         <?php 
         $m='';
@@ -128,8 +128,18 @@ if(isset($_GET['id'])){
         <label>Correo electr&oacute;nico:</label>
         <input type="email" name="txtCorreo" id="txtCorreo" placeholder="Direcci&oacute;n de correo" autocomplete="off" tabindex="2" class="txtinput email" value="<?php echo $resCliente->correo_cliente ?>">
         <label>Di&aacute;betico:</label>
-        <input type="radio" name="rdDiabetico" id="rdDiabetico" class="radio" checked="checked"><label for='rdDiabetico'>Si</label>
-       <input type="radio" name="rdDiabetico" id="rdDiabetico" class="radio" value="NO"><label for='rdDiabetico'>No</label><br><br>
+		 <?php 
+        $si='';
+        $no='';
+        if($resCliente->diabetico_cliente=='si'){
+            $si=' checked ';
+        }else if($resCliente->diabetico_cliente=='no'){
+            $no=' checked ';
+        }
+        ?>
+      	
+        <input type="radio" name="rdDiabetico" id="rdDiabetico" class="radio" Value="si" <?php echo $si ?>><label for='rdDiabetico'>SI</label>
+       <input type="radio" name="rdDiabetico" id="rdDiabetico" class="radio" value="no" <?php echo $no ?> ><label for='rdDiabetico'>NO</label><br><br>
 		<label>Otras enfermedades:</label>
        <textarea name="txtenfer" id="txtenfer" placeholder="Otras enfermedades..." tabindex="5" class="txtblock"><?php echo $resCliente->enfer_cliente; ?></textarea>
         </section>
