@@ -11,9 +11,13 @@ $temporada=array($txtNombre,$txtFechaIni, $txtFechaFin);
 if($tempo->registrar_temporada($temporada)){
 	$consUltimaTemp=$tempo->consultar_ultima_temporada();
 	$resUltimaTemp=$consUltimaTemp->fetch(PDO::FETCH_OBJ);
-	$sucursal=$resUltimaTemp->last_id;
+	$temp=$resUltimaTemp->last_id;
+	//echo count($seleccion);
+	//print_r($seleccion);
 	for($i=0;$i<count($seleccion);$i++){ //Este for recorre el arreglo materia, que va desde 0 (cero) hasta el total de materias que se tengan seleccionadas
-		$sucursal=array($seleccion[$i],$sucursal);
+		//echo "<br />".$i;
+		//echo $seleccion[$i];
+		$sucursal=array($seleccion[$i],$temp);
 	    $guardarsucursaltemporada=$tempo->guardar_sucursal_temporada($sucursal);
 	}
 	$respuesta->mensaje = 1;

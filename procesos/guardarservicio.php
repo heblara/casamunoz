@@ -19,7 +19,7 @@ if($cm->registrar_costo($txtprecio)){
 		
 	}*/
 	$costo=$resID->last_id;
-	echo $_SESSION['empleado'];
+	//echo $_SESSION['empleado'];
 	$servicio=array($txtNombre,$message,$txtFechaRegistro,$txtDuracion,"1",$costo,$_SESSION['usuario']);
 	//print_r($servicio);
 

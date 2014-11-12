@@ -68,7 +68,8 @@ class CasaMunoz {
         if($query->execute()){
             return $query;
         }else{
-            return false;
+            echo "\nPDO::errorInfo():\n";
+            print_r($dbh->errorInfo());
         }
         unset($dbh);
         unset($query);

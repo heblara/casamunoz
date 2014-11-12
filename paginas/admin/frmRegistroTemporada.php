@@ -8,6 +8,14 @@
     nombre=document.getElementById('txtNombre').value;
     FechaInicio=document.getElementById('txtFechaIni').value;
     FechaFin=document.getElementById('txtFechaFin').value;
+    var ok = 0;
+    var ckbox = document.getElementsByName('seleccion[]');
+        for (var i=0; i < ckbox.length; i++){
+            if(ckbox[i].checked == true){
+            ok = 1;
+            }
+        }
+        
     error=false;
     if(nombre==0){
         alert("Digite un Nombre de TEMPORADA");
@@ -18,6 +26,10 @@
     }else if(FechaFin==0){
         alert("Seleccione una Fecha de Fin");
         error=true;
+    }
+    if(ok == 0){
+        alert('Indique al menos una sucursal');
+        return false;
     }
     if(error==true){
       return false;
@@ -73,7 +85,7 @@ $(document).ready(function(){
         <section id="aligned">
         <h2>REGISTRO DE TEMPORADA</h2>
         <label>Nombre:</label>
-        <input type="text" name="txtNombre" id="txtNombre" placeholder="Nombre temporada" tabindex="1" class="txtinput">
+        <input type="text" name="txtNombre" id="txtNombre" placeholder="Nombre temporada" tabindex="1" class="txtinput name">
         <label>Fecha inicial:</label>
         <input type="text" name="txtFechaIni" id="txtFechaIni" placeholder="Fecha inicial" autocomplete="off" tabindex="1" class="txtinput calendar datepicker">
         <br />
@@ -87,7 +99,7 @@ $(document).ready(function(){
       $consultarsucu=$objeto->consultar_sucursal();
 	  while($sucu=$consultarsucu->fetch(PDO::FETCH_OBJ))
       {
-       echo "<input type='checkbox' name='seleccion[]' value='".$sucu->cod_sucursal."'>".$sucu->nom_sucursal."</option>";
+       echo "<input type='checkbox' name='seleccion[]' id='chkSucursal' value='".$sucu->cod_sucursal."'>".$sucu->nom_sucursal."</option>";
       }
    ?>
    </fieldset>
