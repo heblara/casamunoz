@@ -72,8 +72,10 @@
         <input type="email" name="txtCorreo" id="txtCorreo" placeholder="Direcci&oacute;n de correo" autocomplete="off" tabindex="2" class="txtinput email">
         <label>Di&aacute;betico:</label>
         <input type="radio" name="rdDiabetico" id="rdDiabetico" class="radio"><label for='rdDiabetico'>Si</label>
-        <input type="radio" name="rdDiabetico" id="rdDiabetico" class="radio"><label for='rdDiabetico'>No</label>
-        </section>
+       <input type="radio" name="rdDiabetico" id="rdDiabetico" class="radio" value="NO"><label for='rdDiabetico'>No</label><br><br>
+	<label>Otras enfermedades:</label>
+       <textarea name="txtenfer" id="txtenfer" style="width:40%;" placeholder="Otras enfermedades..." tabindex="5" class="txtblock"></textarea>
+       </section>
         <section id="aside" class="clearfix">
         </section>
     </div>
