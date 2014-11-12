@@ -98,7 +98,8 @@ if(isset($_GET['id'])){
       //echo $consultarDepartamentos->rowCount();
       echo "<select name='lstCargo' id='lstCargo' class='selmenu'>";
       echo "<option value='0'>Elige</option>";
-	$cargo1='';
+
+   $cargo1='';
 	   while($cargo=$consultarcargos->fetch(PDO::FETCH_OBJ))
 		  {
 	if($cargo->cod_cargo==$resEmpleado->cod_cargo){$cargo1='selected';
@@ -106,8 +107,9 @@ if(isset($_GET['id'])){
 	} else {
 	echo "<option  value='".$cargo->cod_cargo."'>".$cargo->nom_cargo."</option>";
 	}
-	}
+}
       echo "</select>";
+  
    ?>
         <label>Sucursal: </label>
        <?php 
