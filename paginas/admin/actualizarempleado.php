@@ -75,7 +75,7 @@ if(isset($_GET['id'])){
         <h2>ACTUALIZAR EMPLEADO</h2>
         <label>Codigo:</label>
         <input type="text" name="txtCodigo" id="txtCodigo" value="<?php echo $resEmpleado->cod_emp ?>" class="txtinput id" readonly="readonly">
-		<label>Primer Nombre:</label>
+		    <label>Primer Nombre:</label>
         <input type="text" name="txtPrimerNombre" id="txtNombres" placeholder="Primer nombre" autocomplete="off" tabindex="1" class="txtinput name" value="<?php echo $resEmpleado->primer_nom; ?>" required>
         <label>Segundo Nombre:</label>
         <input type="text" name="txtSegundoNombre" id="txtNombres" placeholder="Segundo nombre" autocomplete="off" tabindex="1" class="txtinput name" value="<?php echo $resEmpleado->segundo_nom; ?>"  required>
@@ -92,7 +92,7 @@ if(isset($_GET['id'])){
        <label>Cargo: </label>
             <?php 
       $objeto=new CasaMunoz;
-      $consultarcargos=$objeto->consultar_cargos();
+      $consultarcargos=$obj->consultar_cargos();
       //$consulta=mysql_query("SELECT cod_dpto, nom_dpto FROM DEPARTAMENTO");
       // Voy imprimiendo el primer select compuesto por los paises
       //echo $consultarDepartamentos->rowCount();
@@ -122,6 +122,28 @@ if(isset($_GET['id'])){
 		  }
 		  echo "</select>";
 	   ?>
+     <label>Departamento: </label>
+    <script type="text/javascript" src="funciones/select_dependientes.js"></script>>
+    <?php 
+      $consultarDepartamentos=$obj->consultar_departamentos();
+      //$consulta=mysql_query("SELECT cod_dpto, nom_dpto FROM DEPARTAMENTO");
+      // Voy imprimiendo el primer select compuesto por los paises
+      //echo $consultarDepartamentos->rowCount();
+      echo "<select name='paises' id='paises' onChange='cargaContenido(this.id)' class='selmenu'>";
+      echo "<option value='0'>Elige</option>";
+
+      while($registro=$consultarDepartamentos->fetch(PDO::FETCH_OBJ))
+      {
+        echo "<option value='".$registro->cod_dpto."'>".$registro->nom_dpto."</option>";
+      }
+      echo "</select>";
+   ?>
+        <label>Municipio: </label>
+        <span id="demoDer">
+        <select disabled="disabled" name="estados" id="estados" class='selmenu'>
+          <option value="0">Selecciona opci&oacute;n...</option>
+      </select>
+      </span>
         <label>Direcci&oacute;n:</label>
         <textarea name="message" id="message" placeholder="Direcci&oacute;n..." tabindex="5" class="txtblock"><?php echo $resEmpleado->direc_emp; ?></textarea>
         <label>Tel&eacute;fono fijo:</label>

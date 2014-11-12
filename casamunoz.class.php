@@ -313,8 +313,7 @@ class CasaMunoz {
          // Ejecutamos la consulta
         if ($query->execute()){
             return $query; //pasamos el query para utilizarlo luego con fetch
-        }
-        else{
+        }else{
             echo "\nPDO::errorInfo():\n";
             print_r($dbh->errorInfo());
             return false;
