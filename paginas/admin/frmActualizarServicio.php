@@ -1,9 +1,10 @@
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css">
-  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
-  <script src="//code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
-  <link rel="stylesheet" href="/resources/demos/style.css">
-<script>
-$(function() {
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
+<link rel="stylesheet" href="/resources/demos/style.css">
+<script type="text/javascript" src="js/jquery.blockUI.js"></script>
+<script type="text/javascript">
+  $(function() {
     $('.datepicker').datepicker({
       dateFormat: 'yy-mm-dd', 
       changeMonth: true, 
@@ -63,24 +64,25 @@ if(isset($_GET['id'])){
       $consultarserv=$objeto->mostrar_servicio($id);
       $resServicio=$consultarserv->fetch(PDO::FETCH_OBJ);
 ?>  
-         <label>Codigo:</label>
-        <input type="hidden" name="txtcodigo" id="txtcodigo" placeholder="codigo  de servicio" autocomplete="off" tabindex="1" class="txtinput offer" value= "<?php echo $resServicio->cod_servicio ?>" >
+     
+        <input type="hidden" name="txtcodigo" id="txtcodigo" placeholder="codigo  de servicio" autocomplete="off" tabindex="1" class="txtinput offer" value= "<?php echo $resServicio->cod_servicio; ?>" >
         <br />
 
         <label>Nombre del servicio:</label>
-        <input type="text" name="txtNombre" id="txtNombre" placeholder="Nombre de servicio" autocomplete="off" tabindex="1" class="txtinput offer" value= "<?php echo $resServicio->nom_servicio ?>"  >
+        <input type="text" name="txtNombre" id="txtNombre" placeholder="Nombre de servicio" autocomplete="off" tabindex="1" class="txtinput offer" value= "<?php echo $resServicio->nom_servicio; ?>"  >
         <br />
         <label>Descripcion:</label>
        <textarea name="message" id="message" style="width:40%;" placeholder="Descripcion..." tabindex="5"  class="txtblock"><?php echo $resServicio->desc_servicio ?></textarea>
         
         <label>precio de servicio:</label>
-        <input type="text" name="txtprecio" id="txtprecio" placeholder="precio de servicio" autocomplete="off" tabindex="1" value= "<?php echo $resCosto->precio_Costo  ?>" class="txtinput money">
+        <input type="text" name="txtprecio" id="txtprecio" placeholder="precio de servicio" autocomplete="off" tabindex="1" value= "<?php echo $resCosto->precio_Costo;  ?>" class="txtinput money">
         <br />
 
+
         <label>Duraci&oacute;n (En minutos):</label>
-        <input type="time" name="txtDuracion" id="txtDuracion" placeholder="Tiempo que dura el servicio (en minutos)" property="readOnly" autocomplete="off" tabindex="1" class="txtinput time"  value= "<?php echo $resServicio->duracion_servicio ?>" >
-       
-       <?php 
+        <input type="time" name="txtDuracion" id="txtDuracion" placeholder="Tiempo que dura el servicio (en minutos)" property="readOnly" autocomplete="off" tabindex="1" class="txtinput time"  value= "<?php echo $resServicio->duracion_servicio; ?>" >
+        
+	<?php 
     
 	 $objeto=new CasaMunoz;
       $consultarsucu=$objeto->consultar_sucursal();
@@ -94,7 +96,7 @@ if(isset($_GET['id'])){
 			}
 		  }
 
-	   ?> 
+	   ?>
 
 </fieldset>
         <br />
@@ -104,7 +106,7 @@ if(isset($_GET['id'])){
     </div>
     <section id="buttons">
         <!--<input type="reset" name="reset" id="resetbtn" class="resetbtn" value="Reset">-->
-        <input type="submit" name="submit" id="submitbtn" class="submitbtn" tabindex="7" value="Guardar cambios">
+        <input type="submit" name="submit" id="submitbtn" class="submitbtn" tabindex="7" value="Actualizar Servicio">
         <br style="clear:both;">
     </section>
 </form>
