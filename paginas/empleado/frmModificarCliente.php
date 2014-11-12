@@ -83,23 +83,8 @@ if(isset($_GET['id'])){
         <input type="text" name="txtApellido1" id="txtApellido1" placeholder="Primer apellido" autocomplete="off" tabindex="1" class="txtinput name" value="<?php echo $resCliente->primer_ape; ?>">
         <label>Segundo Apellido:</label>
         <input type="text" name="txtApellido2" id="txtApellido2" placeholder="Segundo apellido" autocomplete="off" tabindex="1" class="txtinput name" value="<?php echo $resCliente->segundo_ape; ?>">
-        <label>Genero:</label>
-        <?php 
-        $m='';
-        $f='';
-        if($resCliente->genero_cliente=='M'){
-            $m=' selected ';
-        }else if($resCliente->genero_cliente=='F'){
-            $f=' selected ';
-        }
-        ?>
-        <select id="recipient" name="recipient" tabindex="6" class="selmenu">
-            <option value="0">-- Elija genero --</option>
-            <option value="F" <?php echo $f ?>>Femenino</option>
-            <option value="M" <?php echo $m ?>>Masculino</option>
-        </select>
+        
         <label>Fecha de Nacimiento:</label>
-        <?php echo $resCliente->fecha_nac ?>
         <input type="text" name="txtFecNac" id="txtFecNac" placeholder="Fecha de Nacimiento" autocomplete="off" tabindex="1" class="txtinput calendar datepicker" value="<?php echo $resCliente->fec_nac; ?>">
         <label>Departamento: </label>
            <script type="text/javascript" src="funciones/select_dependientes.js"></script>>
