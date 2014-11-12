@@ -47,7 +47,7 @@ if(isset($_GET['id'])){
     $consServicio=$obj->mostrar_servicio($id);
     $resServicio=$consServicio->fetch(PDO::FETCH_OBJ);
 	
-	$consCosto=$obj->mostrar_costo($id);
+	$consCosto=$obj->mostrar_costo($resServicio->cod_costo);
     $resCosto=$consCosto->fetch(PDO::FETCH_OBJ);
 	
 	$consSucursal=$obj->mostrar_sucursal_servicio($id);
