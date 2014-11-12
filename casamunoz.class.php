@@ -795,6 +795,70 @@ class CasaMunoz {
         unset($query);
     }
     
+    
+    
+    function actualizar_servicio($dato) {
+        $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
+        $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
+        $sql = "UPDATE `SERVICIO` SET `nom_servicio`=:nom_servicio,`desc_servicio`=:desc_servicio,`fec_registro`=:fec_registro,`duracion_servicio`=:duracion_servicio
+                    WHERE    `cod_tipo_servicio`=:cod_tipo_servicio and `cod_costo`=:cod_costo and `cod_servicio`=:servicio";
+        $query=$dbh->prepare($sql);
+        $query->bindParam(":nom_servicio",$dato[0]);
+        $query->bindParam(":desc_servicio",$dato[1]);
+        $query->bindParam(":fec_registro",$hoy);
+        $query->bindParam(":duracion_servicio",$dato[3]);
+        $query->bindParam(":cod_tipo_servicio",$dato[4]);
+        $query->bindParam(":cod_costo",$dato[5]);
+        $query->bindParam(":servicio",$dato[6]);
+  if($query->execute()){
+            return $query;
+        }else{
+            echo "\nPDOStatement::errorInfo():\n";
+            $arr = $query->errorInfo();
+            print_r($arr);
+            return false;
+        }
+        unset($dbh);
+        unset($query);
+    }
+
+
+
+
+
+
+function consultar_servicios($dato) {
+        $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
+        $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
+        $sql = "SELECT * FROM servicio WHERE nom_servicio LIKE'%".$dato."%'";
+
+        //$sql = "SELECT * FROM SERVICIO";
+        $query = $dbh->prepare($sql); // Preparamos la consulta para dejarla lista para su ejecucion
+        $query->execute(); // Ejecutamos la consulta
+        if ($query)
+            return $query; //pasamos el query para utilizarlo luego con fetch
+        else
+            return false;
+        unset($dbh);
+        unset($query);
+    }
+
+    function mostrar_servicio($dato) {
+        $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
+        $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
+        $sql = "SELECT * FROM SERVICIO WHERE cod_servicio = :codigo";
+        $query = $dbh->prepare($sql); // Preparamos la consulta para dejarla lista para su ejecucion
+        $query->bindParam(":codigo",$dato);
+        $query->execute(); // Ejecutamos la consulta
+        if ($query)
+            return $query; //pasamos el query para utilizarlo luego con fetch
+        else
+            return false;
+        unset($dbh);
+        unset($query);
+    }
+    
+    
     function registrar_cargo($dato) {
         $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
         $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
