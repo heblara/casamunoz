@@ -13,7 +13,7 @@ if(isset($_SESSION['autenticado'])){
       <ul>
          <li><a href='?mod=registroempleado'><span>Agregar</span></a></li>
           <li class='last'><a href='?mod=buscarempleado'><span>Buscar</span></a></li>
-		  <li><a href='#'><span>Agregar cargo</span></a></li>
+		  <li><a href='?mod=registrocargo'><span>Agregar cargo</span></a></li>
       </ul>
     </li>
     <li class='active has-sub'><a href='#'><span>Promocion</span></a>
