@@ -836,19 +836,20 @@ class CasaMunoz {
     
     
     
-    function actualizar_servicio($dato) {
+function actualizar_servicio($dato) {
         $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
         $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
-        $sql = "UPDATE `SERVICIO` SET `nom_servicio`=:nom_servicio,`desc_servicio`=:desc_servicio,`fec_registro`=:fec_registro,`duracion_servicio`=:duracion_servicio
-                    WHERE    `cod_tipo_servicio`=:cod_tipo_servicio and `cod_costo`=:cod_costo and `cod_servicio`=:servicio";
+        $sql = "UPDATE `SERVICIO` SET `nom_servicio`=:nom_servicio,`desc_servicio`=:desc_servicio,`duracion_servicio`=:duracion_servicio,`cod_costo`=:costo
+                    WHERE    `cod_servicio`=:cod_servicio";
         $query=$dbh->prepare($sql);
-        $query->bindParam(":nom_servicio",$dato[0]);
-        $query->bindParam(":desc_servicio",$dato[1]);
-        $query->bindParam(":fec_registro",$hoy);
+         $query->bindParam(":cod_servicio",$dato[0]);
+        $query->bindParam(":nom_servicio",$dato[1]);
+        $query->bindParam(":desc_servicio",$dato[2]);
         $query->bindParam(":duracion_servicio",$dato[3]);
-        $query->bindParam(":cod_tipo_servicio",$dato[4]);
-        $query->bindParam(":cod_costo",$dato[5]);
-        $query->bindParam(":servicio",$dato[6]);
+        $query->bindParam(":costo",$dato[4]);
+       
+
+        
   if($query->execute()){
             return $query;
         }else{
@@ -860,7 +861,6 @@ class CasaMunoz {
         unset($dbh);
         unset($query);
     }
-
 
 
 
