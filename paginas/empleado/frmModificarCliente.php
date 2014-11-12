@@ -2,14 +2,53 @@
   <script src="//code.jquery.com/jquery-1.10.2.js"></script>
   <script src="//code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
   <link rel="stylesheet" href="/resources/demos/style.css">
-<script>
+<script type="text/javascript" src="js/jquery.blockUI.js"></script>
+<script type="text/javascript">
   $(function() {
-    $( ".datepicker" ).datepicker({
-      changeMonth: true,
-      changeYear: true,
-      dateFormat:'yy-mm-dd'
+    $('.datepicker').datepicker({
+      dateFormat: 'yy-mm-dd', 
+      changeMonth: true, 
+      changeYear: true, 
+      yearRange: '-40:+0'
+      });
     });
+
+    $(function() {
+  //Se pone para que en todos los llamados ajax se bloquee la pantalla mostrando el mensaje Procesando...
+  $.blockUI.defaults.message = 'Procesando información, por favor espere... <br /><img src=\'img/load.gif\' /><br />';
+  $(document).ajaxStart($.blockUI).ajaxStop($.unblockUI);
+});
+function enviarDatos(){
+  var formulario = $("#hongkiat-form").serializeArray();
+    $.ajax({
+      type: "POST",
+      dataType: 'json',
+        url: "procesos/actualizarCliente.php",
+        data: formulario,
+    }).done(function(respuesta){
+        if(respuesta.mensaje==1){
+          alert("Actualizacion realizado con exito");
+        }else if(respuesta.mensaje==2){
+          alert("No fue posible actualizar el empleado");
+        }
+    });
+}
+$(document).ready(function(){         
+  $("#submitbtn").click(function(){
+      enviarDatos();
+      return false;
   });
+});
+</script>
+<script>
+   $(function() {
+	$('.datepicker').datepicker({
+	dateFormat: 'yy-mm-dd', 
+	changeMonth: true, 
+	changeYear: true, 
+	yearRange: '-40:+0'
+	});
+		});
 </script>
 <script src="js/mask.js"></script>
 <script>
@@ -34,6 +73,8 @@ if(isset($_GET['id'])){
     <div id="wrapping" class="clearfix">
         <section id="aligned">
         <h2>MODIFICACI&Oacute;N DE CLIENTES</h2>
+		<label>Codigo:</label>
+        <input type="text" name="txtCodigo" id="txtCodigo" value="<?php echo $resCliente->cod_cliente ?>" class="txtinput id" readonly="readonly">
         <label>Primer Nombre:</label>
         <input type="text" name="txtNombres" id="txtNombres" placeholder="Primer nombre" autocomplete="off" tabindex="1" class="txtinput name" value="<?php echo $resCliente->primer_nom; ?>">
         <label>Segundo Nombre:</label>
@@ -59,31 +100,38 @@ if(isset($_GET['id'])){
         </select>
         <label>Fecha de Nacimiento:</label>
         <?php echo $resCliente->fecha_nac ?>
-        <input type="text" name="txtFecNac" id="txtFecNac" placeholder="Fecha de Nacimiento" autocomplete="off" tabindex="1" class="txtinput calendar datepicker" value=""<?php echo $resCliente->fecha_nac ?>">
+        <input type="text" name="txtFecNac" id="txtFecNac" placeholder="Fecha de Nacimiento" autocomplete="off" tabindex="1" class="txtinput calendar datepicker" value="<?php echo $resCliente->fec_nac; ?>">
         <label>Departamento: </label>
-            <select id="recipient" name="recipient" tabindex="6" class="selmenu">
-                <option value="0">-- Elija departamento --</option>
-                <option value="1">San Salvador</option>
-                <option value="2" selected="selected">La Libertad</option>
-            </select>
+           <script type="text/javascript" src="funciones/select_dependientes.js"></script>>
+    <?php 
+      $consultarDepartamentos=$obj->consultar_departamentos();
+      //$consulta=mysql_query("SELECT cod_dpto, nom_dpto FROM DEPARTAMENTO");
+      // Voy imprimiendo el primer select compuesto por los paises
+      //echo $consultarDepartamentos->rowCount();
+      echo "<select name='paises' id='paises' onChange='cargaContenido(this.id)' class='selmenu'>";
+      echo "<option value='0'>Elige</option>";
+
+      while($registro=$consultarDepartamentos->fetch(PDO::FETCH_OBJ))
+      {
+        echo "<option value='".$registro->cod_dpto."'>".$registro->nom_dpto."</option>";
+      }
+      echo "</select>";
+   ?>
         <label>Municipio: </label>
-        <select id="recipient" name="recipient" tabindex="6" class="selmenu">
-            <option value="0">-- Elija municipio --</option>
-            <option value="1">San Salvador</option>
-            <option value="2">Soyapango</option>
-            <option value="3">Ilopango</option>
-            <option value="4">Mejicanos</option>
-            <option value="5" selected="selected">Santa Tecla</option>
-            <option value="6">Antiguo Cuscatlan</option>
-            <option value="7">Col&oacute;n</option>
-        </select>
+        <span id="demoDer">
+        <select disabled="disabled" name="estados" id="estados" class='selmenu'>
+          <option value="0">Selecciona opci&oacute;n...</option>
+      </select>
+      </span>
         <label>Tel&eacute;fono:</label>
-        <input type="tel" name="txtTelFijo" id="txtTelFijo" placeholder="Telefono fijo" tabindex="4" class="txtinput telephone" value="2122-2324">
+        <input type="tel" name="txtTelFijo" id="txtTelFijo" placeholder="Telefono fijo" tabindex="4" class="txtinput telephone" value="<?php echo $resCliente->tel_cliente ?>">
         <label>Correo electr&oacute;nico:</label>
-        <input type="email" name="txtCorreo" id="txtCorreo" placeholder="Direcci&oacute;n de correo" autocomplete="off" tabindex="2" class="txtinput email" value="dianavanegas@gmail.com">
+        <input type="email" name="txtCorreo" id="txtCorreo" placeholder="Direcci&oacute;n de correo" autocomplete="off" tabindex="2" class="txtinput email" value="<?php echo $resCliente->correo_cliente ?>">
         <label>Di&aacute;betico:</label>
         <input type="radio" name="rdDiabetico" id="rdDiabetico" class="radio" checked="checked"><label for='rdDiabetico'>Si</label>
-        <input type="radio" name="rdDiabetico" id="rdDiabetico" class="radio"><label for='rdDiabetico'>No</label>
+       <input type="radio" name="rdDiabetico" id="rdDiabetico" class="radio" value="NO"><label for='rdDiabetico'>No</label><br><br>
+		<label>Otras enfermedades:</label>
+       <textarea name="txtenfer" id="txtenfer" placeholder="Otras enfermedades..." tabindex="5" class="txtblock"><?php echo $resCliente->enfer_cliente; ?></textarea>
         </section>
         <section id="aside" class="clearfix">
         </section>
