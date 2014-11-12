@@ -33,8 +33,8 @@ if($consCliente->rowCount()>0){
 $codigo=$letraApe.$letraNom.$cod;
 //$respuesta->mensaje=$codigo;
 //echo "Codigo: ".$codigo;
-$Cliente=array($codigo,$txtNombre1,$txtNombre2,$txtApellido1,$txtApellido2,$lstGenero,$txtFecNac,$txtTelFijo,$txtCorreo,$rdDiabetico,"",$_SESSION['nombre1'],1,$estados);
-print_r($Cliente);
+$Cliente=array($codigo,$txtNombre1,$txtNombre2,$txtApellido1,$txtApellido2,$lstGenero,$txtFecNac,$txtTelFijo,$txtCorreo,$rdDiabetico,$txtenfer,$_SESSION['nombre1'],1,$estados);
+//print_r($Cliente);
 if($ObjCliente->registrar_cliente($Cliente)){
 	$consCliente=$ObjCliente->mostrar_cliente($codigo);
 	//echo $conEmpleado->rowCount();
