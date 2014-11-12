@@ -6,7 +6,7 @@ function procesaResultado() {
 // Si aun esta revisando los datos...
 if (objeto.readyState == 1) {
 //  document.getElementById('resultado').innerHTML = "Cargando datos con ajax...";
-  document.getElementById('resultado').innerHTML = "<td colspan='6'><img src='paginas/5-0.gif' title='Cargando datos' width='32' />";
+  document.getElementById('resultado').innerHTML = "<td colspan='6'><img src='img/load.gif' title='Cargando datos' width='32' />";
 }
 // Si el estado es 4 significa que ya termino
 if (objeto.readyState == 4) {
@@ -30,7 +30,7 @@ function crearObjeto() {
 
 // ------------------------------
 
-function leerDatos(valor,sel,opcion) {
+function leerDatos(valor) {
   crearObjeto();
   if (objeto.readyState != 0) {
     alert('Error al crear el objeto XML. El Navegador no soporta AJAX');
@@ -39,11 +39,11 @@ function leerDatos(valor,sel,opcion) {
     objeto.onreadystatechange = procesaResultado;
 var ca=/^[ ]{1}/;
 var com=ca.test(valor);
-	if((!com=="") || (valor=="")){document.getElementById("resultado").innerHTML="";}else{
-	// Enviar la consulta
-	    objeto.open("GET", "paginas/busqueda.php?opc="+sel+"&usuario=" + valor + "&inscrito="+opcion, true);
-	    objeto.send(null);
-	}
+  if((!com=="") || (valor=="")){document.getElementById("resultado").innerHTML="";}else{
+  // Enviar la consulta
+      objeto.open("GET", "paginas/busquedaServicio.php?&valor=" + valor, true);
+      objeto.send(null);
+  }
     
   }
 }
@@ -56,32 +56,33 @@ function leerDatosPag(valor,sel,pag,opcion) {
     objeto.onreadystatechange = procesaResultado;
 var ca=/^[ ]{1}/;
 var com=ca.test(valor);
-	if((!com=="") || (valor=="")){document.getElementById("resultado").innerHTML="";}else{
-	// Enviar la consulta
-	    objeto.open("GET", "paginas/busqueda.php?opc="+sel+"&usuario=" + valor + "&pagina="+pag+ "&inscrito="+opcion, true);
-	    objeto.send(null);
-	}
+  if((!com=="") || (valor=="")){document.getElementById("resultado").innerHTML="";}else{
+  // Enviar la consulta
+      objeto.open("GET", "paginas/busqueda.phpServicio?valor=" + valor + "&pagina="+pag, true);
+      objeto.send(null);
+  }
     
   }
 }
 // ------------------------------
 </script>
 
+
 </head>
 <body>
 <?php
     function generaMedioComunicacion()
-	{
-	    $objMedio=new Noticias;
-	    $consultar=$objMedio->consultar_medio_comunicacion();
-	    echo "<select name='lstMedio' id='lstMedio' onChange='leerDatos(this.options[this.selectedIndex].value,document.hongkiat.lstTipo.options[document.hongkiat.lstTipo.selectedIndex].value);'>";
-		echo "<option value='0'>Elige</option>";
-	    while ($data = $consultar->fetch(PDO::FETCH_OBJ))
-		{
-			echo "<option value='".$data->idMedioComunicacion."'>".$data->Nombre."</option>";
-		}
-		echo "</select>";
-	}
+  {
+      $objMedio=new Noticias;
+      $consultar=$objMedio->consultar_medio_comunicacion();
+      echo "<select name='lstMedio' id='lstMedio' onChange='leerDatos(this.options[this.selectedIndex].value,document.hongkiat.lstTipo.options[document.hongkiat.lstTipo.selectedIndex].value);'>";
+    echo "<option value='0'>Elige</option>";
+      while ($data = $consultar->fetch(PDO::FETCH_OBJ))
+    {
+      echo "<option value='".$data->idMedioComunicacion."'>".$data->Nombre."</option>";
+    }
+    echo "</select>";
+  }
 ?>
 <script src="js/mask.js"></script>
 <script>
@@ -93,21 +94,21 @@ jQuery(function($){
 </script>
 <script type='text/javascript' language='Javascript'>
 function seleccionar(){
-	/*document.getElementById("cargarCaja").style="display:none;";
-	document.getElementById("fecha").style.diplay="none";*/
-	var tipo=document.hongkiat.lstTipo.options[document.hongkiat.lstTipo.selectedIndex].value;
-	//document.getElementById("txtFecha").style="display:none;";
-	document.getElementById("dui").style.display="none";
-	if(tipo==1){
-		document.getElementById("cargarCaja").style.display="none";
-		document.getElementById("dui").style.display="";
-	}else if(tipo==2){
-		document.getElementById("cargarCaja").innerHTML="<input type='text' name='txtTarjeta' onKeyPress='leerDatos(document.hongkiat.txtTarjeta.value,document.hongkiat.lstTipo.value,document.hongkiat.inscrito.value);' class='id txtinput' id='txtTarjeta' placeholder='Digite el numero de Tarjeta' autocomplete='off' tabindex='1' style='width:25%;'>";
-	}else if(tipo==3){
-		document.getElementById("cargarCaja").innerHTML="<input type='text' name='txtNombre' onKeyPress='leerDatos(document.hongkiat.txtNombre.value,document.hongkiat.lstTipo.value,document.hongkiat.inscrito.value);' class='id txtinput' id='txtNombre' placeholder='Digite el nombre a buscar' autocomplete='off' tabindex='1' style='width:25%;'>";
-	}else{
-		document.getElementById("cargarCaja").innerHTML="";
-	}
+  /*document.getElementById("cargarCaja").style="display:none;";
+  document.getElementById("fecha").style.diplay="none";*/
+  var tipo=document.hongkiat.lstTipo.options[document.hongkiat.lstTipo.selectedIndex].value;
+  //document.getElementById("txtFecha").style="display:none;";
+  document.getElementById("dui").style.display="none";
+  if(tipo==1){
+    document.getElementById("cargarCaja").style.display="none";
+    document.getElementById("dui").style.display="";
+  }else if(tipo==2){
+    document.getElementById("cargarCaja").innerHTML="<input type='text' name='txtTarjeta' onKeyPress='leerDatos(document.hongkiat.txtTarjeta.value,document.hongkiat.lstTipo.value,document.hongkiat.inscrito.value);' class='id txtinput' id='txtTarjeta' placeholder='Digite el numero de Tarjeta' autocomplete='off' tabindex='1' style='width:25%;'>";
+  }else if(tipo==3){
+    document.getElementById("cargarCaja").innerHTML="<input type='text' name='txtNombre' onKeyPress='leerDatos(document.hongkiat.txtNombre.value,document.hongkiat.lstTipo.value,document.hongkiat.inscrito.value);' class='id txtinput' id='txtNombre' placeholder='Digite el nombre a buscar' autocomplete='off' tabindex='1' style='width:25%;'>";
+  }else{
+    document.getElementById("cargarCaja").innerHTML="";
+  }
 }
 </script>
 <br />
@@ -115,45 +116,12 @@ function seleccionar(){
 <form name="hongkiat" id="hongkiat-form">
 <div id="wrapping" class="clearfix">
   <section id="aligned" style='text-align:center;'>
-    <div id="resultado" style='background:black;'>
-    	<table width='100%'>
-    		<tr style="background:white;">
-    			<th>No.</th>
-    			<th>Servicio</th>
-    			<th>Descripcion</th>
-    			<th>Duracion</th>
-    			<th>Precio</th>
-    			<th>Sucursales</th>
-          <th>Opcion</th>
-    		</tr>
-    		<tr style="background:silver;">
-    			<td>1</td>
-    			<td>Pedicure</td>
-    			<td>Lavado de pies</td>
-    			<td>30 minutos</td>
-    			<td>$11</td>
-    			<td>La Joya, Merliot, Autopista Sur, Metro Sur, Las Cascadas</td>
-    			<td><a href='?mod=actualizarservicio'><img src="img/edit.png" /></a></td>
-    		</tr>
-        <tr style="background:white;">
-          <td>2</td>
-          <td>Extracci&oacute;n de U&ntilde;eros</td>
-          <td>Limpieza de u&ntildes;as</td>
-          <td>35 minutos</td>
-          <td>$15</td>
-          <td>La Joya, Merliot, Autopista Sur, Las Cascadas</td>
-          <td><a href='?mod=actualizarservicio'><img src="img/edit.png" /></a></td>
-        </tr>
-        <tr style="background:silver;">
-          <td>3</td>
-          <td>Eliminaci&oacute;n de Verrugas</td>
-          <td>Se eliminan las verrugas</td>
-          <td>25 minutos</td>
-          <td>$20</td>
-          <td>La Joya, Merliot, Metro Sur, Las Cascadas</td>
-          <td><a href='?mod=actualizarservicio'><img src="img/edit.png" /></a></td>
-        </tr>
-    	</table>
+    <h3>Digite t&eacute;rmino a buscar:</h3>
+  <div id="cargarCaja" style="clear:both;"></div>
+    <div id="dui" style='display:;clear:both;'> 
+    <input type="text" name="txtBuscar" onKeyPress="leerDatos(this.value);" class="search txtinput" id="txtBuscar" placeholder="servicio" autocomplete="off" tabindex="1" style="width:25%;">
+  </div>
+    <div id="resultado" style='background:black;font-size:12pt;'>
     </div>
   </section>
 </div>
