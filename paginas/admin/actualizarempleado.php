@@ -89,7 +89,11 @@ if(isset($_GET['id'])){
         <input type="text" name="txtNIT" id="txtNIT" placeholder="N&uacute;mero de NIT" autocomplete="off" tabindex="2" class="txtinput id" value="<?php echo $resEmpleado->nit_emp; ?>">
         <label>Fecha de Nacimiento:</label>
         <input type="text" name="txtFecNac" id="txtFecNac" placeholder="Fecha de Nacimiento" autocomplete="off" tabindex="1" class="txtinput calendar datepicker" value="<?php echo $resEmpleado->fec_nac; ?>">
-       <label>Cargo: </label>
+        <label>Fecha de Contrato:</label>
+        <input type="text" name="txtContrato" id="txtContrato" placeholder="Fecha de Contrato" autocomplete="off" tabindex="1" class="txtinput" value="<?php echo $resEmpleado->fec_ini_cont; ?>" readonly="readonly">
+		<label>Fecha de Finalizacion de Contrato:</label>
+        <input type="text" name="txtFinContrato" id="txtFinContrato" placeholder="Fecha de Fin de Contrato" autocomplete="off" tabindex="1" class="txtinput" value="<?php echo $resEmpleado->fec_fin_cont; ?> ">
+        <label>Cargo: </label>
             <?php 
       $objeto=new CasaMunoz;
       $consultarcargos=$obj->consultar_cargos();
