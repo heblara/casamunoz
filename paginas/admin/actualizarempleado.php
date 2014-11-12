@@ -98,11 +98,15 @@ if(isset($_GET['id'])){
       //echo $consultarDepartamentos->rowCount();
       echo "<select name='lstCargo' id='lstCargo' class='selmenu'>";
       echo "<option value='0'>Elige</option>";
-
-   while($cargo=$consultarcargos->fetch(PDO::FETCH_OBJ))
-      {
-        echo "<option value='".$cargo->cod_cargo."'>".$cargo->nom_cargo."</option>";
-      }
+	$cargo1='';
+	   while($cargo=$consultarcargos->fetch(PDO::FETCH_OBJ))
+		  {
+	if($cargo->cod_cargo==$resEmpleado->cod_cargo){$cargo1='selected';
+	echo "<option  value='".$cargo->cod_cargo."' selected='".$cargo1."'>".$cargo->nom_cargo."</option>";
+	} else {
+	echo "<option  value='".$cargo->cod_cargo."'>".$cargo->nom_cargo."</option>";
+	}
+	}
       echo "</select>";
    ?>
         <label>Sucursal: </label>
@@ -118,7 +122,10 @@ if(isset($_GET['id'])){
 		 while($sucu=$consultarsucu->fetch(PDO::FETCH_OBJ))
 		  {
 		    if($resEmpleado->cod_sucursal==$sucu->cod_sucursal){$sucursal='selected';
-			echo "<option value='".$sucu->cod_sucursal."' $sucursal>".$sucu->nom_sucursal."</option>";}
+			echo "<option value='".$sucu->cod_sucursal."' $sucursal>".$sucu->nom_sucursal."</option>";
+			else {
+			echo "<option  value='".$sucu->cod_sucursal."'>".$sucu->nom_nom_sucursal."</option>";
+			}
 		  }
 		  echo "</select>";
 	   ?>
