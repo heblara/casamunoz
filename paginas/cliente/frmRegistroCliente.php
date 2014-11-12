@@ -14,7 +14,7 @@ function enviarDatos(){
     $.ajax({
       type: "POST",
       dataType: 'json',
-        url: "procesos/guardarCliente.php",
+        url: "procesos/guardarCCliente.php",
         data: formulario,
     }).done(function(respuesta){
         if(respuesta.mensaje==2){
