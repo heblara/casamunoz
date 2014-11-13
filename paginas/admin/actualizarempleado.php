@@ -73,6 +73,7 @@ if(isset($_GET['id'])){
     <div id="wrapping" class="clearfix">
         <section id="aligned">
         <h2>ACTUALIZAR EMPLEADO</h2>
+        <a href="#">Asignar usuario</a><br />
         <label>Codigo:</label>
         <input type="text" name="txtCodigo" id="txtCodigo" value="<?php echo $resEmpleado->cod_emp ?>" class="txtinput id" readonly="readonly">
 		    <label>Primer Nombre:</label>
@@ -182,6 +183,9 @@ if(isset($_GET['id'])){
           }
           echo "</select>";
           ?>
+          <label>Crear usuario</label>
+          <input type="radio" name="rdUsuario" id="rdUsuario" value="Si" class="radio">Si
+          <input type="radio" name="rdUsuario" id="rdUsuario" value="No" class="radio">No
         </section>
         <section id="aside" class="clearfix">
         </section>
