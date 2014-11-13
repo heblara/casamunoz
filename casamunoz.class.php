@@ -599,7 +599,9 @@ class CasaMunoz {
         $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL. 
         $sql = "SELECT * FROM INVENTARIO AS i
         INNER JOIN PRODUCTO AS p ON i.cod_producto=p.cod_producto
-        WHERE i.cod_sucursal=".$sucursal; 
+		INNER JOIN DETALLE_INGRESO AS DI ON P.cod_producto=DI.cod_producto
+        WHERE i.cod_sucursal='".$sucursal."'
+		ORDER BY DI.fec_ingreso DESC ";
         //echo $sql;
         $query = $dbh->prepare($sql); // Preparamos la consulta para dejarla lista para su ejecucion //
         //$query->bindParam(":sucursal",$sucursal);
