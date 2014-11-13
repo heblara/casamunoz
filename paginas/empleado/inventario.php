@@ -7,6 +7,7 @@ $objeto=new CasaMunoz;
           <th>No.</th>
           <th>Producto</th>
           <th>Existencia</th>
+		  <th>fecha de ingreso </th>
         </tr>
         <?php 
         $i=0;
@@ -17,7 +18,8 @@ $objeto=new CasaMunoz;
           echo "<tr>
             <td>$i</td>
             <td>".$producto->nom_producto."</td>
-            <td>".$producto->cant_inventario."
+            <td>".$producto->cant_inventario."</td>
+			<td>".$producto->fec_ingreso."
             <input type='hidden' name='txtExistencia[]' id='txtExistencia[]' value='".$producto->cant_inventario."' /></td>
           </tr>";
         }
