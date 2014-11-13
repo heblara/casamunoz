@@ -93,7 +93,6 @@ if(isset($_SESSION['autenticado'])){
       <ul>
          <li><a href='?mod=buscaremp'><span>Dias libres</span></a></li>
 		 <li><a href='?mod=entregamateriales'><span>Entrega de material</span></a></li>
-         <li><a href='?mod=hojamateriales'><span>Hoja de materiales</span></a></li>
          <li><a href='?mod=pedidos'><span>Pedidos</span></a></li>
       </ul>
     </li>
