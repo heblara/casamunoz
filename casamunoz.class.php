@@ -287,7 +287,7 @@ class CasaMunoz {
         $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
         $sql = "UPDATE `EMPLEADO` SET `primer_nom` = :primer_nombre, `segundo_nom`=:segundo_nombre, `primer_ape`=:primer_apellido, 
         `segundo_ape`=:segundo_apellido, `dui_emp`=:dui, 
-            `nit_emp`=:nit, `fec_nac`=:fechanac, `tel_fijo`=:telfijo, `tel_movil`=:telmovil, 
+            `nit_emp`=:nit, `fec_nac`=:fechanac, `fec_ini_cont`=:fechainicio, `fec_fin_cont`=:fechafin, `tel_fijo`=:telfijo, `tel_movil`=:telmovil, 
             `correo_emp`=:correo, `direc_emp`=:direccion, `estado_emp`=:estado,`cod_cargo`=:cargo, `cod_municipio`=:municipio,
             `cod_sucursal`=:sucursal WHERE `cod_emp`=:cod_emp";
         $query = $dbh->prepare($sql); // Preparamos la consulta para dejarla lista para su ejecucion
@@ -298,18 +298,17 @@ class CasaMunoz {
         $query->bindParam(":segundo_apellido",$dato[4]);
         $query->bindParam(":dui",$dato[5]);
         $query->bindParam(":nit",$dato[6]);
-        //$query->bindParam(":genero",$dato[7]);
         $query->bindParam(":fechanac",$dato[7]);
-        $query->bindParam(":telfijo",$dato[8]);
-        $query->bindParam(":telmovil",$dato[9]);
-        $query->bindParam(":correo",$dato[10]);
-        $query->bindParam(":direccion",$dato[11]);
-        $query->bindParam(":estado",$dato[12]);
-        //$query->bindParam(":fecha_ini_cont",$dato[14]);
-        //$query->bindParam(":fecha_fin_cont",$dato[15]);
-        $query->bindParam(":cargo",$dato[13]);
-        $query->bindParam(":municipio",$dato[14]);
-        $query->bindParam(":sucursal",$dato[15]);
+		$query->bindParam(":fechainicio",$dato[8]);
+		$query->bindParam(":fechafin",$dato[9]);
+        $query->bindParam(":telfijo",$dato[10]);
+        $query->bindParam(":telmovil",$dato[11]);
+        $query->bindParam(":correo",$dato[12]);
+        $query->bindParam(":direccion",$dato[13]);
+        $query->bindParam(":estado",$dato[14]);
+        $query->bindParam(":cargo",$dato[15]);
+        $query->bindParam(":municipio",$dato[16]);
+        $query->bindParam(":sucursal",$dato[17]);
          // Ejecutamos la consulta
         if ($query->execute()){
             return $query; //pasamos el query para utilizarlo luego con fetch
@@ -837,19 +836,20 @@ class CasaMunoz {
     
     
     
-    function actualizar_servicio($dato) {
+function actualizar_servicio($dato) {
         $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
         $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
-        $sql = "UPDATE `SERVICIO` SET `nom_servicio`=:nom_servicio,`desc_servicio`=:desc_servicio,`fec_registro`=:fec_registro,`duracion_servicio`=:duracion_servicio
-                    WHERE    `cod_tipo_servicio`=:cod_tipo_servicio and `cod_costo`=:cod_costo and `cod_servicio`=:servicio";
+        $sql = "UPDATE `SERVICIO` SET `nom_servicio`=:nom_servicio,`desc_servicio`=:desc_servicio,`duracion_servicio`=:duracion_servicio,`cod_costo`=:costo
+                    WHERE    `cod_servicio`=:cod_servicio";
         $query=$dbh->prepare($sql);
-        $query->bindParam(":nom_servicio",$dato[0]);
-        $query->bindParam(":desc_servicio",$dato[1]);
-        $query->bindParam(":fec_registro",$hoy);
+         $query->bindParam(":cod_servicio",$dato[0]);
+        $query->bindParam(":nom_servicio",$dato[1]);
+        $query->bindParam(":desc_servicio",$dato[2]);
         $query->bindParam(":duracion_servicio",$dato[3]);
-        $query->bindParam(":cod_tipo_servicio",$dato[4]);
-        $query->bindParam(":cod_costo",$dato[5]);
-        $query->bindParam(":servicio",$dato[6]);
+        $query->bindParam(":costo",$dato[4]);
+       
+
+        
   if($query->execute()){
             return $query;
         }else{
@@ -861,7 +861,6 @@ class CasaMunoz {
         unset($dbh);
         unset($query);
     }
-
 
 
 
@@ -936,5 +935,35 @@ function consultar_servicios($dato) {
         unset($dbh);
         unset($query);
 		}
+		
+	function mostrar_costo($dato) {
+        $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
+        $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
+        $sql = "SELECT * FROM COSTO WHERE cod_costo = :codigo";
+        $query = $dbh->prepare($sql); // Preparamos la consulta para dejarla lista para su ejecucion
+        $query->bindParam(":codigo",$dato);
+        $query->execute(); // Ejecutamos la consulta
+        if ($query)
+            return $query; //pasamos el query para utilizarlo luego con fetch
+        else
+            return false;
+        unset($dbh);
+        unset($query);
+    	}
+    	
+    	function mostrar_sucursal_servicio($dato) {
+        $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
+        $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
+        $sql = "SELECT * FROM DISPONIBILIDAD_SERVICIO WHERE cod_servicio = :codigo";
+        $query = $dbh->prepare($sql); // Preparamos la consulta para dejarla lista para su ejecucion
+        $query->bindParam(":codigo",$dato);
+        $query->execute(); // Ejecutamos la consulta
+        if ($query)
+            return $query; //pasamos el query para utilizarlo luego con fetch
+        else
+            return false;
+        unset($dbh);
+        unset($query);
+    }
 }
 ?>

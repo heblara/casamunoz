@@ -44,6 +44,10 @@ $(document).ready(function(){
     <div id="wrapping" class="clearfix">
         <section id="aligned">
         <h2>REGISTRO DE SERVICIOS</h2>
+       
+
+
+
         <label>Nombre del servicio:</label>
         <input type="text" name="txtNombre" id="txtNombre" placeholder="Nombre de servicio" autocomplete="off" tabindex="1" class="txtinput offer">
         <br />

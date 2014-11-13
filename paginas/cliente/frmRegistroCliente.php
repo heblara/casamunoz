@@ -2,15 +2,46 @@
   <script src="//code.jquery.com/jquery-1.10.2.js"></script>
   <script src="//code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
   <link rel="stylesheet" href="/resources/demos/style.css">
+<script type="text/javascript" src="js/jquery.blockUI.js"></script>
 <script>
- $(function() {
-	$('.datepicker').datepicker({
-	dateFormat: 'yy-mm-dd', 
-	changeMonth: true, 
-	changeYear: true, 
-	yearRange: '-40:+0'
-	});
-		});
+$(function() {
+  //Se pone para que en todos los llamados ajax se bloquee la pantalla mostrando el mensaje Procesando...
+  $.blockUI.defaults.message = 'Procesando información, por favor espere... <br /><img src=\'img/load.gif\' /><br />';
+  $(document).ajaxStart($.blockUI).ajaxStop($.unblockUI);
+});
+function enviarDatos(){
+  var formulario = $("#hongkiat-form").serializeArray();
+    $.ajax({
+      type: "POST",
+      dataType: 'json',
+        url: "procesos/guardarCCliente.php",
+        data: formulario,
+    }).done(function(respuesta){
+        if(respuesta.mensaje==2){
+          alert("No fue posible registrar el empleado");
+        }else if(respuesta.mensaje==1){
+          alert("Registro realizado con exito");
+        }
+    });
+}
+$(document).ready(function(){         
+  $("#submitbtn").click(function(){
+    //if(validar()){
+        enviarDatos();
+      //}
+      return false;
+  });
+});
+</script>
+<script>
+    $(function() {
+      $('.datepicker').datepicker({
+      dateFormat: 'yy-mm-dd', 
+      changeMonth: true, 
+      changeYear: true, 
+      yearRange: '-40:+0'
+      });
+    });
 </script>
 <script src="js/mask.js"></script>
 <script>
@@ -23,27 +54,30 @@
      $("#txtNIT").mask("9999-999999-999-9");   
   });
 </script>
-<form name="hongkiat" id="hongkiat-form" method="post" action="#">
+
+
+<form name="hongkiat" id="hongkiat-form" method="post" action="#" onsubmit="return false;">
     <div id="wrapping" class="clearfix">
         <section id="aligned">
         <h2>REGISTRO DE CLIENTES</h2>
         <label>Primer Nombre:</label>
-        <input type="text" name="txtNombres" id="txtNombres" placeholder="Primer nombre" autocomplete="off" tabindex="1" class="txtinput name">
+        <input type="text" name="txtNombre1" id="txtPrimerNombre" placeholder="Primer nombre" autocomplete="off" tabindex="1" class="txtinput name">
         <label>Segundo Nombre:</label>
-        <input type="text" name="txtNombres" id="txtNombres" placeholder="Segundo nombre" autocomplete="off" tabindex="1" class="txtinput name">
+        <input type="text" name="txtNombre2" id="txtSegundoNombre" placeholder="Segundo nombre" autocomplete="off" tabindex="1" class="txtinput name">
         <label>Primero Apellido:</label>
-        <input type="text" name="txtApellidos" id="txtApellidos" placeholder="Primer apellido" autocomplete="off" tabindex="1" class="txtinput name">
+        <input type="text" name="txtApellido1" id="txtPrimeroApellido" placeholder="Primer apellido" autocomplete="off" tabindex="1" class="txtinput name">
         <label>Segundo Apellido:</label>
-        <input type="text" name="txtApellidos" id="txtApellidos" placeholder="Segundo apellido" autocomplete="off" tabindex="1" class="txtinput name">
+        <input type="text" name="txtApellido2" id="txtSegundoApellido" placeholder="Segundo apellido" autocomplete="off" tabindex="1" class="txtinput name">
         <label>Genero:</label>
-        <select id="recipient" name="recipient" tabindex="6" class="selmenu">
+        <select id="lstGenero" name="lstGenero" tabindex="6" class="selmenu">
             <option value="0">-- Elija genero --</option>
             <option value="F">Femenino</option>
             <option value="M">Masculino</option>
         </select>
         <label>Fecha de Nacimiento:</label>
         <input type="text" name="txtFecNac" id="txtFecNac" placeholder="Fecha de Nacimiento" autocomplete="off" tabindex="1" class="txtinput calendar datepicker">
-   <label>Departamento: </label>
+    
+              <label>Departamento: </label>
 <script type="text/javascript" src="funciones/select_dependientes.js"></script>>
     <?php 
       $objeto=new CasaMunoz;
@@ -71,15 +105,18 @@
         <label>Correo electr&oacute;nico:</label>
         <input type="email" name="txtCorreo" id="txtCorreo" placeholder="Direcci&oacute;n de correo" autocomplete="off" tabindex="2" class="txtinput email">
         <label>Di&aacute;betico:</label>
-        <input type="radio" name="rdDiabetico" id="rdDiabetico" class="radio"><label for='rdDiabetico'>Si</label>
-        <input type="radio" name="rdDiabetico" id="rdDiabetico" class="radio"><label for='rdDiabetico'>No</label>
+        <input type="radio" name="rdDiabetico" id="rdDiabetico" class="radio" value="SI"><label for='rdDiabetico'>Si</label>
+        <input type="radio" name="rdDiabetico" id="rdDiabetico" class="radio" value="NO"><label for='rdDiabetico'>No</label>
+        <br><br>
+	<label>Otras enfermedades:</label>
+       <textarea name="txtenfer" id="txtenfer" style="width:40%;" placeholder="Otras enfermedades..." tabindex="5" class="txtblock"></textarea>
         </section>
         <section id="aside" class="clearfix">
         </section>
     </div>
     <section id="buttons">
         <input type="reset" name="reset" id="resetbtn" class="resetbtn" value="Limpiar">
-        <input type="button" name="submit" id="submitbtn" class="submitbtn" tabindex="" value="Guardar" onclick="alert('Su registro ha sido proceso, su contrase&ntilde;a ha sido enviada a su correo electr&oacute;nico.');">
+        <input type="submit" name="submit" id="submitbtn" class="submitbtn" tabindex="" value="Guardar">
         <br style="clear:both;">
     </section>
 </form>

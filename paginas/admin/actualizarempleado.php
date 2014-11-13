@@ -90,7 +90,11 @@ if(isset($_GET['id'])){
         <input type="text" name="txtNIT" id="txtNIT" placeholder="N&uacute;mero de NIT" autocomplete="off" tabindex="2" class="txtinput id" value="<?php echo $resEmpleado->nit_emp; ?>">
         <label>Fecha de Nacimiento:</label>
         <input type="text" name="txtFecNac" id="txtFecNac" placeholder="Fecha de Nacimiento" autocomplete="off" tabindex="1" class="txtinput calendar datepicker" value="<?php echo $resEmpleado->fec_nac; ?>">
-       <label>Cargo: </label>
+        <label>Fecha de Contrato:</label>
+        <input type="text" name="txtContrato" id="txtContrato" placeholder="Fecha de Contrato" autocomplete="off" tabindex="1" class="txtinput" value="<?php echo $resEmpleado->fec_ini_cont; ?>" readonly="readonly">
+		<label>Fecha de Finalizacion de Contrato:</label>
+        <input type="text" name="txtFinContrato" id="txtFinContrato" placeholder="Fecha de Fin de Contrato" autocomplete="off" tabindex="1" class="txtinput" value="<?php echo $resEmpleado->fec_fin_cont; ?> ">
+        <label>Cargo: </label>
             <?php 
       $objeto=new CasaMunoz;
       $consultarcargos=$obj->consultar_cargos();
@@ -100,11 +104,17 @@ if(isset($_GET['id'])){
       echo "<select name='lstCargo' id='lstCargo' class='selmenu'>";
       echo "<option value='0'>Elige</option>";
 
-   while($cargo=$consultarcargos->fetch(PDO::FETCH_OBJ))
-      {
-        echo "<option value='".$cargo->cod_cargo."'>".$cargo->nom_cargo."</option>";
-      }
+   $cargo1='';
+	   while($cargo=$consultarcargos->fetch(PDO::FETCH_OBJ))
+		  {
+	if($cargo->cod_cargo==$resEmpleado->cod_cargo){$cargo1='selected';
+	echo "<option  value='".$cargo->cod_cargo."' selected='".$cargo1."'>".$cargo->nom_cargo."</option>";
+	} else {
+	echo "<option  value='".$cargo->cod_cargo."'>".$cargo->nom_cargo."</option>";
+	}
+}
       echo "</select>";
+  
    ?>
         <label>Sucursal: </label>
        <?php 
@@ -119,7 +129,10 @@ if(isset($_GET['id'])){
 		 while($sucu=$consultarsucu->fetch(PDO::FETCH_OBJ))
 		  {
 		    if($resEmpleado->cod_sucursal==$sucu->cod_sucursal){$sucursal='selected';
-			echo "<option value='".$sucu->cod_sucursal."' $sucursal>".$sucu->nom_sucursal."</option>";}
+			echo "<option value='".$sucu->cod_sucursal."' $sucursal>".$sucu->nom_sucursal."</option>";
+			else {
+			echo "<option  value='".$sucu->cod_sucursal."'>".$sucu->nom_nom_sucursal."</option>";
+			}
 		  }
 		  echo "</select>";
 	   ?>

@@ -7,15 +7,14 @@ $respuesta = new stdClass();
 //echo "<br />";
 extract($_POST); //Extrae todos los elementos del array POST
 $ObjEmpleado=new CasaMunoz;
-$empleado=array($txtCodigo,$txtPrimerNombre,$txtSegundoNombre,$txtPrimerApellido,$txtSegundoApellido,$txtDUI,$txtNIT,
-	$txtFecNac,$txtContrato,$txtFinContrato,$txtTelFijo,$txtTelMovil,$txtCorreo,$message,$lstEstado,$lstCargo,$estados,
-	$lstSucursal);
+$servicio=array($txtcodigo,$txtNombre,$message,$txtDuracion,$txtprecio);
 //print_r($empleado);
-
-if($ObjEmpleado->actualizar_empleado($empleado)){
+if($ObjEmpleado->actualizar_servicio($servicio)){
 	$respuesta->mensaje = 1;
 }else{
 	$respuesta->mensaje = 2;
 }
 echo json_encode($respuesta);
+?>on_encode($respuesta);
 ?>
+	
