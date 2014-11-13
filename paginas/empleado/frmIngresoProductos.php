@@ -6,14 +6,10 @@
 <script type="text/javascript">
   function validar(){
     producto=document.getElementById('lstProducto').value;
-    sucursal=document.getElementById('lstSucursal').value;
     cantidad=document.getElementById('txtCantidadEntrega').value;
     error=false;
     if(producto==0){
         alert("Seleccione un producto");
-        error=true;
-    }else if(sucursal==0){
-        alert("Seleccione una sucursal");
         error=true;
     }else if(isNaN(cantidad)){
         alert("Ingrese un numero en la cantidad");
@@ -82,22 +78,7 @@ $(document).ready(function(){
    ?>
     <label>Cantidad:</label>
         <input type="text" name="txtCantidadEntrega" id="txtCantidadEntrega" placeholder="Cantidad a Entregar" autocomplete="off" tabindex="1" class="txtinput">
-		<label>Sucursal: </label>
-        <?php 
-      $consultarsucu=$objeto->consultar_sucursal();
-      //$consulta=mysql_query("SELECT cod_dpto, nom_dpto FROM DEPARTAMENTO");
-      // Voy imprimiendo el primer select compuesto por los paises
-      //echo $consultarDepartamentos->rowCount();
-      echo "<select name='lstSucursal' id='lstSucursal' class='selmenu'>";
-      echo "<option value='0'>Elige</option>";
-
-      while($sucu=$consultarsucu->fetch(PDO::FETCH_OBJ))
-      {
-        echo "<option value='".$sucu->cod_sucursal."'>".$sucu->nom_sucursal."</option>";
-      }
-      echo "</select>";
-   ?>
-  </section>
+	  </section>
 </div>
 <section id="buttons">
         <input type="submit" name="submit" id="submitbtn" class="submitbtn" tabindex="7" value="Guardar">
