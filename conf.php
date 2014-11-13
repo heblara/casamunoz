@@ -128,10 +128,6 @@ $conf['registrarse']=array(
 
 //EMPLEADO
 
-$conf['hojamateriales']=array(
-'archivo'=>'empleado/frmHojaMateriales.php',
-'layout'=>LAYOUT_INICIO
-);
 $conf['pedidos']=array(
 'archivo'=>'empleado/frmPedidos.php',
 'layout'=>LAYOUT_INICIO
