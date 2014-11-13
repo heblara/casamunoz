@@ -130,7 +130,7 @@ if(isset($_GET['id'])){
 		  {
 		    if($resEmpleado->cod_sucursal==$sucu->cod_sucursal){$sucursal='selected';
 			echo "<option value='".$sucu->cod_sucursal."' $sucursal>".$sucu->nom_sucursal."</option>";
-			else {
+			} else {
 			echo "<option  value='".$sucu->cod_sucursal."'>".$sucu->nom_nom_sucursal."</option>";
 			}
 		  }
