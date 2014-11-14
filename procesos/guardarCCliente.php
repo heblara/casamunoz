@@ -39,8 +39,21 @@ if($ObjCliente->registrar_Ccliente($Cliente)){
 	$consCliente=$ObjCliente->mostrar_cliente($codigo);
 	//echo $consCliente->rowCount();
 	if($consCliente->rowCount()>0){
-		//ENVIAR CORREO AL USUARIO
-		$respuesta->mensaje = 1;
+		$nombre=$txtNombre1." ".$txtNombre2." ".$txtApellido1." ".$txtApellido2;
+		$mensaje="
+		<br />
+		<h2>Validaci&oacute;n de correo</h2>
+		<p>
+		Sus datos han sido registrados en el sistema de reservas de Casa Mu&ntilde;z, para poder acceder al sistema
+		debe validar su correo, haciendo <a href='http://localhost/casamunoz2/?mod=validarcorreo&e=".base64_encode($codigo)."'>Clic aqu&iacute;.
+		</p>
+		";
+		if(Enviar_Email($txtCorreo,$nombre,$mensaje,"Casa Munoz","","Activacion de su correo","")){
+			echo "Correo enviado"; 
+		}else{
+			$respuesta->mensaje = 1;
+		}
+		
 	}else{
 		$respuesta->mensaje = 2;
 	}

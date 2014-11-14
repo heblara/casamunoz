@@ -6,4 +6,6 @@ require_once ('../DBManager.class.php'); //Clase de Conexión a las Base de Dato
 require('../casamunoz.class.php');
 require("../conf.php");
 require("../conexion.php");
+include("../phpmailer/class.phpmailer.php");
+include("../funciones/funciones.php");
 ?>

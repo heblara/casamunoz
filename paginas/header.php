@@ -14,11 +14,12 @@
 		$resEmpleado=$consEmpleado->fetch(PDO::FETCH_OBJ);
 		$nombre=$resEmpleado->NombreCompleto;
 		
-		$consNombre1=$cm1->consultar_nombre1($_SESSION['nombre1']);
+		
+		$consNombre1=$cm1->consultar_nombre1($_SESSION['usuario']);
 		$resNombre1=$consNombre1->fetch(PDO::FETCH_OBJ);
 		$nombre1=$resNombre1->NombreCompleto;
 		
-		$consNombre2=$cm1->consultar_nombre2($_SESSION['usuario']);
+		$consNombre2=$cm1->consultar_nombre2($_SESSION['nombre1']);
 		$resNombre2=$consNombre2->fetch(PDO::FETCH_OBJ);
 		$nombre2=$resNombre2->NombreCompleto;
 		

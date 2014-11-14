@@ -39,7 +39,7 @@ $(document).ready(function(){
       dateFormat: 'yy-mm-dd', 
       changeMonth: true, 
       changeYear: true, 
-      yearRange: '-40:+0'
+      yearRange: '-100:-18'
       });
     });
 </script>

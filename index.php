@@ -3,7 +3,7 @@ include_once ('DBManager.class.php'); //Clase de Conexión a las Base de Datos
 include('casamunoz.class.php');
 include("conf.php");
 include("conexion.php");
-
+include("phpmailer/class.phpmailer.php");
 if(isset($_GET['mod'])){
 	//if(!empty($_GET['mod'])){
 		$modulo = $_GET['mod'];

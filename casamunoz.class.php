@@ -205,7 +205,7 @@ class CasaMunoz {
 	  function consultar_nombre1($usuario) {
         $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
         $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
-        $sql = "SELECT *,CONCAT_WS(' ',primer_nom,segundo_nom,primer_ape,segundo_ape) as NombreCompleto FROM CLIENTE WHERE cod_usuario='".$usuario."'";
+        $sql = "SELECT *,CONCAT_WS(' ',primer_nom,segundo_nom,primer_ape,segundo_ape) as NombreCompleto FROM CLIENTE WHERE cod_cliente='".$usuario."'";
         $query = $dbh->prepare($sql); // Preparamos la consulta para dejarla lista para su ejecucion
         $query->execute(); // Ejecutamos la consulta
         if ($query)
@@ -587,21 +587,26 @@ class CasaMunoz {
     	$dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL. 
     	$sql = "SELECT * FROM PRODUCTO"; $query = $dbh->prepare($sql); // Preparamos la consulta para dejarla lista para su ejecucion //
     	$query->execute(); // Ejecutamos la consulta 
-    	if ($query) 
-    	return $query; //pasamos el query para utilizarlo luego con fetch 
-    	else 
-    	return false; 
+    	if($query->execute()){
+            return $query;
+        }else{
+            echo "\nPDOStatement::errorInfo():\n";
+            $arr = $query->errorInfo();
+            print_r($arr);
+            return false;
+        } 
     	unset($dbh); 
     	unset($query); 
 	}
     function consultar_inventario_sucursal($sucursal){ 
         $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager 
         $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL. 
-        $sql = "SELECT * FROM INVENTARIO AS i
+        $sql = "SELECT p.nom_producto,i.cant_inventario,MAX(DI.fec_ingreso) as fec_ingreso FROM INVENTARIO AS i
         INNER JOIN PRODUCTO AS p ON i.cod_producto=p.cod_producto
-		INNER JOIN DETALLE_INGRESO AS DI ON P.cod_producto=DI.cod_producto
+		INNER JOIN DETALLE_INGRESO AS DI ON p.cod_producto=DI.cod_producto
         WHERE i.cod_sucursal='".$sucursal."'
-		ORDER BY DI.fec_ingreso DESC ";
+        GROUP BY i.cod_producto
+		ORDER BY i.cod_producto,fec_ingreso DESC";
         //echo $sql;
         $query = $dbh->prepare($sql); // Preparamos la consulta para dejarla lista para su ejecucion //
         //$query->bindParam(":sucursal",$sucursal);
@@ -941,6 +946,24 @@ function consultar_servicios($dato) {
         $query->bindParam(":nombre",$dato[0]);
         $query->bindParam(":descripcion",$dato[1]);
        	
+        if($query->execute()){
+            return $query;
+        }else{
+            return false;
+        }
+        unset($dbh);
+        unset($query);
+    }
+    function guardar_usuario($usuario) {
+        $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
+        $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
+        $sql = "INSERT INTO `USUARIO` (`usuario`, `contra_usuario`,`estado_usuario`,`ROL_cod_rol`) 
+        VALUES (:usuario,:contrasena,:estado,:rol)";
+        $query = $dbh->prepare($sql); // Preparamos la consulta para dejarla lista para su ejecucion
+        $query->bindParam(":usuario",$usuario[0]);
+        $query->bindParam(":contrasena",$usuario[1]);
+        $query->bindParam(":estado",$usuario[2]);
+        $query->bindParam(":rol",$usuario[3]);
         if($query->execute()){
             return $query;
         }else{

@@ -18,7 +18,7 @@ function Enviar_Email($Correo_Envio, $Nombre_Envio, $Mensaje_Envio, $Firma_Envio
   $mail->From = $Correo_Emisor; 
   $mail->FromName = utf8_encode($Firma_Envio); 
   $mail->Subject  = $Asunto_Mensaje;
-  $mail->AddEmbeddedImage('images/logo.png','Casamunoz','images/logo.png','base64','image/png'); 
+  $mail->AddEmbeddedImage('images/logo.png','Cm','images/logo.png','base64','image/png'); 
   $mail->Body    = plantilla($Mensaje_Envio);
   $mail->AltBody = $Mensaje_Envio; 
   $mail->AddAddress($Correo_Envio, $Nombre_Envio);
@@ -46,7 +46,7 @@ $html="<html xmlns='http://www.w3.org/1999/xhtml'>
       <tr>
         <td align='center' valign='top' style='padding-left:13px; padding-right:13px; background-color:#ffffff;'><table width='100%' border='0' cellspacing='0' cellpadding='0'>
           <tr>
-            <td align='center' valign='middle' style='font-family:Georgia, 'Times New Roman', Times, serif; font-size:48px;'><img src='cid:Casamunoz' /><br /><i>Casa Munoz</i></td>
+            <td align='center' valign='middle' style='font-family:Georgia, 'Times New Roman', Times, serif; font-size:48px;'><img src='cid:Cm' /><br /><i>Casa Munoz</i></td>
           </tr>
           <tr>
             <td align='center' valign='middle' style='padding-top:7px;'><table width='240' border='0' cellspacing='0' cellpadding='0'>

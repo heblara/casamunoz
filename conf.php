@@ -99,6 +99,16 @@ $conf['enviarCorreo']=array(
 'archivo'=>'enviarCorreo.php',
 'layout'=>LAYOUT_INICIO
 );
+
+$conf['validarcorreo']=array(
+'archivo'=>'validarcorreo.php',
+'layout'=>LAYOUT_INICIO
+);
+$conf['actualizarreserva']=array(
+'archivo'=>'empleado/frmActualizarReserva.php',
+'layout'=>LAYOUT_INICIO
+);
+
 $conf['log']=array(
 'archivo'=>'admin/log.php',
 'layout'=>LAYOUT_INICIO

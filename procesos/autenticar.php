@@ -13,10 +13,14 @@
 	  	  $resEmpleado=$consEmpleado->fetch(PDO::FETCH_OBJ);
 	  	  @session_start();
 		  if($resUser->estado_usuario=='Activo'){   
-		  	$_SESSION['sucursal']=$resEmpleado->cod_sucursal;
-			$_SESSION['nombre1']=$resUser->cod_usuario;
-			$_SESSION['empleado']=$username;
-			$_SESSION['usuario']=$resUser->usuario;
+		  	//if($resUser->ROL_cod_rol==1 || $resUser->ROL_cod_rol==2){
+		  		$_SESSION['sucursal']=$resEmpleado->cod_sucursal;
+				$_SESSION['nombre1']=$resUser->cod_usuario;
+				$_SESSION['empleado']=$username;
+				$_SESSION['usuario']=$resUser->usuario;
+		  	/*}else if($resUser->ROL_cod_rol==3){
+		  		//$_SESSION['usuario']=$resUser->;
+		  	}*/
 		  	$_SESSION['autenticado']='si';
 		  	$_SESSION["tipo"]=$resUser->ROL_cod_rol;
 		    /*if( $resUser->ROL_cod_rol == 1)     {
