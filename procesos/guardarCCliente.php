@@ -30,7 +30,7 @@ if($consCliente->rowCount()>0){
 }else{
 	$cod="001";
 }
-$codigo=$letraApe.$letraNom.$cod;
+$codigo="C-".$letraApe.$letraNom.$cod;
 //$respuesta->mensaje=$codigo;
 //echo "Codigo: ".$codigo;
 $Cliente=array($codigo,$txtNombre1,$txtNombre2,$txtApellido1,$txtApellido2,$lstGenero,$txtFecNac,$txtTelFijo,$txtCorreo,$rdDiabetico,$txtenfer,1,$estados);
@@ -39,6 +39,7 @@ if($ObjCliente->registrar_Ccliente($Cliente)){
 	$consCliente=$ObjCliente->mostrar_cliente($codigo);
 	//echo $consCliente->rowCount();
 	if($consCliente->rowCount()>0){
+		//ENVIAR CORREO AL USUARIO
 		$respuesta->mensaje = 1;
 	}else{
 		$respuesta->mensaje = 2;
