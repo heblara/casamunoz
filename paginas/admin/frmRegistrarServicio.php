@@ -13,6 +13,77 @@
       });
     });
 
+	function validar(){
+    nombre=document.getElementById('txtNombre').value;
+	descripcion=document.getElementById('message').value;
+	precio=document.getElementById('txtprecio').value;
+	duracion=document.getElementById('txtDuracion').value;
+    msg="";
+    error=false;
+	precionum=parseFloat(precio);
+	duracionnum=parseFloat(duracion);
+		var ok = 0;
+    var ckbox = document.getElementsByName('seleccion[]');
+        for (var i=0; i < ckbox.length; i++){
+            if(ckbox[i].checked == true){
+            ok = 1;
+            }
+        }
+		if(nombre=="" || nombre==null){
+        msg+='* Primer Nombre';
+        alert("Ingrese nombre del servicio");
+        //#hongkiat-form input.name
+        document.getElementsByName('txtNombre').style="border-color:#F80303;";
+        document.getElementById('txtNombre').focus();
+        error=true;
+    }else if(descripcion=="" || descripcion==null){
+        msg+='* Descripcion';
+        alert("Ingrese la descripcion del servicio");
+        //#hongkiat-form input.name
+        document.getElementsByName('message').style="border-color:#F80303;";
+        document.getElementById('message').focus();
+        error=true;
+    }else if(precio=="" || precio==null){
+        msg+='* Precio';
+        alert("Ingrese el precio del servicio");
+        //#hongkiat-form input.name
+        document.getElementsByName('txtprecio').style="border-color:#F80303;";
+        document.getElementById('txtprecio').focus();
+        error=true;
+    }else if(precionum <= 0){
+        msg+='* precio';
+        alert("Precio debe ser mayor que cero");
+        //#hongkiat-form input.name
+        document.getElementsByName('txtprecio').style="border-color:#F80303;";
+        document.getElementById('txtprecio').focus();
+        error=true;
+    }else if(duracion=="" || duracion==null){
+        msg+='* Duracion';
+        alert("Ingrese la duracion del servicio");
+        //#hongkiat-form input.name
+        document.getElementsByName('txtDuracion').style="border-color:#F80303;";
+        document.getElementById('txtDuracion').focus();
+        error=true;
+    }else if(duracion <= 0){
+        msg+='* Duracion';
+        alert("Duracion debe ser mayor que cero minutos");
+        //#hongkiat-form input.name
+        document.getElementsByName('txtDuracion').style="border-color:#F80303;";
+        document.getElementById('txtDuracion').focus();
+        error=true;
+    }else if(ok == 0){
+        alert('Indique al menos una sucursal');
+        return false;
+    }
+
+	  if(error==true){
+      return false;
+    }else{
+      //enviarDatos();
+      return true;
+    }
+}
+	
     $(function() {
   //Se pone para que en todos los llamados ajax se bloquee la pantalla mostrando el mensaje Procesando...
   $.blockUI.defaults.message = 'Procesando información, por favor espere... <br /><img src=\'img/load.gif\' /><br />';
@@ -35,7 +106,9 @@ function enviarDatos(){
 }
 $(document).ready(function(){         
   $("#submitbtn").click(function(){
-      enviarDatos();
+    if(validar()){
+        enviarDatos();
+      }
       return false;
   });
 });
