@@ -95,6 +95,10 @@ $conf['consultaempleado']=array(
 'archivo'=>'admin/actualizarempleado.php',
 'layout'=>LAYOUT_INICIO
 );
+$conf['enviarCorreo']=array(
+'archivo'=>'enviarCorreo.php',
+'layout'=>LAYOUT_INICIO
+);
 $conf['log']=array(
 'archivo'=>'admin/log.php',
 'layout'=>LAYOUT_INICIO
@@ -128,6 +132,10 @@ $conf['registrarse']=array(
 
 //EMPLEADO
 
+$conf['hojamateriales']=array(
+'archivo'=>'empleado/frmHojaMateriales.php',
+'layout'=>LAYOUT_INICIO
+);
 $conf['pedidos']=array(
 'archivo'=>'empleado/frmPedidos.php',
 'layout'=>LAYOUT_INICIO

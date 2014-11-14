@@ -1,4 +1,88 @@
 <?php
+function Enviar_Email($Correo_Envio, $Nombre_Envio, $Mensaje_Envio, $Firma_Envio, $Correo_Envia, $Asunto_Mensaje,$Imagen) 
+{
+  if($Correo_Envia!=""){
+    $Correo_Emisor=$Correo_Envia;
+  }else{
+    $Correo_Emisor="info@casamunoz.com";
+  }
+  $mail = new PHPMailer();
+  //$mail->SMTPDebug=2; 
+  $mail->IsSMTP();
+  $mail->SMTPAuth = true; 
+  //$mail->SMTPSecure = "ssl"; 
+  $mail->Host = "smtpout.secureserver.net"; 
+  $mail->Port = 80; 
+  $mail->Username = "info@heblara.biz"; 
+  $mail->Password = "chame2904";
+  $mail->From = $Correo_Emisor; 
+  $mail->FromName = utf8_encode($Firma_Envio); 
+  $mail->Subject  = $Asunto_Mensaje;
+  $mail->AddEmbeddedImage('images/logo.png','Casamunoz','images/logo.png','base64','image/png'); 
+  $mail->Body    = plantilla($Mensaje_Envio);
+  $mail->AltBody = $Mensaje_Envio; 
+  $mail->AddAddress($Correo_Envio, $Nombre_Envio);
+  $mail->AddReplyTo("info@casamunoz.com", "Responda a este e-mail");
+  $mail->IsHTML(true); 
+  if(!$mail->Send()) { 
+    return "Error: " . $mail->ErrorInfo; 
+  } else { 
+    return "Mensaje enviado correctamente"; 
+  }
+}
+function plantilla($texto){
+$html="<html xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+<meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
+<title>Casa Mu&ntilde;oz</title>
+</head>
+<body>
+<table width='100%' border='0' cellspacing='0' cellpadding='0'>
+  <tr>
+    <td align='center' valign='top' bgcolor='#f6f3e4' style='background-color:#f6f3e4;'>
+    <br>
+    <br>
+    <table width='600' border='0' cellspacing='0' cellpadding='0'>
+      <tr>
+        <td align='center' valign='top' style='padding-left:13px; padding-right:13px; background-color:#ffffff;'><table width='100%' border='0' cellspacing='0' cellpadding='0'>
+          <tr>
+            <td align='center' valign='middle' style='font-family:Georgia, 'Times New Roman', Times, serif; font-size:48px;'><img src='cid:Casamunoz' /><br /><i>Casa Munoz</i></td>
+          </tr>
+          <tr>
+            <td align='center' valign='middle' style='padding-top:7px;'><table width='240' border='0' cellspacing='0' cellpadding='0'>
+              <tr>
+                <td height='31' align='center' valign='middle' bgcolor='#003366' style='font-family:Georgia, 'Times New Roman', Times, serif; font-size:19px; color:white;'><div style='color:white; font-size:15px;text-align:center;'><b>".date('d/m/Y')."</b></div></td>
+              </tr>
+            </table></td>
+          </tr>
+          <tr>
+            <td align='center' valign='middle' style='padding-bottom:15px; padding-top:15px;'></td>
+          </tr>
+          <tr>
+            <td align='center' valign='middle' style='font-family:Georgia, 'Times New Roman', Times, serif; color:#000000; font-size:24px; padding-bottom:5px;'>
+            <tr>
+            <td align='left' valign='middle' style='font-family:Georgia, 'Times New Roman', Times, serif; color:#000000; font-size:15px;'>
+              ".$texto." <br /><br /><br /><br />
+              <div style='color:#003366; font-size:15px;text-align:center;'><b>Contáctenos</b></div>
+             <div style='text-align:center;'>
+             DIRECCION DEL NEGOCIO
+             </div><div>
+        </table>
+        <div>
+<br><br>
+        </td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td align='center' valign='top'>&nbsp;</td>
+  </tr>
+</table>
+</body>
+</html>
+";
+return $html;
+}
 function CalculaEdad( $fecha ) {
     list($Y,$m,$d) = explode("-",$fecha);
     return( date("md") < $m.$d ? date("Y")-$Y-1 : date("Y")-$Y );
