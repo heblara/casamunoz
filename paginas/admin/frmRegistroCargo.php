@@ -4,6 +4,35 @@
 <link rel="stylesheet" href="/resources/demos/style.css">
 <script type="text/javascript" src="js/jquery.blockUI.js"></script>
 <script type="text/javascript">
+	function validar(){
+    cargo=document.getElementById('txtNombreCargo').value;
+    descripcion=document.getElementById('txtDesc').value;
+	msg="";
+    error=false;
+    if(cargo=="" || cargo==null){
+        msg+='* gargo';
+        alert("Ingrese el nombre del cargo");
+        //#hongkiat-form input.name
+        document.getElementsByName('txtNombreCargo').style="border-color:#F80303;";
+        document.getElementById('txtNombreCargo').focus();
+        error=true;
+    }else if(descripcion=="" || descripcion==null){
+        msg+='* descripcion';
+        alert("Ingrese la descripcion");
+        //#hongkiat-form input.name
+        document.getElementsByName('txtDesc').style="border-color:#F80303;";
+        document.getElementById('txtDesc').focus();
+        error=true;
+    }
+	if(error==true){
+      return false;
+    }else{
+      //enviarDatos();
+      return true;
+    }
+}
+	
+
   $(function() {
     $('.datepicker').datepicker({
       dateFormat: 'yy-mm-dd', 
@@ -35,7 +64,9 @@ function enviarDatos(){
 }
 $(document).ready(function(){         
   $("#submitbtn").click(function(){
-      enviarDatos();
+    if(validar()){
+        enviarDatos();
+      }
       return false;
   });
 });
