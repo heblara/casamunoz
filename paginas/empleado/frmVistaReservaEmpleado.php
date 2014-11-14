@@ -1,24 +1,12 @@
-<script src="//code.jquery.com/jquery-1.10.2.js"></script>
-  <script src="//code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
-  <link rel="stylesheet" href="/resources/demos/style.css">
-<script>
-   $(function() {
-	$('.datepicker').datepicker({
-	dateFormat: 'yy-mm-dd', 
-	changeMonth: true, 
-	changeYear: true, 
-	yearRange: '-40:+0'
-	});
-		});
-</script>
-<script src="js/mask.js"></script>
+  <script type="text/javascript" src="js/calendar/scripts/epoch_classes.js"></script>
+<link rel="stylesheet" type="text/css" href="js/calendar/epoch_styles.css" />
 <script language="JavaScript">
 var objeto = false;
 function procesaResultado() {
 // Si aun esta revisando los datos...
 if (objeto.readyState == 1) {
 //  document.getElementById('resultado').innerHTML = "Cargando datos con ajax...";
-  document.getElementById('resultado').innerHTML = "<td colspan='6'><img src='paginas/5-0.gif' title='Cargando datos' width='32' />";
+  document.getElementById('resultado').innerHTML = "<td colspan='6'><img src='img/load.gif' title='Cargando datos' width='32' />";
 }
 // Si el estado es 4 significa que ya termino
 if (objeto.readyState == 4) {
@@ -42,7 +30,7 @@ function crearObjeto() {
 
 // ------------------------------
 
-function leerDatos(valor,sel,opcion) {
+function leerDatos(valor) {
   crearObjeto();
   if (objeto.readyState != 0) {
     alert('Error al crear el objeto XML. El Navegador no soporta AJAX');
@@ -51,11 +39,11 @@ function leerDatos(valor,sel,opcion) {
     objeto.onreadystatechange = procesaResultado;
 var ca=/^[ ]{1}/;
 var com=ca.test(valor);
-	if((!com=="") || (valor=="")){document.getElementById("resultado").innerHTML="";}else{
-	// Enviar la consulta
-	    objeto.open("GET", "paginas/busqueda.php?opc="+sel+"&usuario=" + valor + "&inscrito="+opcion, true);
-	    objeto.send(null);
-	}
+  if((!com=="") || (valor=="")){document.getElementById("resultado").innerHTML="";}else{
+  // Enviar la consulta
+      objeto.open("GET", "paginas/busquedaReserva.php?&valor=" + valor, true);
+      objeto.send(null);
+  }
     
   }
 }
@@ -68,113 +56,73 @@ function leerDatosPag(valor,sel,pag,opcion) {
     objeto.onreadystatechange = procesaResultado;
 var ca=/^[ ]{1}/;
 var com=ca.test(valor);
-	if((!com=="") || (valor=="")){document.getElementById("resultado").innerHTML="";}else{
-	// Enviar la consulta
-	    objeto.open("GET", "paginas/busqueda.php?opc="+sel+"&usuario=" + valor + "&pagina="+pag+ "&inscrito="+opcion, true);
-	    objeto.send(null);
-	}
+  if((!com=="") || (valor=="")){document.getElementById("resultado").innerHTML="";}else{
+  // Enviar la consulta
+      objeto.open("GET", "paginas/busqueda.phpServicio?valor=" + valor + "&pagina="+pag, true);
+      objeto.send(null);
+  }
     
   }
 }
 // ------------------------------
 </script>
+
+
+</head>
+<body>
+<?php
+    function generaMedioComunicacion()
+  {
+      $objMedio=new Noticias;
+      $consultar=$objMedio->consultar_medio_comunicacion();
+      echo "<select name='lstMedio' id='lstMedio' onChange='leerDatos(this.options[this.selectedIndex].value,document.hongkiat.lstTipo.options[document.hongkiat.lstTipo.selectedIndex].value);'>";
+    echo "<option value='0'>Elige</option>";
+      while ($data = $consultar->fetch(PDO::FETCH_OBJ))
+    {
+      echo "<option value='".$data->idMedioComunicacion."'>".$data->Nombre."</option>";
+    }
+    echo "</select>";
+  }
+?>
+<script src="js/mask.js"></script>
+<script>
+
+jQuery(function($){
+ $("#txtDUI").mask("99999999-9");   
+});
+
+</script>
 <script type='text/javascript' language='Javascript'>
 function seleccionar(){
-	/*document.getElementById("cargarCaja").style="display:none;";
-	document.getElementById("fecha").style.diplay="none";*/
-	var tipo=document.hongkiat.lstTipo.options[document.hongkiat.lstTipo.selectedIndex].value;
-	//document.getElementById("txtFecha").style="display:none;";
-	document.getElementById("dui").style.display="none";
-	if(tipo==1){
-		document.getElementById("cargarCaja").style.display="none";
-		document.getElementById("dui").style.display="";
-	}else if(tipo==2){
-		document.getElementById("cargarCaja").innerHTML="<input type='text' name='txtTarjeta' onKeyPress='leerDatos(document.hongkiat.txtTarjeta.value,document.hongkiat.lstTipo.value,document.hongkiat.inscrito.value);' class='id txtinput' id='txtTarjeta' placeholder='Digite el numero de Tarjeta' autocomplete='off' tabindex='1' style='width:25%;'>";
-	}else if(tipo==3){
-		document.getElementById("cargarCaja").innerHTML="<input type='text' name='txtNombre' onKeyPress='leerDatos(document.hongkiat.txtNombre.value,document.hongkiat.lstTipo.value,document.hongkiat.inscrito.value);' class='id txtinput' id='txtNombre' placeholder='Digite el nombre a buscar' autocomplete='off' tabindex='1' style='width:25%;'>";
-	}else{
-		document.getElementById("cargarCaja").innerHTML="";
-	}
+  /*document.getElementById("cargarCaja").style="display:none;";
+  document.getElementById("fecha").style.diplay="none";*/
+  var tipo=document.hongkiat.lstTipo.options[document.hongkiat.lstTipo.selectedIndex].value;
+  //document.getElementById("txtFecha").style="display:none;";
+  document.getElementById("dui").style.display="none";
+  if(tipo==1){
+    document.getElementById("cargarCaja").style.display="none";
+    document.getElementById("dui").style.display="";
+  }else if(tipo==2){
+    document.getElementById("cargarCaja").innerHTML="<input type='text' name='txtTarjeta' onKeyPress='leerDatos(document.hongkiat.txtTarjeta.value,document.hongkiat.lstTipo.value,document.hongkiat.inscrito.value);' class='id txtinput' id='txtTarjeta' placeholder='Digite el numero de Tarjeta' autocomplete='off' tabindex='1' style='width:25%;'>";
+  }else if(tipo==3){
+    document.getElementById("cargarCaja").innerHTML="<input type='text' name='txtNombre' onKeyPress='leerDatos(document.hongkiat.txtNombre.value,document.hongkiat.lstTipo.value,document.hongkiat.inscrito.value);' class='id txtinput' id='txtNombre' placeholder='Digite el nombre a buscar' autocomplete='off' tabindex='1' style='width:25%;'>";
+  }else{
+    document.getElementById("cargarCaja").innerHTML="";
+  }
 }
 </script>
 <br />
 <br />
-<script>
-  $(function() {
-    $( ".datepicker" ).datepicker({
-      changeMonth: true,
-      changeYear: true,
-      dateFormat:'yy-mm-dd'
-    });
-  });
-</script>
-<h2>RESERVAS</h2>
 <form name="hongkiat" id="hongkiat-form">
 <div id="wrapping" class="clearfix">
   <section id="aligned" style='text-align:center;'>
-        <label>Fecha de reporte a generar:</label>
-        <input type="text" name="txtFecha" id="txtFecha" placeholder="Fecha" autocomplete="off" tabindex="1" class="txtinput calendar datepicker" value="2014-08-28">
-	<div id="cargarCaja" style="clear:both;"></div>
-    <div id="resultado" style='background:black;font-size:15pt;'>
-    	<table width='100%'>
-    		<tr style="background:white;">
-    			<th>Pedicurista</th>
-    			<th>Hora</th>
-    			<th>Estado</th>
-    		</tr>
-    		<tr style="background:silver;">
-    			<td>Pedicurista 1</td>
-    			<td>08:00 a.m.</td>
-    			<td>Ocupado</td>
-    		</tr>
-    		<tr style="background:white;">
-    			<td>Pedicurista 2</td>
-          <td>08:00 a.m.</td>
-          <td>Disponible</td>
-    		</tr>
-    		<tr style="background:silver;">
-    			<td>Pedicurista 1</td>
-          <td>08:30 a.m.</td>
-          <td>Disponible</td>
-    		</tr>
-        <tr style="background:white;">
-          <td>Pedicurista 2</td>
-          <td>08:30 a.m.</td>
-          <td>Disponible</td>
-        </tr>
-        <tr style="background:silver;">
-          <td>Pedicurista 1</td>
-          <td>09:00 a.m.</td>
-          <td>Ocupado</td>
-        </tr>
-        <tr style="background:white;">
-          <td>Pedicurista 2</td>
-          <td>09:00 a.m.</td>
-          <td>Ocupado</td>
-        </tr>
-        <tr style="background:silver;">
-          <td>Pedicurista 1</td>
-          <td>09:30 a.m.</td>
-          <td>Disponible</td>
-        </tr>
-        <tr style="background:white;">
-          <td>Pedicurista 2</td>
-          <td>09:30 a.m.</td>
-          <td>Ocupado</td>
-        </tr>
-        <tr style="background:silver;">
-          <td>Pedicurista 1</td>
-          <td>10:00 a.m.</td>
-          <td>Ocupado</td>
-        </tr>
-        <tr style="background:white;">
-          <td>Pedicurista 2</td>
-          <td>10:00 a.m.</td>
-          <td>Disponible</td>
-        </tr>
-    	</table>
+    <h3>Digite para bucar:</h3>
+  <div id="cargarCaja" style="clear:both;"></div>
+    <div id="dui" style='display:;clear:both;'> 
+    <input type="text" name="txtBuscar" onKeyPress="leerDatos(this.value);" class="search txtinput" id="txtBuscar" placeholder="Reserva" autocomplete="off" tabindex="1" style="width:25%;">
+  </div>
+    <div id="resultado" style='background:black;font-size:12pt;'>
     </div>
-    <img src="images/print.png" width="64px" />
   </section>
 </div>
 </form>
