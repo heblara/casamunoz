@@ -647,7 +647,7 @@ class CasaMunoz {
     function consultar_inventario_sucursal($sucursal){ 
         $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager 
         $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL. 
-        $sql = "SELECT p.nom_producto,i.cant_inventario,MAX(DI.fec_ingreso) as fec_ingreso FROM INVENTARIO AS i
+        $sql = "SELECT p.cod_producto,p.nom_producto,i.cant_inventario,MAX(DI.fec_ingreso) as fec_ingreso FROM INVENTARIO AS i
         INNER JOIN PRODUCTO AS p ON i.cod_producto=p.cod_producto
 		INNER JOIN DETALLE_INGRESO AS DI ON p.cod_producto=DI.cod_producto
         WHERE i.cod_sucursal='".$sucursal."'
@@ -695,8 +695,8 @@ class CasaMunoz {
         $query = $dbh->prepare($sql); // Preparamos la consulta para dejarla lista para su ejecucion
         $hoy=date('Y-m-d H:i:s');
         $query->bindParam(":fecha",$hoy);
-        $query->bindParam(":cantidad",$dato[1]);
         $query->bindParam(":producto",$dato[0]);
+        $query->bindParam(":cantidad",$dato[1]);
         $query->bindParam(":sucursal",$dato[2]);
         if($query->execute()){
             return $query;
@@ -739,20 +739,26 @@ class CasaMunoz {
         unset($query);
     }
     function guardar_salida($dato) {
-        $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
-        $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
-        $sql = "INSERT INTO `DETALLE_SALIDA`(`fec_salida`, `cant_salida`, `cod_emp`,`cod_producto`) 
-        VALUES (:fecha,:cantidad,:empleado,:producto)";
-        $query = $dbh->prepare($sql); // Preparamos la consulta para dejarla lista para su ejecucion
-        $hoy=date('Y-m-d H:i:s');
-        $query->bindParam(":fecha",$hoy);
-        $query->bindParam(":cantidad",$dato[1]);
-        $query->bindParam(":producto",$dato[0]);
-        $query->bindParam(":empleado",$dato[2]);
-        if($query->execute()){
-            return $query;
-        }else{
-            return false;
+        try{
+            $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
+            $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
+            $sql = "INSERT INTO `DETALLE_SALIDA`(`fec_salida`, `cant_salida`, `cod_emp`,`cod_producto`) 
+            VALUES (:fecha,:cantidad,:empleado,:producto)";
+            $query = $dbh->prepare($sql); // Preparamos la consulta para dejarla lista para su ejecucion
+            $hoy=date('Y-m-d H:i:s');
+            $query->bindParam(":fecha",$hoy);
+            $query->bindParam(":cantidad",$dato[1]);
+            $query->bindParam(":producto",$dato[0]);
+            $query->bindParam(":empleado",$dato[2]);
+            if ($query->execute()){
+                return $query; //pasamos el query para utilizarlo luego con fetch
+            }else{
+                /*echo "\nPDO::errorInfo():\n";
+                print_r($dbh->errorInfo());*/
+                return false;
+            }
+        } catch(PDOExecption $e) {
+            print "Error!: " . $e->getMessage() . "</br>"; 
         }
         unset($dbh);
         unset($query);
@@ -769,7 +775,7 @@ class CasaMunoz {
         if($query->execute()){
             return $query;
         }else{
-            echo "\nPDOStatement::errorInfo():\n";
+            echo "\nInventario PDOStatement::errorInfo():\n";
             $arr = $query->errorInfo();
             print_r($arr);
             return false;
@@ -778,17 +784,23 @@ class CasaMunoz {
         unset($query);
     }
     function actualizar_inventario($dato) {
-        $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
-        $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
-        $sql = "UPDATE `INVENTARIO` SET `cant_inventario`=:cantidad WHERE `cod_sucursal`=:sucursal and `cod_producto`=:producto";
-        $query = $dbh->prepare($sql); // Preparamos la consulta para dejarla lista para su ejecucion
-        $query->bindParam(":producto",$dato[0]);
-        $query->bindParam(":sucursal",$dato[1]);
-        $query->bindParam(":cantidad",$dato[2]);
-        if($query->execute()){
-            return $query;
-        }else{
-            return false;
+        try{
+            $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
+            $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
+            $sql = "UPDATE `INVENTARIO` SET `cant_inventario`=:cantidad WHERE `cod_sucursal`=:sucursal and `cod_producto`=:producto";
+            $query = $dbh->prepare($sql); // Preparamos la consulta para dejarla lista para su ejecucion
+            $query->bindParam(":producto",$dato[0]);
+            $query->bindParam(":sucursal",$dato[1]);
+            $query->bindParam(":cantidad",$dato[2]);
+            if ($query->execute()){
+                return $query; //pasamos el query para utilizarlo luego con fetch
+            }else{
+                /*echo "\nInventario PDO::errorInfo():\n";
+                print_r($dbh->errorInfo());*/
+                return false;
+            }
+        } catch(PDOExecption $e) {
+            print "Error!: " . $e->getMessage() . "</br>"; 
         }
         unset($dbh);
         unset($query);

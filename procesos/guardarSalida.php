@@ -12,7 +12,8 @@ for ($i=0;$i<count($txtProducto);$i++){
 		//echo $txtCantidadEntrega[$i]."- ".$txtExistencia[$i]."<br />";
 		$respuesta->mensaje = 3;
 	}else{
-		$salida=array($txtProducto[$i],$txtCantidadEntrega[$i], $lstEmpleadoSucursal);
+		$salida=array($txtProducto[$i],$txtCantidadEntrega[$i],$lstEmpleadoSucursal,$_SESSION['sucursal']);
+		print_r($salida);
 		if($obj->guardar_salida($salida)){
 			$inventario=array($txtProducto[$i],$_SESSION['sucursal']);
 			$consInventario=$obj->consultar_inventario($inventario);
