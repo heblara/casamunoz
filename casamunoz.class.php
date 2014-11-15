@@ -1066,6 +1066,32 @@ function consultar_servicios($dato) {
         unset($query);
     	}
     	
+    	function consultar_reserva($sucursal) {
+        $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
+        $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
+        $sql = "SELECT 
+    c.primer_nom,
+	c.primer_ape,
+	e.primer_nom,
+	e.primer_ape,
+    s.nom_servicio,
+    co.fec_estado_rsv,
+	es.estado_rsv
+FROM EMPLEADO AS e 
+INNER JOIN RESERVA r ON r.cod_emp=e.cod_emp
+INNER JOIN CONTROL co ON co.cod_rsv=r.cod_rsv
+INNER JOIN ESTADO_RESERVA AS es ON es.cod_estado_rsv=co.cod_estado
+INNER JOIN CLIENTE c ON c.cod_cliente = r.cod_cliente
+INNER JOIN SERVICIO s ON s.cod_servicio = r.cod_servicio";
+        $query = $dbh->prepare($sql); // Preparamos la consulta para dejarla lista para su ejecucion
+        $query->execute(); // Ejecutamos la consulta
+        if ($query)
+            return $query; //pasamos el query para utilizarlo luego con fetch
+        else
+            return false;
+        unset($dbh);
+        unset($query);
+    }
     	function mostrar_sucursal_servicio($dato) {
         $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
         $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
