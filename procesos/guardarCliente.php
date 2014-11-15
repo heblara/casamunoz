@@ -30,7 +30,7 @@ if($consCliente->rowCount()>0){
 }else{
 	$cod="001";
 }
-$codigo=$letraApe.$letraNom.$cod;
+$codigo="C-".$letraApe.$letraNom.$cod;
 //$respuesta->mensaje=$codigo;
 //echo "Codigo: ".$codigo;
 $Cliente=array($codigo,$txtNombre1,$txtNombre2,$txtApellido1,$txtApellido2,$lstGenero,$txtFecNac,$txtTelFijo,$txtCorreo,$rdDiabetico,$txtenfer,$_SESSION['nombre1'],1,$estados);
