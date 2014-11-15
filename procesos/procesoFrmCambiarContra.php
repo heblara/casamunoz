@@ -10,9 +10,10 @@ if($txtContraActual==""){
 	$error=true;
 }
 if($error==false){
-	$consul=mysql_query("SELECT * FROM usuario WHERE Usuario='".$_SESSION["nombre"]."' and Contrasena=md5('".$_POST["txtContraActual"]."')");	
+	//echo "SELECT * FROM USUARIO WHERE usuario='".$_SESSION["usuario"]."' and contra_usuario=md5('".$txtContraActual."')";
+	$consul=mysql_query("SELECT * FROM USUARIO WHERE usuario='".$_SESSION["usuario"]."' and contra_usuario=md5('".$txtContraActual."')");	
 	//$respuesta->mensaje = "SELECT * FROM usuario WHERE Usuario='".$_SESSION["nombre"]."' and Contrasena=md5('".$_POST["txtContraActual"]."')"
-	$nr=mysql_num_rows($consul);
+	@$nr=mysql_num_rows($consul);
 	if($nr==1){
 		if($txtContraNueva==""){
 			$respuesta->mensaje = "Debe ingresar una contraseña nueva para continuar";
@@ -24,7 +25,7 @@ if($error==false){
 			$respuesta->mensaje = "La nueva contraseña no coincide con su confirmación";
 			$error=true;
 		}else{
-			if(mysql_query("UPDATE usuario SET Contrasena=md5('".$_POST["txtContraNueva"]."') WHERE Usuario='".$_SESSION["nombre"]."'")){
+			if(mysql_query("UPDATE USUARIO SET contra_usuario=md5('".$_POST["txtContraNueva"]."') WHERE usuario='".$_SESSION["usuario"]."'")){
 				$respuesta->mensaje = "1";
 				//echo "Contraseña cambiada";
 			}else{
