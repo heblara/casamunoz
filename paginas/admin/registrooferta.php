@@ -4,12 +4,77 @@
   <link rel="stylesheet" href="/resources/demos/style.css">
   <script type="text/javascript" src="js/jquery.blockUI.js"></script>  
 <script type="text/javascript">
+
+	function validar(){
+    nombre=document.getElementById('txtNombre').value;
+    descripcion=document.getElementById('message').value;
+    fechalimite=document.getElementById('txtFecLimite').value;
+	descuento=document.getElementById('txtDescuento').value;
+	servicio=document.getElementById('lstServicio').value;
+    msg="";
+    error=false;
+	var ok = 0;
+    var ckbox = document.getElementsByName('seleccion[]');
+        for (var i=0; i < ckbox.length; i++){
+            if(ckbox[i].checked == true){
+            ok = 1;
+            }
+        }
+	if(nombre=="" || nombre==null){
+        msg+='* Nombre';
+        alert("Ingrese el nombre de la oferta");
+        //#hongkiat-form input.name
+        document.getElementsByName('txtNombre').style="border-color:#F80303;";
+        document.getElementById('txtNombre').focus();
+        error=true;
+    }else if(descripcion=="" || descripcion==null){
+        msg+='* Descripcion';
+        alert("Ingrese la descripcion");
+        //#hongkiat-form input.name
+        document.getElementsByName('message').style="border-color:#F80303;";
+        document.getElementById('message').focus();
+        error=true;
+    }else if(fechalimite=="" || fechalimite==null){
+        msg+='* Fecha';
+        alert("Ingrese la fecha limite");
+        //#hongkiat-form input.name
+        document.getElementsByName('txtFecLimite').style="border-color:#F80303;";
+        document.getElementById('txtFecLimite').focus();
+        error=true;
+	}else if(descuento=="" || descuento==null){
+        msg+='* Descuento';
+        alert("Ingrese el descuento");
+        //#hongkiat-form input.name
+        document.getElementsByName('txtDescuento').style="border-color:#F80303;";
+        document.getElementById('txtDescuento').focus();
+        error=true;
+    }else if(servicio==0){
+        msg+='* Servicio';
+        alert("Seleccione un servicio");
+        //#hongkiat-form input.name
+        document.getElementsByName('lstServicio').style="border-color:#F80303;";
+        error=true;
+	}else if(ok == 0){
+        alert('Indique una sucursal');
+        return false;
+    }
+	if(error==true){
+      return false;
+    }else{
+      //enviarDatos();
+      return true;
+    }
+}
+
+
+
+
   $(function() {
     $('.datepicker').datepicker({
       dateFormat: 'yy-mm-dd', 
       changeMonth: true, 
       changeYear: true, 
-      yearRange: '-40:+0'
+      yearRange: '+0:+10'
       });
     });
 
@@ -28,6 +93,8 @@ function enviarDatos(){
     }).done(function(respuesta){
         if(respuesta.mensaje==1){
           alert("Registro realizado con exito");
+		  document.getElementById('hongkiat-form').reset();
+          document.getElementById('txtNombre').focus();
         }else if(respuesta.mensaje==2){
           alert("No fue posible registrar la Oferta");
         }
@@ -35,10 +102,18 @@ function enviarDatos(){
 }
 $(document).ready(function(){         
   $("#submitbtn").click(function(){
-      enviarDatos();
+    if(validar()){
+        enviarDatos();
+      }
       return false;
   });
 });
+</script>
+<script src="js/mask.js"></script>
+<script>
+  jQuery(function($){
+     $("#txtDescuento").mask("0.99");   
+  });
 </script>
 <form name="hongkiat" id="hongkiat-form" method="post" action="#">
     <div id="wrapping" class="clearfix">
