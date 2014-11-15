@@ -4,6 +4,80 @@
 <link rel="stylesheet" href="/resources/demos/style.css">
 <script type="text/javascript" src="js/jquery.blockUI.js"></script>
 <script type="text/javascript">
+
+  function validarEmail(valor) {
+  if (/(\w+)(\.?)(\w*)(\@{1})(\w+)(\.?)(\w*)(\.{1})(\w{2,3})/.test(valor)){
+  return true;
+  } else {
+  return false;
+  }
+}
+
+
+	function validar(){
+    nombre=document.getElementById('txtNombre').value;
+    direccion=document.getElementById('txtDireccion').value;
+    telefono=document.getElementById('txtTelefono').value;
+    correo=document.getElementById('txtCorreo').value;
+	departamento=document.getElementById('paises').value;
+	municipio=document.getElementById('estados').value;
+	msg="";
+    error=false;
+    if(nombre=="" || nombre==null){
+        msg+='* Nombre';
+        alert("Ingrese el nombre de la sucursal");
+        //#hongkiat-form input.name
+        document.getElementsByName('txtNombre').style="border-color:#F80303;";
+        document.getElementById('txtNombre').focus();
+        error=true;
+    }else if(direccion=="" || direccion==null){
+        msg+='* Direccion';
+        alert("Ingrese la direccion");
+        //#hongkiat-form input.name
+        document.getElementsByName('txtDireccion').style="border-color:#F80303;";
+        document.getElementById('txtDireccion').focus();
+        error=true;
+    }else if(telefono=="" || telefono==null){
+        msg+='* Telefono';
+        alert("Ingrese el Telefono de la Sucursal");
+        //#hongkiat-form input.name
+        document.getElementsByName('txtTelefono').style="border-color:#F80303;";
+        document.getElementById('txtTelefono').focus();
+        error=true;
+    }else if(correo=="" || correo==null){
+        msg+='* Correo ';
+        alert("Ingrese el correo");
+        //#hongkiat-form input.name
+        document.getElementsByName('txtCorreo').style="border-color:#F80303;";
+        document.getElementById('txtCorreo').focus();
+        error=true;
+    }else if(!validarEmail(document.getElementById("txtCorreo").value)){ // validamos el correo valido
+		alert("Ingrese un correo valido");
+		error=true;
+	}else if(departamento==0){
+        msg+='* Departamento';
+        alert("Seleccion un Departamento");
+        //#hongkiat-form input.name
+        document.getElementsByName('paises').style="border-color:#F80303;";
+        error=true;
+    }else if(municipio==0){
+        msg+='* Municipio';
+        alert("Seleccion un Municipio");
+        //#hongkiat-form input.name
+        document.getElementsByName('estados').style="border-color:#F80303;";
+        error=true;
+    }
+	
+    if(error==true){
+      return false;
+    }else{
+      //enviarDatos();
+      return true;
+    }
+}
+
+
+
   $(function() {
     $('.datepicker').datepicker({
       dateFormat: 'yy-mm-dd', 
@@ -37,10 +111,18 @@ function enviarDatos(){
 }
 $(document).ready(function(){         
   $("#submitbtn").click(function(){
-      enviarDatos();
+    if(validar()){
+        enviarDatos();
+      }
       return false;
   });
 });
+</script>
+<script src="js/mask.js"></script>
+<script>
+  jQuery(function($){
+     $("#txtTelefono").mask("9999-9999");   
+  });
 </script>
 <form name="hongkiat" id="hongkiat-form" method="post" action="#" onsubmit="return false;">
     <div id="wrapping" class="clearfix">
@@ -55,7 +137,7 @@ $(document).ready(function(){
         <input type="text" name="txtTelefono" id="txtTelefono" placeholder="Telefono" autocomplete="off" tabindex="1" class="txtinput offer" >  
         <br/>
         <label>Correo:</label>
-        <input type="text" name="txtCorreo" id="txtCorreo" placeholder="Correo" autocomplete="off" tabindex="1" class="txtinput offer">
+        <input type="text" name="txtCorreo" id="txtCorreo" placeholder="ejemplo@casamunoz.com" autocomplete="off" tabindex="1" class="txtinput offer">
         <br />
 
 		
