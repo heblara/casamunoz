@@ -47,6 +47,10 @@ $conf['cambiarcontrasena']=array(
 'layout'=>LAYOUT_INICIO
 );
 //admin
+$conf['usuarioempleado']=array(
+'archivo'=>'admin/usuarioempleado.php',
+'layout'=>LAYOUT_INICIO
+);
 $conf['registroempleado']=array(
 'archivo'=>'admin/registroempleados.php',
 'layout'=>LAYOUT_INICIO
@@ -99,7 +103,6 @@ $conf['enviarCorreo']=array(
 'archivo'=>'enviarCorreo.php',
 'layout'=>LAYOUT_INICIO
 );
-
 $conf['validarcorreo']=array(
 'archivo'=>'validarcorreo.php',
 'layout'=>LAYOUT_INICIO
@@ -141,7 +144,10 @@ $conf['registrarse']=array(
 );
 
 //EMPLEADO
-
+$conf['usuariocliente']=array(
+'archivo'=>'empleado/crearUsuario.php',
+'layout'=>LAYOUT_INICIO
+);
 $conf['hojamateriales']=array(
 'archivo'=>'empleado/frmHojaMateriales.php',
 'layout'=>LAYOUT_INICIO

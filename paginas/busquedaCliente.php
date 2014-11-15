@@ -10,6 +10,7 @@ if(isset($_GET['valor'])){
 		echo "<tr>
 		<td>No.</td>
 		<td>Nombre</td>
+		<td>Opcion</td>
 		</tr>";
 		$i=0;	
 		while($resCliente=$consCliente->fetch(PDO::FETCH_OBJ)){
@@ -17,7 +18,8 @@ if(isset($_GET['valor'])){
 			echo "<tr>
 			<td>".$i."</td>
 			<td>".$resCliente->NombreCompleto."</td>
-			<td><a href='?mod=modificarcliente&id=".base64_encode($resCliente->cod_cliente)."'><img src='img/edit.png' /></a></td>
+			<td><a href='?mod=modificarcliente&id=".base64_encode($resCliente->cod_cliente)."'><img src='img/edit.png' /></a>
+			<a title='Crear usuario' href='?mod=usuariocliente&id=".base64_encode($resCliente->cod_cliente)."'><img src='images/user.png' /></a></td>
 			</tr>";
 		}
 		echo "</table>";

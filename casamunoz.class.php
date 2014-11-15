@@ -482,6 +482,52 @@ class CasaMunoz {
         unset($dbh);
         unset($query);
     }
+    function actualizar_usuario_empleado($dato,$emp){
+        $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
+        $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
+        $sql = "UPDATE EMPLEADO SET cod_usuario=:usuario WHERE cod_emp=:emp";
+        $query = $dbh->prepare($sql); // Preparamos la consulta para dejarla lista para su ejecucion
+        $query->bindParam(":usuario",$dato);
+        $query->bindParam(":emp",$emp);
+        $query->execute(); // Ejecutamos la consulta
+        if ($query)
+            return $query; //pasamos el query para utilizarlo luego con fetch
+        else
+            return false;
+        unset($dbh);
+        unset($query);
+    }
+    function actualizar_usuario_cliente($dato,$cliente){
+        $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
+        $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
+        $sql = "UPDATE CLIENTE SET cod_usuario=:usuario WHERE cod_cliente=:cliente";
+        $query = $dbh->prepare($sql); // Preparamos la consulta para dejarla lista para su ejecucion
+        $query->bindParam(":usuario",$dato);
+        $query->bindParam(":cliente",$cliente);
+        $query->execute(); // Ejecutamos la consulta
+        if ($query)
+            return $query; //pasamos el query para utilizarlo luego con fetch
+        else
+            return false;
+        unset($dbh);
+        unset($query);
+    }
+    function consultar_ultimo_usuario() {
+        $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
+        $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
+        $sql = "SELECT LAST_INSERT_ID( cod_usuario ) AS last_id
+                FROM USUARIO
+                ORDER BY last_id DESC  ";
+        $query = $dbh->prepare($sql); // Preparamos la consulta para dejarla lista para su ejecucion
+        //$query->bindParam(":nombre",$dato);
+        $query->execute(); // Ejecutamos la consulta
+        if ($query)
+            return $query; //pasamos el query para utilizarlo luego con fetch
+        else
+            return false;
+        unset($dbh);
+        unset($query);
+    }
     function consultar_empleado_sucursal($sucursal,$empleado) {
         $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
         $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.

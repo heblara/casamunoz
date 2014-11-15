@@ -99,7 +99,7 @@ $(document).ready(function(){
             <td>".$producto->cant_inventario."
             <input type='hidden' name='txtExistencia[]' id='txtExistencia[]' value='".$producto->cant_inventario."' />
             <input type='hidden' name='txtProducto[]' id='txtProducto[]' value='".$producto->cod_producto."' /></td>
-            <td><input type='number' name='txtCantidadEntrega[]' id='txtCantidadEntrega[]' /></td>
+            <td><input type='number' name='txtCantidadEntrega[]' id='txtCantidadEntrega[]' min=0 /></td>
           </tr>";
         }
         ?>

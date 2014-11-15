@@ -10,13 +10,10 @@ if(isset($_GET['valor'])){
 		echo "<tr>
 		<td>No.</td>
 		<td>Nombre</td>
-		<td>Dui</td>
-		<td>Nit</td>
-		<td>Telefono</td>
-		<td>Correo</td>
-		<td>Fecha Contrato</td>
-		<td>Fin Contrato</td>
-		<td>codigo</td>
+		<td>DUI</td>
+		<td>NIT</td>
+		<td>Codigo</td>
+		<td>Opcion</td>
 		</tr>";
 		$i=0;	
 		while($resEmpleado=$consEmpleado->fetch(PDO::FETCH_OBJ)){
@@ -26,13 +23,14 @@ if(isset($_GET['valor'])){
 			<td>".$resEmpleado->NombreCompleto."</td>
 			<td>".$resEmpleado->dui_emp."</td>
 			<td>".$resEmpleado->nit_emp."</td>
-			<td>".$resEmpleado->tel_fijo."</td>
-			<td>".$resEmpleado->correo_emp."</td>
-			<td>".$resEmpleado->fec_ini_cont."</td>
-			<td>".$resEmpleado->fec_fin_cont."</td>
 			<td>".$resEmpleado->cod_emp."</td>
-			
-			<td><a href='?mod=consultaempleado&id=".base64_encode($resEmpleado->cod_emp)."'><img src='img/edit.png' /></a></td>
+			<td><a href='?mod=consultaempleado&id=".base64_encode($resEmpleado->cod_emp)."'><img src='img/edit.png' /></a>
+			";
+			if($resEmpleado->cod_cargo==1 || $resEmpleado->cod_cargo==3){
+				echo "<a href='?mod=usuarioempleado&id=".base64_encode($resEmpleado->cod_emp)."'><img src='images/user.png' />";
+			}
+			echo "
+			</td>
 			</tr>";
 		}
 		echo "</table>";
