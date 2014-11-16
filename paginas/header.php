@@ -17,11 +17,11 @@
 		
 		$consNombre1=$cm1->consultar_nombre1($_SESSION['usuario']);
 		$resNombre1=$consNombre1->fetch(PDO::FETCH_OBJ);
-		$nombre1=$resNombre1->NombreCompleto;
+		@$nombre1=$resNombre1->NombreCompleto;
 		
 		$consNombre2=$cm1->consultar_nombre2($_SESSION['nombre1']);
 		$resNombre2=$consNombre2->fetch(PDO::FETCH_OBJ);
-		$nombre2=$resNombre2->NombreCompleto;
+		@$nombre2=$resNombre2->NombreCompleto;
 		
 		if($_SESSION['tipo']==1){
 			echo "<p style='font-size:12pt;float:right;'>Bienvenido $nombre2 (<a href='?mod=logout'>Salir</a>)<br /></p><br/><br />";

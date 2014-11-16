@@ -6,9 +6,9 @@ class ConfigDB{
         var $Password_MySQL; //CONTRASENA MYSQL
         function configDB(){
                 $this->DB_MySQL="casamunoz"; 
-                $this->Server_MySQL="192.168.56.101";
+                $this->Server_MySQL="localhost";
                 $this->User_MySQL="root";
-                $this->Password_MySQL="admin2014";
+                $this->Password_MySQL="";
         }
 }
 ?>

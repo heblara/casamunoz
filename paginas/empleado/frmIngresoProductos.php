@@ -8,11 +8,15 @@
     producto=document.getElementById('lstProducto').value;
     cantidad=document.getElementById('txtCantidadEntrega').value;
     error=false;
+	cant=parseInt(cantidad);
     if(producto==0){
         alert("Seleccione un producto");
         error=true;
     }else if(isNaN(cantidad)){
         alert("Ingrese un numero en la cantidad");
+        error=true;
+    }else if(cant <= 0 ){
+        alert("La cantidad debe ser mayor que cero");
         error=true;
     }
     if(error==true){
@@ -40,7 +44,8 @@ function enviarDatos(){
           alert("No fue posible registrar la entrada");
         }else if(respuesta.mensaje==1){
           alert("Registro realizado con exito");
-        }
+		  document.getElementById('hongkiat-form').reset();
+         }
     });
 }
 $(document).ready(function(){         
