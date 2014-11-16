@@ -467,6 +467,24 @@ class CasaMunoz {
         unset($dbh);
         unset($query);
     }
+    function consultar_disponibilidad_empleado($sucursal,$fecha,$empleado){
+        $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
+        $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
+        $sql = "SELECT * FROM EMPLEADO AS e
+        INNER JOIN DIA_LIBRE AS dl ON e.cod_emp=dl.cod_emp
+        WHERE e.cod_sucursal=:sucursal and dl.fec_libre=:fecha and dl.cod_emp=:empleado";
+        $query = $dbh->prepare($sql); // Preparamos la consulta para dejarla lista para su ejecucion
+        $query->bindParam(":sucursal",$sucursal);
+        $query->bindParam(":fecha",$fecha);
+        $query->bindParam(":empleado",$empleado);
+         // Ejecutamos la consulta
+        if ($query->execute())
+            return $query; //pasamos el query para utilizarlo luego con fetch
+        else
+            return false;
+        unset($dbh);
+        unset($query);
+    }
     function consultar_empleados_sucursal($sucursal) {
         $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
         $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
@@ -993,8 +1011,41 @@ function consultar_servicios($dato) {
         unset($dbh);
         unset($query);
     }
+    function listar_servicios() {
+        $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
+        $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
+        $sql = "SELECT * FROM SERVICIO";
+        $query = $dbh->prepare($sql); // Preparamos la consulta para dejarla lista para su ejecucion
+        $query->bindParam(":codigo",$dato);
+        $query->execute(); // Ejecutamos la consulta
+        if ($query)
+            return $query; //pasamos el query para utilizarlo luego con fetch
+        else
+            return false;
+        unset($dbh);
+        unset($query);
+    }
     
-    
+    function consultar_horario_sucursal($sucursal,$dia) {
+        $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
+        $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
+        $sql = "SELECT * FROM HORARIO AS h 
+        INNER JOIN SUCURSAL_HORARIO AS sh ON h.cod_horario=sh.cod_horario
+        WHERE sh.cod_sucursal=:sucursal AND h.dia_horario=:dia";
+        $query = $dbh->prepare($sql); // Preparamos la consulta para dejarla lista para su ejecucion
+        $query->bindParam(":sucursal",$sucursal);
+        //$dia=date('w');
+        $query->bindParam(":dia",$dia);
+        $query->execute(); // Ejecutamos la consulta
+        if ($query)
+            return $query; //pasamos el query para utilizarlo luego con fetch
+        else
+            return false;
+        unset($dbh);
+        unset($query);
+    }
+
+
     function registrar_cargo($dato) {
         $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
         $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
