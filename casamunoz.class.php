@@ -1243,20 +1243,3 @@ GROUP BY fec_estado_rsv";
     }
 }
 ?>
-
-    	function mostrar_sucursal_servicio($dato) {
-        $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
-        $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
-        $sql = "SELECT * FROM DISPONIBILIDAD_SERVICIO WHERE cod_servicio = :codigo";
-        $query = $dbh->prepare($sql); // Preparamos la consulta para dejarla lista para su ejecucion
-        $query->bindParam(":codigo",$dato);
-        $query->execute(); // Ejecutamos la consulta
-        if ($query)
-            return $query; //pasamos el query para utilizarlo luego con fetch
-        else
-            return false;
-        unset($dbh);
-        unset($query);
-    }
-}
-?>
