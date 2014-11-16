@@ -21,8 +21,12 @@ if($objReserva->registrar_reserva($reserva)){
 		$mensaje="Se ha procesado la reserva en el sistema, le solicitamos ser puntual con el horario.
 		<br /><br />Su reserva ha sido creada para el dia ".date("d-m-Y",strtotime($txtFecha))." a las ".$txtHora." horas";
 		//echo $mensaje;
-		Enviar_Email($cliente->correo_cliente,$cliente->NombreCompleto,$mensaje,"Casa munoz","","Estado de reserva","");
-		$respuesta->mensaje = 1;
+		if(Enviar_Email($cliente->correo_cliente,$cliente->NombreCompleto,$mensaje,"Casa munoz","","Estado de reserva","")){
+			echo "Correo enviado";
+			$respuesta->mensaje = 1;
+		}else{
+			$respuesta->mensaje = 3;
+		}
 	}else{
 		$respuesta->mensaje = 2;
 	}

@@ -76,10 +76,11 @@ $(document).ready(function(){
 <script>
     $(function() {
       $('.datepicker').datepicker({
-      dateFormat: 'yy-mm-dd', 
-      changeMonth: true, 
-      changeYear: true, 
-      yearRange: '-90:-18'
+        dateFormat: 'yy-mm-dd', 
+        changeMonth: true, 
+        changeYear: true, 
+        yearRange: '-90:-18',
+        minDate: '-100Y', maxDate: "-18Y +0D"
       });
     });
 </script>

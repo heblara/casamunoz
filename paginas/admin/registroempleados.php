@@ -134,21 +134,51 @@ $(document).ready(function(){
 });
 </script>
 <script>
- $(function() {
-  $('.datepicker').datepicker({
-  dateFormat: 'yy-mm-dd', 
-  changeMonth: true, 
-  changeYear: true, 
-  yearRange: '-100:+0'
-  });
+  $(function() {
+      $( "#txtFecIni" ).datepicker({
+        defaultDate: "+1w",
+        changeMonth: true,
+        numberOfMonths: 1,
+        minDate: "+0D",
+        onClose: function( selectedDate ) {
+          $( "#txtFecFin" ).datepicker( "option", "minDate", selectedDate );
+        }
+      });
+      $( "#txtFecFin" ).datepicker({
+        defaultDate: "+1w",
+        changeMonth: true,
+        numberOfMonths: 1,
+        onClose: function( selectedDate ) {
+          $( "#txtFecIni" ).datepicker( "option", "maxDate", selectedDate );
+        }
+      });
     });
- $(function() {
-  $('#txtFecNac').datepicker({
-  dateFormat: 'yy-mm-dd', 
-  changeMonth: true, 
-  changeYear: true, 
-  yearRange: '-100:-18'
-  });
+    /*$(function() {
+      $('#txtFecIni').datepicker({
+        dateFormat: 'yy-mm-dd', 
+        changeMonth: true, 
+        changeYear: true, 
+        //yearRange: '-90:-18',
+        minDate: '-100Y', maxDate: "+0D"
+      });
+    });
+    $(function() {
+      $('#txtFecFin').datepicker({
+        dateFormat: 'yy-mm-dd', 
+        changeMonth: true, 
+        changeYear: true, 
+        //yearRange: '-90:-18',
+        minDate: document.getElementById('txtFecIni').value, maxDate: "+10Y"
+      });
+    });*/
+  $(function() {
+      $('#txtFecNac').datepicker({
+            dateFormat: 'yy-mm-dd', 
+            changeMonth: true, 
+            changeYear: true, 
+            yearRange: '-90:-18',
+            minDate: '-100Y', maxDate: "-18Y +0D"
+      });
     });
 </script>
 <script src="js/mask.js"></script>

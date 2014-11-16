@@ -479,6 +479,21 @@ class CasaMunoz {
         unset($dbh);
         unset($query);
     }
+    function buscar_usuario($username){
+        $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
+        $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
+        $sql = "SELECT * FROM USUARIO where usuario=:usuario";
+        $query = $dbh->prepare($sql); // Preparamos la consulta para dejarla lista para su ejecucion
+        $query->bindParam(":usuario",$username);
+        $query->execute(); // Ejecutamos la consulta
+        if($query->execute()){
+            return $query;
+        }else{
+            return false;
+        }
+        unset($dbh);
+        unset($query);
+    }
 	function consultar_empleados() {
         $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
         $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
