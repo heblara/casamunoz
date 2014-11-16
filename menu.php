@@ -76,9 +76,9 @@ if(isset($_SESSION['autenticado'])){
         <li class='last'><a href='?mod=vistareservaemp'><span>Vista de reserva</span></a></li>
       </ul>
     </li>
-    <li class='active has-sub'><a href='#'><span>Reporte</span></a>
+    <li class='active has-sub'><a href='#'><span>Reportes</span></a>
       <ul>
-         <li><a href='?mod=reporteventas'><span>Ventas</span></a></li>
+         <li><a href='?mod=reporteventas'><span>Reportes de Ventas</span></a></li>
       </ul>
     </li>
     <li class='active has-sub'><a href='#'><span>Productos</span></a>
