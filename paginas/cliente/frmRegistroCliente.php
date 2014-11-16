@@ -96,7 +96,7 @@ $(document).ready(function(){
 </script>
 
 
-<form name="hongkiat" id="hongkiat-form" method="post" action="#" onsubmit="return false;">
+<form name="hongkiat" id="hongkiat-form">
     <div id="wrapping" class="clearfix">
         <section id="aligned">
         <h2>REGISTRO DE CLIENTES</h2>

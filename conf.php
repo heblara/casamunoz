@@ -161,7 +161,7 @@ $conf['registrarcliente']=array(
 'layout'=>LAYOUT_INICIO
 );
 $conf['reservarservicio']=array(
-'archivo'=>'empleado/frmIniciarReservaEmpleado.php',
+'archivo'=>'empleado/frmIniciarReserva.php',
 'layout'=>LAYOUT_INICIO
 );
 $conf['vistareservaemp']=array(

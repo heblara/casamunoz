@@ -38,6 +38,6 @@ if(isset($_GET['sucursal']) && isset($_GET['fecha']) && isset($_GET['serv'])){
 	//echo "Fecha: ".$_GET['fecha'];
 	$fecha=explode("-", $fecha);
 	$date=$fecha[0].$fecha[1].$fecha[2];
-	echo "<input type='time' min='".$horaIni."' max='".$horaFin."' class='txtinput time' onchange='cargarHorario(".$sucursal.",".$date.",this.value)'>";
+	echo "<input type='time' name='txtHora' id='txtHora' min='".$horaIni."' max='".$horaFin."' class='txtinput time' onchange='cargarHorario(".$sucursal.",".$date.",this.value)'>";
 }
 ?>

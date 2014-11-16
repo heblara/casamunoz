@@ -21,7 +21,7 @@ class CasaMunoz {
     function consultar_clientes() {
         $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
         $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
-        $sql = "SELECT * FROM CLIENTE";
+        $sql = "SELECT *,CONCAT_WS(' ',primer_nom,segundo_nom,primer_ape,segundo_ape) as NombreCompleto FROM CLIENTE";
         $query = $dbh->prepare($sql); // Preparamos la consulta para dejarla lista para su ejecucion
         $query->bindParam(":nombre",$dato);
         $query->execute(); // Ejecutamos la consulta
@@ -29,6 +29,43 @@ class CasaMunoz {
             return $query; //pasamos el query para utilizarlo luego con fetch
         else
             return false;
+        unset($dbh);
+        unset($query);
+    }
+    //INSERT INTO `RESERVA`(`cod_rsv`, `cod_cliente`, `cod_sucursal`, `cod_servicio`, `cod_emp`) VALUES ([value-1],[value-2],[value-3],[value-4],[value-5])
+    function registrar_reserva($dato) {
+        $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
+        $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
+        $sql = "INSERT INTO `RESERVA`(`cod_cliente`, `cod_sucursal`, `cod_servicio`, `cod_emp`) 
+        VALUES (:cliente,:sucursal,:servicio,:empleado)";
+        $query = $dbh->prepare($sql); // Preparamos la consulta para dejarla lista para su ejecucion
+        $query->bindParam(":cliente",$dato[0]);
+        $query->bindParam(":sucursal",$dato[1]);
+        $query->bindParam(":servicio",$dato[2]);
+        $query->bindParam(":empleado",$dato[3]);
+        
+        if($query->execute()){
+            return $query;
+        }else{
+            return false;
+        }
+        unset($dbh);
+        unset($query);
+    }
+    function guardar_control($dato) {
+        $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
+        $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
+        $sql = "INSERT INTO `CONTROL`(`cod_estado`, `cod_rsv`, `fec_estado_rsv`) 
+        VALUES (:estado,:reserva,:fecha)";
+        $query = $dbh->prepare($sql); // Preparamos la consulta para dejarla lista para su ejecucion
+        $query->bindParam(":estado",$dato[0]);
+        $query->bindParam(":reserva",$dato[1]);
+        $query->bindParam(":fecha",$dato[2]);
+        if($query->execute()){
+            return $query;
+        }else{
+            return false;
+        }
         unset($dbh);
         unset($query);
     }
@@ -87,6 +124,22 @@ class CasaMunoz {
         }else{
             return false;
         }
+        unset($dbh);
+        unset($query);
+    }
+    function consultar_ultimo_id($tabla,$campo) {
+        $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
+        $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
+        $sql = "SELECT LAST_INSERT_ID( $campo ) AS last_id
+        FROM $tabla
+        ORDER BY last_id DESC ";
+        $query = $dbh->prepare($sql); // Preparamos la consulta para dejarla lista para su ejecucion
+        //$query->bindParam(":nombre",$dato);
+        $query->execute(); // Ejecutamos la consulta
+        if ($query)
+            return $query; //pasamos el query para utilizarlo luego con fetch
+        else
+            return false;
         unset($dbh);
         unset($query);
     }
@@ -234,7 +287,7 @@ class CasaMunoz {
     function mostrar_cliente($dato) {
         $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
         $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
-        $sql = "SELECT * FROM CLIENTE WHERE cod_cliente = '".$dato."'";
+        $sql = "SELECT *,CONCAT_WS(' ',primer_nom,segundo_nom,primer_ape,segundo_ape) as NombreCompleto FROM CLIENTE WHERE cod_cliente = '".$dato."'";
         $query = $dbh->prepare($sql); // Preparamos la consulta para dejarla lista para su ejecucion
         $query->bindParam(":nombre",$dato);
         $query->execute(); // Ejecutamos la consulta
@@ -467,15 +520,46 @@ class CasaMunoz {
         unset($dbh);
         unset($query);
     }
-    function consultar_disponibilidad_empleado($sucursal,$fecha,$empleado){
+    /*$sql="SELECT * 
+        FROM EMPLEADO AS e
+        LEFT JOIN DIA_LIBRE AS dl ON e.cod_emp = dl.cod_emp
+        LEFT JOIN RESERVA AS r ON r.cod_emp = e.cod_emp AND 
+        LEFT JOIN CONTROL AS c ON c.cod_rsv = r.cod_rsv
+        LEFT JOIN ESTADO_RESERVA AS er ON er.cod_estado_rsv = c.cod_estado
+        WHERE dl.cod_emp IS NULL and r.cod_emp IS NULL and e.cod_sucursal=:sucursal and dl.cod_emp=:empleado";*/
+    function consultar_empleado_reserva($empleado,$fec,$hora){
+        //echo $sucursal."- ".$date."- ".$empleado;
         $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
         $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
-        $sql = "SELECT * FROM EMPLEADO AS e
-        INNER JOIN DIA_LIBRE AS dl ON e.cod_emp=dl.cod_emp
-        WHERE e.cod_sucursal=:sucursal and dl.fec_libre=:fecha and dl.cod_emp=:empleado";
+        $sql="SELECT * 
+        FROM RESERVA AS r
+        INNER JOIN CONTROL AS c ON c.cod_rsv = r.cod_rsv
+        INNER JOIN ESTADO_RESERVA AS er ON er.cod_estado_rsv = c.cod_estado
+        WHERE r.cod_emp=:empleado and c.fec_estado_rsv='".$fec." ".$hora."'";
+        //echo $sql."<br />";
+        $query = $dbh->prepare($sql); // Preparamos la consulta para dejarla lista para su ejecucion
+        /*$query->bindParam(":fecha",$date);
+        $query->bindParam(":hora",$hora);*/
+        $query->bindParam(":empleado",$empleado);
+         // Ejecutamos la consulta
+        if ($query->execute())
+            return $query; //pasamos el query para utilizarlo luego con fetch
+        else
+            return false;
+        unset($dbh);
+        unset($query);
+    }
+    function consultar_disponibilidad_empleado($sucursal,$date,$empleado){
+        //echo $sucursal."- ".$date."- ".$empleado;
+        $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
+        $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
+        $sql = "SELECT * 
+        FROM DIA_LIBRE AS dl
+        INNER JOIN EMPLEADO AS e ON dl.cod_emp = e.cod_emp
+        WHERE e.cod_sucursal=:sucursal and dl.cod_emp=:empleado and dl.fec_libre=:fecha";
         $query = $dbh->prepare($sql); // Preparamos la consulta para dejarla lista para su ejecucion
         $query->bindParam(":sucursal",$sucursal);
-        $query->bindParam(":fecha",$fecha);
+        $query->bindParam(":fecha",$date);
         $query->bindParam(":empleado",$empleado);
          // Ejecutamos la consulta
         if ($query->execute())

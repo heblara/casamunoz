@@ -6,6 +6,7 @@ if(isset($_GET['sucursal']) && isset($_GET['fecha2'])){
 	$sucursal=$_GET['sucursal'];
 	$fecha=$_GET['fecha2'];
 	$date=substr($fecha, 0,4)."-".substr($fecha, 4,2)."-".substr($fecha, 6,2);
+
 	$hora=$_GET['hora'];
 	echo "Fecha: ".$date."<br />";
 	echo $hora;
@@ -16,32 +17,37 @@ if(isset($_GET['sucursal']) && isset($_GET['fecha2'])){
   <table width='100%' border='1' style='border:groove 1px;font-size:12pt;'>
       <tr>
         <th>Hora</th>
-        <th>Estado</th>
-        <td>Seleccionar</td>
+        <th>Nombre del pedicurista</th>
+        <th>Seleccionar</th>
       </tr>";
 
       $l=0;
 	$i=0;
 	while($resEmpSucu=$consEmpSucu->fetch(PDO::FETCH_OBJ)){
-		$consEmpleado=$objeto->consultar_disponibilidad_empleado($sucursal,$fecha,$resEmpSucu->cod_emp);
+		//$fec=$date;
+		$consEmpleado=$objeto->consultar_disponibilidad_empleado($sucursal,$date,$resEmpSucu->cod_emp);
 		//echo $sucursal."-".$fecha."-".$resEmpSucu->cod_emp;
 		//echo $consEmpleado->rowCount();
 		if($consEmpleado->rowCount() == 0 && $resEmpSucu->cod_cargo==2){
-			$l=1;
-			$i++;
-			$tabla.="
-		      <tr>
-		        <td>".$hora."</td>
-		        <td>".$resEmpSucu->NombreCompleto."</td>
-		        <td><input type='radio' name='rdSeleccionar' id='rdSeleccionar' value='".$resEmpSucu->cod_emp."'></td>
-		      </tr>";
-			//echo "<option value='".$resEmpSucu->cod_emp."'>".$resEmpSucu->cod_emp."- ".$resEmpSucu->NombreCompleto."</option>";
+			$consReservaEmp=$objeto->consultar_empleado_reserva($resEmpSucu->cod_emp,$date,$hora);
+			if($consReservaEmp->rowCount() == 0){
+				$l=1;
+				$i++;
+				$tabla.="
+			      <tr>
+			        <td>".$hora."</td>
+			        <td>".$resEmpSucu->cod_emp."- ".$resEmpSucu->NombreCompleto."</td>
+			        <td><input type='radio' name='rdSeleccionar' id='rdSeleccionar' value='".$resEmpSucu->cod_emp."' class='radio' /></td>
+			      </tr>";
+				//echo "<option value='".$resEmpSucu->cod_emp."'>".$resEmpSucu->cod_emp."- ".$resEmpSucu->NombreCompleto."</option>";
+			}
 		}
 	}
 
       $tabla.="
     </table>
-</fieldset>";
+</fieldset>
+";
 	/*echo "<select name='estados' id='estados' class='selmenu'>
 	          <option value='0'>-- Elija pedicurista --</option>";*/
 	//echo "</select>";

@@ -62,7 +62,7 @@ function leerDatos(sucursal,fecha,servicio) {
 }
 function cargarHorario(sucursal,fecha2,hora) {
   //alert(hor);
-  alert(fecha2);
+  //alert(fecha2);
   crearObjeto();
   if (objeto.readyState != 0) {
     alert('Error al crear el objeto XML. El Navegador no soporta AJAX');
@@ -84,7 +84,7 @@ function cargarHorario(sucursal,fecha2,hora) {
 </script>
 <script type="text/javascript">
   function validarSucursal(){
-  var sucursal=document.getElementById('paises').value;
+  var sucursal=document.getElementById('lstSucursal').value;
   if(sucursal==0){
     //alert("Primero seleccione una sucursal");
     document.getElementById("txtFecha").setAttribute("disabled","disabled");
@@ -105,19 +105,51 @@ function cargarHorario(sucursal,fecha2,hora) {
     });
   }
 }
+function validar(){
+  /*alert(document.getElementById("rdSeleccionar").checked);
+  if(document.getElementById("rdSeleccionar").checked){
+    return true;
+  }else{
+    alert("Debe seleccionar un horario del listado");
+    return false;
+  }*/
+}
 </script>
-<script src="js/mask.js"></script>
-<script>
-  jQuery(function($){
-     $("#txtDUI").mask("99999999-9");   
+<script type="text/javascript" src="js/jquery.blockUI.js"></script>
+<script type="text/javascript">
+  $(function() {
+  //Se pone para que en todos los llamados ajax se bloquee la pantalla mostrando el mensaje Procesando...
+  $.blockUI.defaults.message = 'Procesando información, por favor espere... <br /><img src=\'img/load.gif\' /><br />';
+  $(document).ajaxStart($.blockUI).ajaxStop($.unblockUI);
+});
+function enviarDatos(){
+  var formulario = $("#hongkiat-form").serializeArray();
+    $.ajax({
+      type: "POST",
+      dataType: 'json',
+        url: "procesos/guardarReserva.php",
+        data: formulario,
+    }).done(function(respuesta){
+        if(respuesta.mensaje==2){
+          alert("No fue posible registrar a reserva, intente de nuevo");
+        }else if(respuesta.mensaje==1){
+          alert("Reserva realizado con exito");
+        }
+    });
+}
+$(document).ready(function(){         
+  $("#submitbtn").click(function(){
+    if($("input[id=rdSeleccionar]:checked").val()){
+      enviarDatos();
+    }else{
+      alert("Seleccion un horario");
+    }
   });
+});
 </script>
-<script>
-  jQuery(function($){
-     $("#txtNIT").mask("9999-999999-999-9");   
-  });
-</script>
-<form name="hongkiat" id="hongkiat-form" method="post" action="#">
+
+
+<form name="hongkiat" id="hongkiat-form">
     <div id="wrapping" class="clearfix">
         <section id="aligned">
         <h2>RESERVA DE SERVICIO</h2>
@@ -129,7 +161,7 @@ function cargarHorario(sucursal,fecha2,hora) {
           //$consulta=mysql_query("SELECT cod_dpto, nom_dpto FROM DEPARTAMENTO");
           // Voy imprimiendo el primer select compuesto por los paises
           //echo $consultarDepartamentos->rowCount();
-          echo "<select name='paises' id='paises' class='selmenu' onchange='validarSucursal()'>";
+          echo "<select name='lstSucursal' id='lstSucursal' class='selmenu' onchange='validarSucursal()'>";
           echo "<option value='0'>Elige</option>";
 
           while($registro=$consultarSucursal->fetch(PDO::FETCH_OBJ))
@@ -146,8 +178,8 @@ function cargarHorario(sucursal,fecha2,hora) {
           <option value="0">Selecciona opci&oacute;n...</option>
       </select>
         </span>-->
-        <label for="recipient">Servicio:</label>
-        <select id="recipient" name="recipient" tabindex="6" class="selmenu" onchange="leerDatos(document.getElementById('paises').value,document.getElementById('txtFecha').value,this.value)">
+        <label for="lstServicios">Servicio:</label>
+        <select id="lstServicios" name="lstServicios" tabindex="6" class="selmenu" onchange="leerDatos(document.getElementById('lstSucursal').value,document.getElementById('txtFecha').value,this.value)">
             <option value="0">-- Elija servicio --</option>
             <?php 
             $conServicios=$objeto->listar_servicios();
@@ -170,9 +202,9 @@ function cargarHorario(sucursal,fecha2,hora) {
         <section id="aside" class="clearfix">
         </section>
     </div>
-    <section id="buttons">
+    <section id='buttons'>
         <!--<input type="reset" name="reset" id="resetbtn" class="resetbtn" value="Reset">-->
-        <input type="submit" name="submit" id="submitbtn" class="submitbtn" tabindex="7" value="Reservar">
-        <br style="clear:both;">
+        <input type='button' name='submit' id='submitbtn' class='submitbtn' tabindex='7' value='Reservar'>
+        <br style='clear:both;'>
     </section>
 </form>
