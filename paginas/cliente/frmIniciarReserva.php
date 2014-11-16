@@ -78,27 +78,33 @@ function cargarHorario(sucursal,fecha2,hora) {
     } 
   }
 }
-function validarSucursal(){
-  sucursal=document.getElementById('paises').value;
-  if(sucursal==0){
-    alert("Primero seleccione una sucursal");
-    document.getElementById("txtFecha").setAttribute("disabled","disabled");
-  }else{
-    document.getElementById("txtFecha").setAttribute("disabled","");
-  }
-}
 </script>
 <script>
-  $(function() {
-	$('.datepicker').datepicker({
-    	dateFormat: 'yy-mm-dd', 
-    	changeMonth: true, 
-    	changeYear: true, 
-    	yearRange: '+0:+1',
-      minDate: -0, maxDate: "+3D"
-  //maxDate:'+1M +10D'
-	});
-		});
+  
+</script>
+<script type="text/javascript">
+  function validarSucursal(){
+  var sucursal=document.getElementById('paises').value;
+  if(sucursal==0){
+    //alert("Primero seleccione una sucursal");
+    document.getElementById("txtFecha").setAttribute("disabled","disabled");
+  }else{
+    document.getElementById("txtFecha").removeAttribute("disabled");
+    document.getElementById("txtFecha").setAttribute("readonly","readonly");
+    document.getElementById("txtFecha").removeAttribute("class");
+    document.getElementById("txtFecha").setAttribute("class","txtinput calendar datepicker");
+    $(function() {
+      $('.datepicker').datepicker({
+          dateFormat: 'yy-mm-dd', 
+          changeMonth: true, 
+          changeYear: true, 
+          yearRange: '+0:+1',
+          minDate: -0, maxDate: "+3D"
+          //maxDate:'+1M +10D'
+      });
+    });
+  }
+}
 </script>
 <script src="js/mask.js"></script>
 <script>
@@ -123,7 +129,7 @@ function validarSucursal(){
           //$consulta=mysql_query("SELECT cod_dpto, nom_dpto FROM DEPARTAMENTO");
           // Voy imprimiendo el primer select compuesto por los paises
           //echo $consultarDepartamentos->rowCount();
-          echo "<select name='paises' id='paises' class='selmenu'>";
+          echo "<select name='paises' id='paises' class='selmenu' onchange='validarSucursal()'>";
           echo "<option value='0'>Elige</option>";
 
           while($registro=$consultarSucursal->fetch(PDO::FETCH_OBJ))
@@ -133,7 +139,7 @@ function validarSucursal(){
           echo "</select>";
        ?>
         <label>Fecha:</label>
-        <input type="text" name="txtFecha" id="txtFecha" placeholder="Seleccione una fecha" autocomplete="off" tabindex="1" class="txtinput calendar datepicker" onclick="validarSucursal()">
+        <input type="text" name="txtFecha" id="txtFecha" placeholder="Seleccione una fecha" autocomplete="off" tabindex="1" class="txtinput calendar" disabled="disabled">
         <!--<label>Pedicurista: </label>
         <span id="demoDer">
         <select disabled="disabled" name="estados" id="estados" class='selmenu'>
