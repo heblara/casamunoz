@@ -108,7 +108,7 @@ $conf['validarcorreo']=array(
 'layout'=>LAYOUT_INICIO
 );
 $conf['actualizarreserva']=array(
-'archivo'=>'empleado/frmActualizarReserva.php',
+'archivo'=>'empleado/ActualizarReserva.php',
 'layout'=>LAYOUT_INICIO
 );
 

@@ -33,7 +33,7 @@ function enviarDatos(){
     $.ajax({
       type: "POST",
       dataType: 'json',
-        url: "procesos/actualizadoreserva.php",
+        url: "procesos/actualizardoreserva.php",
         data: formulario,
     }).done(function(respuesta){
         if(respuesta.mensaje==2){
@@ -69,6 +69,13 @@ $(document).ready(function(){
             <option value="2">Cancelar</option>
            <br> <br> <br>
         </select>
+		
+		
+		<label>Fecha registro reprogramar</label>
+        <input type="text" name="txtFechaRegistro" id="txtFechaRegistro" placeholder="Fecha de reprogramacion" autocomplete="off" tabindex="1" class="txtinput calendar" readonly="readonly" value="<?php echo date('Y-m-d H:i:s') ?>">  
+        <br/>
+		     <br> <br> <br>     
+		
         <label for="txtHora">Hora:</label>
         <select id="recipient" name="recipient" tabindex="6" class="selmenu">
             <option value="0">-- Elija hora --</option>
@@ -78,7 +85,13 @@ $(document).ready(function(){
               <option value="4">9.15am</option>
                 <option value="5">8.45am</option>
         <fieldset>
+		
+		
+		
+		
          <br> <br> <br>
+		 
+		 
           <legend><span style='font-size:12pt;'>Disponibilidad de pedicurista seleccionado</span></legend>
           <table width="100%" border='1' style="border:groove 1px;font-size:12pt;">
               <tr>
