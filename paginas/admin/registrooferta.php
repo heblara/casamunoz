@@ -120,7 +120,7 @@ $(document).ready(function(){
         <section id="aligned-center">
         <h2>REGISTRO DE OFERTA</h2>
         <label>Nombre:</label>
-        <input type="text" name="txtNombre" id="txtNombre" placeholder="Nombre de oferta" autocomplete="off" tabindex="1" class="txtinput offer">
+        <input type="text" name="txtNombre" id="txtNombre" MaxLength="45" placeholder="Nombre de oferta" autocomplete="off" tabindex="1" class="txtinput offer">
 		<br><label>Descripcion:</label>
         <textarea name="message" id="message" style="width:40%;" placeholder="Descripcion..." tabindex="5" class="txtblock"></textarea>
 		</br>
