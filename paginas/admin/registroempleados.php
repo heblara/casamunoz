@@ -274,9 +274,9 @@ $(document).ready(function(){
         <label>Direcci&oacute;n:</label>
         <textarea name="txtDireccion" id="txtDireccion" placeholder="Direcci&oacute;n..." tabindex="11" class="txtblock"></textarea>
         <label>Tel&eacute;fono fijo:</label>
-        <input type="tel" name="txtTelFijo" id="txtTelFijo" placeholder="Telefono fijo" MaxLength="8" tabindex="12" class="txtinput telephone">
+        <input type="tel" name="txtTelFijo" id="txtTelFijo" placeholder="Telefono fijo" MaxLength="9" tabindex="12" class="txtinput telephone">
         <label>Tel&eacute;fono movil:</label>
-        <input type="tel" name="txtTelMovil" id="txtTelMovil" placeholder="Telefono movil" MaxLength="8" tabindex="13" class="txtinput telephone">
+        <input type="tel" name="txtTelMovil" id="txtTelMovil" placeholder="Telefono movil" MaxLength="9" tabindex="13" class="txtinput telephone">
         <label>Correo electr&oacute;nico:</label>
         <input type="email" name="txtCorreo" id="txtCorreo" placeholder="Direcci&oacute;n de correo" autocomplete="off" tabindex="14" class="txtinput email">
         <!--<label>Cubiculo:</label>
