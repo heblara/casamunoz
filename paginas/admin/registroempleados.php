@@ -184,7 +184,9 @@ $(document).ready(function(){
 <script src="js/mask.js"></script>
 <script>
   jQuery(function($){
-     $("#txtDUI").mask("99999999-9");   
+     $("#txtDUI").mask("99999999-9");
+     $("#txtTelFijo").mask("9999-9999");
+     $("#txtTelMovil").mask("9999-9999");
   });
 </script>
 <script>
