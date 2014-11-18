@@ -16,7 +16,7 @@ if(isset($_GET['sucursal']) && isset($_GET['fecha']) && isset($_GET['serv'])){
 
 	$consServ=$objeto->mostrar_servicio($servicio);
 	$servicio=$consServ->fetch(PDO::FETCH_OBJ);
-	//echo $servicio->duracion_servicio;
+	echo $servicio->precio_Costo;
 	$horsucu=$consHorSuc->fetch(PDO::FETCH_OBJ);
 	$horaIni=$horsucu->hora_ini;
 	$horaFin=$horsucu->hora_fin;

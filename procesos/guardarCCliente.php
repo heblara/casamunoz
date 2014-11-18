@@ -48,10 +48,12 @@ if($ObjCliente->registrar_Ccliente($Cliente)){
 		debe validar su correo, haciendo <a href='http://localhost/casamunoz2/?mod=validarcorreo&e=".base64_encode($codigo)."'>Clic aqu&iacute;.
 		</p>
 		";
+		//$Correo_Envio, $Nombre_Envio, $Mensaje_Envio, $Firma_Envio, $Correo_Envia, $Asunto_Mensaje,$Imagen
 		if(Enviar_Email($txtCorreo,$nombre,$mensaje,"Casa Munoz","","Activacion de su correo","")){
 			echo "Correo enviado"; 
-		}else{
 			$respuesta->mensaje = 1;
+		}else{
+			$respuesta->mensaje = 3;
 		}
 		
 	}else{

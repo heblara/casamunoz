@@ -231,9 +231,9 @@ jQuery( document ).ready(function( $ ) {
         <select id="lstServicios" name="lstServicios" tabindex="6" class="selmenu" onchange="leerDatos(<?php echo $_SESSION['sucursal'] ?>,document.getElementById('txtFecha').value,this.value)">
             <option value="0">-- Elija servicio --</option>
             <?php 
-            $conServicios=$objeto->listar_servicios();
+            $conServicios=$objeto->listar_servicios($_SESSION["sucursal"]);
             while($servicio=$conServicios->fetch(PDO::FETCH_OBJ)){
-                echo "<option value='".$servicio->cod_servicio."'>".$servicio->nom_servicio."</option>";  
+                echo "<option value='".$servicio->cod_servicio."'>".$servicio->nom_servicio." ($".$servicio->precio_Costo.")</option>";  
             }
             ?>
         </select>

@@ -71,12 +71,13 @@ function consultar_servicios_dia() {
     function guardar_control($dato) {
         $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
         $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
-        $sql = "INSERT INTO `CONTROL`(`cod_estado`, `cod_rsv`, `fec_estado_rsv`) 
-        VALUES (:estado,:reserva,:fecha)";
+        $sql = "INSERT INTO `CONTROL`(`cod_estado`, `cod_rsv`, `fec_estado_rsv`,`hora_rsv`) 
+        VALUES (:estado,:reserva,:fecha,:hora)";
         $query = $dbh->prepare($sql); // Preparamos la consulta para dejarla lista para su ejecucion
         $query->bindParam(":estado",$dato[0]);
         $query->bindParam(":reserva",$dato[1]);
         $query->bindParam(":fecha",$dato[2]);
+        $query->bindParam(":hora",$dato[3]);
         if($query->execute()){
             return $query;
         }else{
@@ -468,7 +469,7 @@ function consultar_servicios_dia() {
     function consultar_cargos() {
         $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
         $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
-        $sql = "SELECT * FROM CARGO WHERE cod_cargo!='1'";
+        $sql = "SELECT * FROM CARGO WHERE cod_cargo!='4'";
         $query = $dbh->prepare($sql); // Preparamos la consulta para dejarla lista para su ejecucion
         //$query->bindParam(":nombre",$dato);
         $query->execute(); // Ejecutamos la consulta
@@ -513,7 +514,7 @@ function consultar_servicios_dia() {
 	function consultar_empleados() {
         $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
         $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
-        $sql = "SELECT * FROM EMPLEADO";
+        $sql = "SELECT * FROM EMPLEADO WHERE cod_cargo<>4";
         $query = $dbh->prepare($sql); // Preparamos la consulta para dejarla lista para su ejecucion
         $query->execute(); // Ejecutamos la consulta
         if ($query)
@@ -1145,12 +1146,15 @@ function consultar_servicios($dato) {
         unset($dbh);
         unset($query);
     }
-    function listar_servicios() {
+    function listar_servicios($sucursal) {
         $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
         $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
-        $sql = "SELECT * FROM SERVICIO";
+        $sql = "SELECT * FROM SERVICIO AS s 
+        INNER JOIN DISPONIBILIDAD_SERVICIO AS ds ON ds.cod_servicio=s.cod_servicio
+        INNER JOIN COSTO as c ON c.cod_costo=s.cod_costo
+        ORDER BY c.fec_registro AND ds.cod_sucursal=:sucursal";
         $query = $dbh->prepare($sql); // Preparamos la consulta para dejarla lista para su ejecucion
-        $query->bindParam(":codigo",$dato);
+        $query->bindParam(":sucursal",$sucursal);
         $query->execute(); // Ejecutamos la consulta
         if ($query)
             return $query; //pasamos el query para utilizarlo luego con fetch

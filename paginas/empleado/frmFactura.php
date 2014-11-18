@@ -36,7 +36,7 @@
         <fieldset>
           <legend>Factura</legend>
           <label>Fecha:</label>
-          <input type="text" name="txtFecha" id="txtFecha" placeholder="Fecha" autocomplete="off" tabindex="1" class="txtinput calendar datepicker">  
+          <input type="text" name="txtFecha" id="txtFecha" placeholder="Fecha" autocomplete="off" tabindex="1" class="txtinput calendar datepicker" value="<?php echo date('Y-m-d') ?>">  
           <label>Empleado.:</label>
           <input type="text" name="txtEmpleado" id="txtEmpleado" placeholder="Nombre del Empleado" autocomplete="off" tabindex="1" class="txtinput name">
           <label>Cliente.:</label>

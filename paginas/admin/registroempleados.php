@@ -137,6 +137,7 @@ $(document).ready(function(){
   $(function() {
       $( "#txtFecIni" ).datepicker({
         defaultDate: "+1w",
+        dateFormat:'yy-mm-dd',
         changeMonth: true,
         numberOfMonths: 1,
         minDate: "+0D",
@@ -146,6 +147,7 @@ $(document).ready(function(){
       });
       $( "#txtFecFin" ).datepicker({
         defaultDate: "+1w",
+        dateFormat:'yy-mm-dd',
         changeMonth: true,
         numberOfMonths: 1,
         onClose: function( selectedDate ) {

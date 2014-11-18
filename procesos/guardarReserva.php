@@ -12,8 +12,9 @@ if($objReserva->registrar_reserva($reserva)){
 	$consUltimoID=$objReserva->consultar_ultimo_id("RESERVA","cod_rsv");
 	$resID=$consUltimoID->fetch(PDO::FETCH_OBJ);
 	$codrsv=$resID->last_id;
-	$fecha=$txtFecha.' '.$txtHora;
-	$control=array("1",$codrsv,$fecha);
+	$fecha=$txtFecha;
+	$hora=$txtHora;
+	$control=array("1",$codrsv,$fecha,$hora);
 	if($objReserva->guardar_control($control)){
 		$consCliente=$objReserva->mostrar_cliente($_SESSION['usuario']);
 		$cliente=$consCliente->fetch(PDO::FETCH_OBJ);
@@ -22,7 +23,7 @@ if($objReserva->registrar_reserva($reserva)){
 		<br /><br />Su reserva ha sido creada para el dia ".date("d-m-Y",strtotime($txtFecha))." a las ".$txtHora." horas";
 		//echo $mensaje;
 		if(Enviar_Email($cliente->correo_cliente,$cliente->NombreCompleto,$mensaje,"Casa munoz","","Estado de reserva","")){
-			echo "Correo enviado";
+			//echo "Correo enviado";
 			$respuesta->mensaje = 1;
 		}else{
 			$respuesta->mensaje = 3;

@@ -131,7 +131,7 @@ function enviarDatos(){
         data: formulario,
     }).done(function(respuesta){
         if(respuesta.mensaje==2){
-          alert("No fue posible registrar a reserva, intente de nuevo");
+          alert("No fue posible registrar la reserva, intente de nuevo");
         }else if(respuesta.mensaje==1){
           alert("Reserva realizado con exito");
         }

@@ -13,7 +13,7 @@ if($objReserva->registrar_reserva($reserva)){
 	$resID=$consUltimoID->fetch(PDO::FETCH_OBJ);
 	$codrsv=$resID->last_id;
 	$fecha=$txtFecha.' '.$txtHora;
-	$control=array("1",$codrsv,$fecha);
+	$control=array("1",$codrsv,$fecha,$hora);
 	if($objReserva->guardar_control($control)){
 		$consCliente=$objReserva->mostrar_cliente($_SESSION['usuario']);
 		$cliente=$consCliente->fetch(PDO::FETCH_OBJ);
