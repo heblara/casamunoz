@@ -112,6 +112,8 @@ class CasaMunoz {
         if($query->execute()){
             return $query;
         }else{
+            echo "\nPDO::errorInfo():\n";
+            print_r($dbh->errorInfo());
             return false;
         }
         unset($dbh);
@@ -1023,6 +1025,20 @@ function consultar_empleado_reporte($dato) {
         $sql = "SELECT LAST_INSERT_ID( cod_temp ) AS last_id
         FROM TEMPORADA
         ORDER BY last_id DESC ";
+        $query = $dbh->prepare($sql); // Preparamos la consulta para dejarla lista para su ejecucion
+        //$query->bindParam(":nombre",$dato);
+        $query->execute(); // Ejecutamos la consulta
+        if ($query)
+            return $query; //pasamos el query para utilizarlo luego con fetch
+        else
+            return false;
+        unset($dbh);
+        unset($query);
+    }
+    function consultar_temporadas() {
+        $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
+        $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
+        $sql = "SELECT * FROM TEMPORADA";
         $query = $dbh->prepare($sql); // Preparamos la consulta para dejarla lista para su ejecucion
         //$query->bindParam(":nombre",$dato);
         $query->execute(); // Ejecutamos la consulta

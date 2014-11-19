@@ -70,12 +70,25 @@ $(document).ready(function(){
 </script>
 <script>
  $(function() {
-  $('.datepicker').datepicker({
-  dateFormat: 'yy-mm-dd', 
-  changeMonth: true, 
-  changeYear: true, 
-  yearRange: '-100:+0'
-  });
+      $( "#txtFechaIni" ).datepicker({
+        defaultDate: "+1w",
+        dateFormat:'yy-mm-dd',
+        changeMonth: true,
+        numberOfMonths: 1,
+        minDate: "+0D",
+        onClose: function( selectedDate ) {
+          $( "#txtFechaFin" ).datepicker( "option", "minDate", selectedDate );
+        }
+      });
+      $( "#txtFechaFin" ).datepicker({
+        defaultDate: "+1w",
+        dateFormat:'yy-mm-dd',
+        changeMonth: true,
+        numberOfMonths: 1,
+        onClose: function( selectedDate ) {
+          $( "#txtFechaIni" ).datepicker( "option", "maxDate", selectedDate );
+        }
+      });
     });
 </script>
 <script language="JavaScript">
@@ -87,10 +100,10 @@ $(document).ready(function(){
         <label>Nombre:</label>
         <input type="text" name="txtNombre" id="txtNombre" placeholder="Nombre temporada" tabindex="1" class="txtinput name">
         <label>Fecha inicial:</label>
-        <input type="text" name="txtFechaIni" id="txtFechaIni" placeholder="Fecha inicial" autocomplete="off" tabindex="1" class="txtinput calendar datepicker">
+        <input type="text" name="txtFechaIni" id="txtFechaIni" placeholder="Fecha inicial" autocomplete="off" tabindex="1" class="txtinput calendar datepicker" readonly="readonly">
         <br />
         <label>Fecha Final:</label>
-        <input type="text" name="txtFechaFin" id="txtFechaFin" placeholder="Fecha final" autocomplete="off" tabindex="1" class="txtinput calendar datepicker">
+        <input type="text" name="txtFechaFin" id="txtFechaFin" placeholder="Fecha final" autocomplete="off" tabindex="1" class="txtinput calendar datepicker" readonly="readonly">
         <form >
 		<fieldset>
       <br><label>Sucursal: </label>

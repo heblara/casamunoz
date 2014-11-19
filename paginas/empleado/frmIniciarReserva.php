@@ -150,15 +150,15 @@ $.noConflict();
 jQuery( document ).ready(function( $ ) {
   // Code that uses jQuery's $ can follow here.
   $("#submitbtn").click(function(){
-    if(validar()){
-      if($("input[id=rdSeleccionar]:checked").val()){
-        enviarDatos();
-      }else{
-        alert("Seleccione un horario");
-      }
-    }else{
-      echo "Seleccione un cliente";
-    }
+        if(validar()){
+          if($("input[id=rdSeleccionar]:checked").val()){
+            enviarDatos();
+          }else{
+            alert("Seleccione un horario");
+          }
+        }else{
+          //alert("Seleccione un cliente");
+        }
     });
 });
 
@@ -211,24 +211,12 @@ jQuery( document ).ready(function( $ ) {
           });    
     </script>
 <!-- FIN DE RECURSOS FUNCIONARIOS-->
-        <label>Fecha:</label>
-        <?php 
-        $fecha = date('Y-m-d');
-        $nuevafecha = strtotime ( '+15 day' , strtotime ( $fecha ) ) ;
-        $nuevafecha = date ( 'Y-m-d' , $nuevafecha );
-        ?>
-        <input type="text" name="txtFecha" id="txtFecha" placeholder="Seleccione una fecha" autocomplete="off" tabindex="1" class="txtinput calendar datepicker" min="<?php echo date("Y-m-d") ?>" max="<?php echo $nuevafecha ?>">
-        <!--<label>Pedicurista: </label>
-        <span id="demoDer">
-        <select disabled="disabled" name="estados" id="estados" class='selmenu'>
-          <option value="0">Selecciona opci&oacute;n...</option>
-      </select>
-        </span>-->
+<br /><br />
         <label for="lstServicios">Servicio:</label>
         <?php 
         //echo $_SESSION['sucursal'];
         ?>
-        <select id="lstServicios" name="lstServicios" tabindex="6" class="selmenu" onchange="leerDatos(<?php echo $_SESSION['sucursal'] ?>,document.getElementById('txtFecha').value,this.value)">
+        <select id="lstServicios" name="lstServicios" tabindex="6" class="selmenu">
             <option value="0">-- Elija servicio --</option>
             <?php 
             $conServicios=$objeto->listar_servicios($_SESSION["sucursal"]);
@@ -237,9 +225,27 @@ jQuery( document ).ready(function( $ ) {
             }
             ?>
         </select>
+        <label>Fecha:</label>
+        <?php 
+        $fecha = date('Y-m-d');
+        $fecha = strtotime ( '-1 day' , strtotime ( $fecha ) );
+        $nuevafecha = strtotime ( '+15 day' , strtotime ( $fecha ) ) ;
+        $nuevafecha = date ( 'Y-m-d' , $nuevafecha );
+        ?>
+        <input type="text" name="txtFecha" id="txtFecha" placeholder="Seleccione una fecha" autocomplete="off" tabindex="1" class="txtinput calendar datepicker" min="<?php echo $fecha ?>" max="<?php echo $nuevafecha ?>" onchange="leerDatos(<?php echo $_SESSION['sucursal'] ?>,this.value)">
+        <!--<label>Pedicurista: </label>
+        <span id="demoDer">
+        <select disabled="disabled" name="estados" id="estados" class='selmenu'>
+          <option value="0">Selecciona opci&oacute;n...</option>
+      </select>
+        </span>-->
+        
         <label>Hora de Inicio: </label>
         <span id="demoDer">
-        <input type='time' min='' max='' class='txtinput time' disabled="disabled">
+        <select class='selmenu' id='txtHora' name='txtHora' disabled='disabled'>
+          <option value='0'>Seleccione una fecha</option>
+        </select>
+        <!--<input type='time' min='' max='' class='txtinput time' disabled="disabled">-->
         </span>
         <!--<label for="txthora">Hora:</label>
         <input type="text" id="txtHora" placeholder='Hora' class="txtinput time" />-->

@@ -170,16 +170,8 @@ $(document).ready(function(){
           }
           echo "</select>";
        ?>
-        <label>Fecha:</label>
-        <input type="text" name="txtFecha" id="txtFecha" placeholder="Seleccione una fecha" autocomplete="off" tabindex="1" class="txtinput calendar" disabled="disabled">
-        <!--<label>Pedicurista: </label>
-        <span id="demoDer">
-        <select disabled="disabled" name="estados" id="estados" class='selmenu'>
-          <option value="0">Selecciona opci&oacute;n...</option>
-      </select>
-        </span>-->
-        <label for="lstServicios">Servicio:</label>
-        <select id="lstServicios" name="lstServicios" tabindex="6" class="selmenu" onchange="leerDatos(document.getElementById('lstSucursal').value,document.getElementById('txtFecha').value,this.value)">
+       <label for="lstServicios">Servicio:</label>
+        <select id="lstServicios" name="lstServicios" tabindex="6" class="selmenu">
             <option value="0">-- Elija servicio --</option>
             <?php 
             $conServicios=$objeto->listar_servicios();
@@ -188,6 +180,14 @@ $(document).ready(function(){
             }
             ?>
         </select>
+        <label>Fecha:</label>
+        <input type="text" name="txtFecha" id="txtFecha" placeholder="Seleccione una fecha" autocomplete="off" tabindex="1" class="txtinput calendar" disabled="disabled" onchange="leerDatos(document.getElementById('lstSucursal').value,this.value,document.getElementById('lstServicios').value)">
+        <!--<label>Pedicurista: </label>
+        <span id="demoDer">
+        <select disabled="disabled" name="estados" id="estados" class='selmenu'>
+          <option value="0">Selecciona opci&oacute;n...</option>
+      </select>
+        </span>-->
         <label>Hora de Inicio: </label>
         <span id="demoDer">
         <input type='time' min='' max='' class='txtinput time' disabled="disabled">

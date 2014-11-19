@@ -5,7 +5,7 @@ if(isset($_GET['sucursal']) && isset($_GET['fecha']) && isset($_GET['serv'])){
 	$objeto=new CasaMunoz;
 	$sucursal=$_GET['sucursal'];
 	$fecha=$_GET['fecha'];
-	$servicio=$_GET['serv'];
+	$servic=$_GET['serv'];
 	$fecha2=explode("-", $fecha);
 	$fec=$fecha2[2]."-".$fecha2[1]."-".$fecha2[0];
 	//echo $fecha;
@@ -26,6 +26,7 @@ if(isset($_GET['sucursal']) && isset($_GET['fecha']) && isset($_GET['serv'])){
 	if($hora[1]=="00"){
 		$hora[1]=60;
 	}
+	$consServ=$objeto->mostrar_servicio($servic);
 	$duracion=date("i",strtotime($servicio->duracion_servicio));
 	//echo "Minutos: ".$duracion;
 	$minutos=$hora[1]-$duracion;
@@ -44,7 +45,9 @@ if(isset($_GET['sucursal']) && isset($_GET['fecha']) && isset($_GET['serv'])){
 		<?php 
 		for($i=$horain[0];$i<=$hora2;$i++){
 			echo "<option value='".$i.":00'>".$i.":00</option>";
+			echo "<option value='".$i.":00'>".$i.":15</option>";
 			echo "<option value='".$i.":30'>".$i.":30</option>";
+			echo "<option value='".$i.":00'>".$i.":45</option>";
 		}
 		?>
 	</select>
