@@ -16,15 +16,15 @@ function soloNumeros(evt) {
  }
 </script>
 <script type="text/javascript">
-  $(function() {
-    $('.datepicker').datepicker({
-      dateFormat: 'yy-mm-dd', 
-      changeMonth: true, 
-      changeYear: true, 
-      yearRange: '-40:+0'
-      });
-    });
-
+     $(function() {
+	$('#txtFechaRegistro').datepicker({
+	dateFormat: 'yy-mm-dd', 
+	changeMonth: true, 
+	changeYear: true, 
+	   yearRange: '+0:+1',
+           minDate: -0, maxDate: "+0D"
+	});
+		});
 	function validar(){
     nombre=document.getElementById('txtNombre').value;
 	descripcion=document.getElementById('message').value;
@@ -111,6 +111,8 @@ function enviarDatos(){
     }).done(function(respuesta){
         if(respuesta.mensaje==1){
           alert("Registro realizado con exito");
+		  document.getElementById('hongkiat-form').reset();
+          document.getElementById('txtNombre').focus();
         }else if(respuesta.mensaje==2){
           alert("No fue posible registrar el servicio");
         }
