@@ -121,6 +121,8 @@ function enviarDatos(){
           alert("No fue posible registrar el empleado");
         }else if(respuesta.mensaje==1){
           alert("Registro realizado con exito");
+          document.getElementById('hongkiat-form').reset();
+          document.getElementById('txtNombre1').focus();
         }
     });
 }
