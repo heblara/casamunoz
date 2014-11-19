@@ -1,11 +1,14 @@
 
 <?php 
+session_start();
 include("funciones.php");
 sleep(1);
 if(isset($_GET['valor'])){
   $objeto=new CasaMunoz;
   $valor=$_GET['valor'];
-  $consReserva=$objeto->consultar_reserva($valor);
+
+  $consReserva=$objeto->consultar_reserva($_SESSION['sucursal']);
+
   if($consReserva->rowCount()){
     echo "<table style='background-color:white;' width=100%>";
     echo "<tr>

@@ -83,7 +83,7 @@ $(document).ready(function(){
             //echo $id;
             $conReserva=$objeto->consultar_reserva_cliente($id);
             if($conReserva->rowCount()==0){
-              die("<h2>Reserva no encontrada</h2>");
+              die("Reserva no encontrada");
             }
             $resReserva=$conReserva->fetch(PDO::FETCH_OBJ);
           ?>
@@ -108,21 +108,58 @@ $(document).ready(function(){
 		     <br> <br> <br>     
 		
         <label for="txtHora">Hora:</label>
-        <select id="recipient" name="recipient" tabindex="6" class="selmenu">
-            <option value="0">-- Elija hora --</option>
-            <option value="1">8.00am</option>
-            <option value="2">8.30am</option>
-              <option value="3">8.45am</option>  
-              <option value="4">9.15am</option>
-                <option value="5">8.45am</option>
+        <input type='time' min='' max='' class='txtinput time' value="<?php echo $resReserva->hora_rsv ?>"> 
+
+            <label>Servicio: </label>
+            <?php 
+      $consultarservicios=$objeto->consultar_servicio();
+      //$consulta=mysql_query("SELECT cod_dpto, nom_dpto FROM DEPARTAMENTO");
+      // Voy imprimiendo el primer select compuesto por los paises
+      //echo $consultarDepartamentos->rowCount();
+      echo "<select name='lstServicio' id='lstServicio' class='selmenu'>";
+      echo "<option value='0'>Elige</option>";
+
+      $servicio1="";
+      while($servicio=$consultarservicios->fetch(PDO::FETCH_OBJ))
+      {
+      if($servicio->cod_servicio==$resReserva->cod_servicio){$servicio1='selected';
+        echo "<option value='".$servicio->cod_servicio."' selected='".$servicio1."'>".$servicio->nom_servicio."</option>";
+      } else {
+        echo "<option value='".$servicio->cod_servicio."' >".$servicio->nom_servicio."</option>";
+      }
+    }
+
+      echo "</select>";
+   ?>
+
+        <br> <br> <br> 
         <fieldset>
 		
-		
-		
-		
-         <br> <br> <br>
+			 
 		 
-		 
+<label>Pedicurista: </label>
+            <?php 
+      $consultarpedicurista=$objeto->consultar_pedicurista($_SESSION['sucursal']);
+      //$consulta=mysql_query("SELECT cod_dpto, nom_dpto FROM DEPARTAMENTO");
+      // Voy imprimiendo el primer select compuesto por los paises
+      //echo $consultarDepartamentos->rowCount();
+      echo "<select name='lstPedicurista' id='lstPedicurista' class='selmenu'>";
+      echo "<option value='0'>Elige</option>";
+
+      $pedicurista1="";
+      while($pedicurista=$consultarpedicurista->fetch(PDO::FETCH_OBJ))
+      {
+      if($pedicurista->cod_emp==$resReserva->cod_emp){$pedicurista1='selected';
+        echo "<option value='".$pedicurista->cod_emp."' selected='".$pedicurista1."'>".$pedicurista->primer_nom."</option>";
+      } else {
+        echo "<option value='".$pedicurista->cod_emp."' >".$pedicurista->primer_nom."</option>";
+      }
+    }
+
+      echo "</select>";
+   ?>
+
+
           <legend><span style='font-size:12pt;'>Disponibilidad de pedicurista seleccionado</span></legend>
           <table width="100%" border='1' style="border:groove 1px;font-size:12pt;">
               <tr>
@@ -145,21 +182,7 @@ $(document).ready(function(){
         </fieldset>
        <br> <br> <br>
          <select>
-        <label>Servicio: </label>
-            <?php 
-      $consultarservicios=$objeto->consultar_servicio();
-      //$consulta=mysql_query("SELECT cod_dpto, nom_dpto FROM DEPARTAMENTO");
-      // Voy imprimiendo el primer select compuesto por los paises
-      //echo $consultarDepartamentos->rowCount();
-      echo "<select name='lstServicio' id='lstServicio' class='selmenu'>";
-      echo "<option value='0'>Elige</option>";
-
-      while($servicio=$consultarservicios->fetch(PDO::FETCH_OBJ))
-      {
-        echo "<option value='".$servicio->cod_servicio."'>".$servicio->nom_servicio."</option>";
-      }
-      echo "</select>";
-   ?>
+        
         <br />
         <br />
         <br />
