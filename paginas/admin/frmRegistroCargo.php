@@ -57,6 +57,8 @@ function enviarDatos(){
     }).done(function(respuesta){
         if(respuesta.mensaje==1){
           alert("Registro realizado con exito");
+	  document.getElementById('hongkiat-form').reset();
+          document.getElementById('txtNombreCargo').focus();
         }else if(respuesta.mensaje==2){
           alert("No fue posible registrar el servicio");
         }
