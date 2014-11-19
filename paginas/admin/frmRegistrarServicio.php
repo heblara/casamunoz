@@ -3,6 +3,18 @@
 <script src="//code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
 <link rel="stylesheet" href="/resources/demos/style.css">
 <script type="text/javascript" src="js/jquery.blockUI.js"></script>
+<script language="javascript">
+function soloNumeros(evt) {
+    evt = (evt) ? evt : event;
+    var charCode = (evt.charCode) ? evt.charCode : ((evt.keyCode) ? evt.keyCode :
+        ((evt.which) ? evt.which : 0));
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+        alert("Solo se permiten números en este campo.");
+        return false;
+    }
+    return true;
+ }
+</script>
 <script type="text/javascript">
   $(function() {
     $('.datepicker').datepicker({
@@ -130,7 +142,7 @@ $(document).ready(function(){
         <input type="text" name="txtFechaRegistro" id="txtFechaRegistro" placeholder="Fecha de registro de producto" autocomplete="off" tabindex="1" class="txtinput calendar" readonly="readonly" value="<?php echo date('Y-m-d H:i:s') ?>">  
         <br/>
         <label>precio de servicio:</label>
-        <input type="text" name="txtprecio" id="txtprecio" placeholder="precio de servicio" autocomplete="off" tabindex="1" class="txtinput money">
+        <input type="text" name="txtprecio" id="txtprecio" placeholder="precio de servicio" autocomplete="off" tabindex="1" class="txtinput money"  onkeypress="return soloNumeros(event)">
         <br />
 
         <label>Duraci&oacute;n (En minutos):</label>
