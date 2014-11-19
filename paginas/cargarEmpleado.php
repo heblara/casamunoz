@@ -15,11 +15,7 @@ if(isset($_GET['sucursal']) && isset($_GET['fecha2'])){
 	<fieldset>
   <legend><span style='font-size:12pt;'>Disponibilidad de horario seleccionado</span></legend>
   <table width='100%' border='1' style='border:groove 1px;font-size:12pt;'>
-      <tr>
-        <th>Hora</th>
-        <th>Nombre del pedicurista</th>
-        <th>Seleccionar</th>
-      </tr>";
+      ";
 
       $l=0;
 	$i=0;
@@ -31,6 +27,13 @@ if(isset($_GET['sucursal']) && isset($_GET['fecha2'])){
 		if($consEmpleado->rowCount() == 0 && $resEmpSucu->cod_cargo==2){
 			$consReservaEmp=$objeto->consultar_empleado_reserva($resEmpSucu->cod_emp,$date,$hora);
 			if($consReservaEmp->rowCount() == 0){
+				if($i==0){
+						$tabla.= "<tr>
+				        <th>Hora</th>
+				        <th>Nombre del pedicurista</th>
+				        <th>Seleccionar</th>
+				      </tr>";
+				}
 				$l=1;
 				$i++;
 				$tabla.="
@@ -42,7 +45,14 @@ if(isset($_GET['sucursal']) && isset($_GET['fecha2'])){
 				//echo "<option value='".$resEmpSucu->cod_emp."'>".$resEmpSucu->cod_emp."- ".$resEmpSucu->NombreCompleto."</option>";
 			}
 		}
+		/*else{
+			
+		}*/
 	}
+	if($i==0){
+		$tabla.="<tr><td><h1>No tenemos pedicuristas disponibles a esta hora, por favor seleccione otra</h3></td></tr>";
+	}
+
 
       $tabla.="
     </table>
