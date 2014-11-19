@@ -208,5 +208,9 @@ $conf['inventario']=array(
 'archivo'=>'empleado/inventario.php',
 'layout'=>LAYOUT_INICIO
 );
+$conf['expediente']=array(
+'archivo'=>'empleado/frmExpediente.php',
+'layout'=>LAYOUT_INICIO
+);
 
 ?>
