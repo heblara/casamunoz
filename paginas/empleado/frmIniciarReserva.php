@@ -34,7 +34,7 @@
               changeMonth: true, 
               changeYear: true, 
               yearRange: '+0:+1',
-              minDate: -0, maxDate: "+3D"
+              minDate: -0, maxDate: "+15D"
               //maxDate:'+1M +10D'
           });
         });
@@ -214,10 +214,10 @@ jQuery( document ).ready(function( $ ) {
         <label>Fecha:</label>
         <?php 
         $fecha = date('Y-m-d');
-        $nuevafecha = strtotime ( '+3 day' , strtotime ( $fecha ) ) ;
+        $nuevafecha = strtotime ( '+15 day' , strtotime ( $fecha ) ) ;
         $nuevafecha = date ( 'Y-m-d' , $nuevafecha );
         ?>
-        <input type="date" format="yyyy-mm-dd" name="txtFecha" id="txtFecha" placeholder="Seleccione una fecha" autocomplete="off" tabindex="1" class="txtinput calendar datepicker" min="<?php echo date("Y-m-d") ?>" max="<?php echo $nuevafecha ?>">
+        <input type="text" name="txtFecha" id="txtFecha" placeholder="Seleccione una fecha" autocomplete="off" tabindex="1" class="txtinput calendar datepicker" min="<?php echo date("Y-m-d") ?>" max="<?php echo $nuevafecha ?>">
         <!--<label>Pedicurista: </label>
         <span id="demoDer">
         <select disabled="disabled" name="estados" id="estados" class='selmenu'>

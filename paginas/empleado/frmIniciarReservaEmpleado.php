@@ -20,7 +20,7 @@
         <label>Cliente:</label>
         <input type="text" name="txtCliente" id="txtCliente" placeholder="Ingrese el nombre del cliente" autocomplete="off" tabindex="1" class="txtinput name">
         <label>Fecha:</label>
-        <input type="text" name="txtFecha" id="txtFecha" placeholder="Seleccione una fecha" autocomplete="off" tabindex="1" class="txtinput calendar datepicker">
+        <input type="text" name="txtFecha" id="txtFecha" format='yy-mm-dd' placeholder="Seleccione una fecha" autocomplete="off" tabindex="1" class="txtinput calendar datepicker">
         <label>Pedicurista: </label>
         <select id="recipient" name="recipient" tabindex="6" class="selmenu">
             <option value="0">-- Elija pedicurista --</option>

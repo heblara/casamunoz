@@ -613,7 +613,7 @@ function consultar_empleado_reporte($dato) {
         FROM RESERVA AS r
         INNER JOIN CONTROL AS c ON c.cod_rsv = r.cod_rsv
         INNER JOIN ESTADO_RESERVA AS er ON er.cod_estado_rsv = c.cod_estado
-        WHERE r.cod_emp=:empleado and c.fec_estado_rsv='".$fec." ".$hora."'";
+        WHERE r.cod_emp=:empleado and c.fec_estado_rsv='".$fec."' and c.hora_rsv='".$hora."'";
         //echo $sql."<br />";
         $query = $dbh->prepare($sql); // Preparamos la consulta para dejarla lista para su ejecucion
         /*$query->bindParam(":fecha",$date);

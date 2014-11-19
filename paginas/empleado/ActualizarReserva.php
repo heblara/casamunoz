@@ -83,7 +83,7 @@ $(document).ready(function(){
             //echo $id;
             $conReserva=$objeto->consultar_reserva_cliente($id);
             if($conReserva->rowCount()==0){
-              die("Reserva no encontrada");
+              die("<h2>Reserva no encontrada</h2>");
             }
             $resReserva=$conReserva->fetch(PDO::FETCH_OBJ);
           ?>

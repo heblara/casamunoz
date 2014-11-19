@@ -3,4 +3,5 @@ include_once ('../DBManager.class.php'); //Clase de Conexión a las Base de Dato
 include('../casamunoz.class.php');
 include("../conf.php");
 include("../conexion.php");
+include("../funciones/funciones.php");
 ?>

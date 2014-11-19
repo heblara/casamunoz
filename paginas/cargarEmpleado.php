@@ -8,8 +8,8 @@ if(isset($_GET['sucursal']) && isset($_GET['fecha2'])){
 	$date=substr($fecha, 0,4)."-".substr($fecha, 4,2)."-".substr($fecha, 6,2);
 
 	$hora=$_GET['hora'];
-	echo "Fecha: ".$date."<br />";
-	echo $hora;
+	//echo "Fecha: ".$date."<br />";
+	//echo $hora;
 	$consEmpSucu=$objeto->consultar_empleados_sucursal($sucursal);
 	$tabla="
 	<fieldset>
