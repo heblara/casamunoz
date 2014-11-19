@@ -59,7 +59,7 @@ $(document).ready(function(){
 <form name="hongkiat" id="hongkiat-form" method="post" onsubmit="return false;">
     <div id="wrapping" class="clearfix">
         <section id="aligned">
-		<h2>INGRESO PRODUCTO</h2>
+		<h2>SALIDA DE PRODUCTOS</h2>
 		<h3>Fecha actual: <?php echo date('d-m-Y H:i a'); ?> </h3>
 		<br>
     <label>Empleado: </label>
