@@ -4,23 +4,26 @@
   <link rel="stylesheet" href="/resources/demos/style.css">
   <script type="text/javascript" src="js/jquery.blockUI.js"></script>
 <script type="text/javascript">
-  function validar(){
-    sucursal=document.getElementById('lstEmpleadoSucursal').value;
-    cantidad=document.getElementById('txtCantidadEntrega[]').value;
-    error=false;
-    if(sucursal==0){
-        alert("Seleccione un empleado");
-        error=true;
-    }else if(isNaN(cantidad)){
-        alert("Ingrese un numero en la cantidad");
-        error=true;
-    }
-    if(error==true){
-      return false;
-    }else{
-      return true;
-    }
-  }
+	 function validar(){
+	sucursal=document.getElementById('lstEmpleadoSucursal').value;
+	cantidad=document.getElementById('txtCantidadEntrega[]').value;
+	error=false;
+	if(sucursal==0){
+	alert("Seleccione un empleado");
+	error=true;
+	}else if(isNaN(cantidad)){
+	alert("Ingrese un numero en la cantidad");
+	error=true;
+	}else if(cantidad <= 0 ){
+	alert("La cantidad debe ser mayor que cero");
+	error=true;
+	}
+	if(error==true){
+	return false;
+	}else{
+	return true;
+	}
+	}
 </script>
 <script type="text/javascript">
   $(function() {
