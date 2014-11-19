@@ -1330,7 +1330,7 @@ INNER JOIN SERVICIO s ON s.cod_servicio = r.cod_servicio
 INNER JOIN SUCURSAL su ON su.cod_sucursal = r.cod_sucursal
 WHERE r.cod_sucursal=:sucursal
 OR CONCAT_WS(' ',c.primer_nom,c.segundo_nom,c.primer_ape,c.segundo_ape) LIKE '%".$sucursal."%'
-OR co.fec_estado_rsv LIKE '%".$sucursal."%'
+AND co.fec_estado_rsv LIKE '%".$sucursal."%'
 GROUP BY fec_estado_rsv";
         $query = $dbh->prepare($sql); // Preparamos la consulta para dejarla lista para su ejecucion
         $query->bindParam(":sucursal",$sucursal);
