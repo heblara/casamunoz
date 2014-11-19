@@ -74,7 +74,8 @@
       dateFormat: 'yy-mm-dd', 
       changeMonth: true, 
       changeYear: true, 
-      yearRange: '+0:+10'
+      yearRange: '+0:+10',
+	  minDate: -0, maxDate: "+10000000D"
       });
     });
 
