@@ -3,13 +3,28 @@
   <script src="//code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
   <link rel="stylesheet" href="/resources/demos/style.css">
   <script type="text/javascript" src="js/jquery.blockUI.js"></script>
+  <script language="javascript">
+function soloNumeros(evt) {
+    evt = (evt) ? evt : event;
+    var charCode = (evt.charCode) ? evt.charCode : ((evt.keyCode) ? evt.keyCode :
+        ((evt.which) ? evt.which : 0));
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+        alert("Solo se permiten números en este campo.");
+        return false;
+    }
+    return true;
+ }
+</script>
 <script type="text/javascript">
      $(function() {
 	$('#txtFechaRegistro').datepicker({
 	dateFormat: 'yy-mm-dd', 
 	changeMonth: true, 
 	changeYear: true, 
-	yearRange: '-40:+0'
+	   yearRange: '+0:+1',
+           minDate: -0, maxDate: "+0D"
+
+	
 	});
 		});
 
@@ -28,7 +43,7 @@ function enviarDatos(){
     }).done(function(respuesta){
         if(respuesta.mensaje==1){
           alert("Registro realizado con exito");
-        }else if(respuesta.mensaje==2){
+		}else if(respuesta.mensaje==2){
           alert("No fue posible registrar el producto");
         }
     });
@@ -47,7 +62,7 @@ $(document).ready(function(){
         <label>Nombre de producto:</label>
         <input type="text" name="txtNombreProducto" id="txtNombreProducto" placeholder="Nombre del producto" autocomplete="off" tabindex="1" class="txtinput">  
         <label>Rendimiento:</label>
-        <input type="text" name="txtRendimiento" id="txtRendimiento" placeholder="Rendimiento del producto" autocomplete="off" tabindex="1" class="txtinput">  
+        <input type="text" name="txtRendimiento" id="txtRendimiento" placeholder="Rendimiento del producto" autocomplete="off" tabindex="1" class="txtinput" onkeypress="return soloNumeros(event)">  
         <label>Fecha registro de producto:</label>
         <input type="text" name="txtFechaRegistro" id="txtFechaRegistro" placeholder="Fecha de registro del producto" autocomplete="off" tabindex="1" class="txtinput calendar datepicker">  
         <br/>
