@@ -4,6 +4,22 @@
   <link rel="stylesheet" href="/resources/demos/style.css">
   <script type="text/javascript" src="js/jquery.blockUI.js"></script>
 <script type="text/javascript">
+      $(function( $ ) {
+        $(function() {
+          $('.datepicker').datepicker({
+              dateFormat: 'yy-mm-dd', 
+              changeMonth: true, 
+              changeYear: true, 
+              //yearRange: '+0:+1',
+              /*onClose: function( selectedDate ) {
+                $( "#txtFechaRegistro" ).datepicker( "option", "minDate", selectedDate );
+              },*/
+              minDate:'-0',
+              maxDate:'+3D'              
+              //maxDate:'+1M +10D'
+          });
+        });
+      });
   function validar(){
     sucursal=document.getElementById('lstEmpleadoSucursal').value;
     cantidad=document.getElementById('txtCantidadEntrega[]').value;
@@ -60,19 +76,34 @@ $(document).ready(function(){
 <form name="hongkiat" id="hongkiat-form" method="post" action="#">
     <div id="wrapping" class="clearfix">
         <section id="aligned">
-        <h2>RESERVA DE SERVICIO</h2>
-  
+        <h2>REPROGRAMACION DE RESERVA</h2>
+          <?php 
+          $objeto=new CasaMunoz;
+            $id=base64_decode($_GET['id']);
+            //echo $id;
+            $conReserva=$objeto->consultar_reserva_cliente($id);
+            if($conReserva->rowCount()==0){
+              die("Reserva no encontrada");
+            }
+            $resReserva=$conReserva->fetch(PDO::FETCH_OBJ);
+          ?>
           <label>Estado: </label>
           <select id="recipient" name="recipient" tabindex="6" class="selmenu">
             <option value="0">-- Elija Estado --</option>
-            <option value="1">Reprogramar</option>
-            <option value="2">Cancelar</option>
+            <?php 
+            $consEstados=$objeto->consultar_estados();
+            while($resEstados=$consEstados->fetch(PDO::FETCH_OBJ)){
+              if($resEstados->cod_estado_rsv!=1 && $resEstados->cod_estado_rsv!=5){
+                echo "<option value='".$resEstados->cod_estado_rsv."'>".$resEstados->estado_rsv."</option>";
+              }
+            }
+            ?>
            <br> <br> <br>
         </select>
 		
 		
 		<label>Fecha registro reprogramar</label>
-        <input type="text" name="txtFechaRegistro" id="txtFechaRegistro" placeholder="Fecha de reprogramacion" autocomplete="off" tabindex="1" class="txtinput calendar" readonly="readonly" value="<?php echo date('Y-m-d H:i:s') ?>">  
+        <input type="text" name="txtFechaRegistro" id="txtFechaRegistro" placeholder="Fecha de reprogramacion" autocomplete="off" tabindex="1" class="txtinput calendar datepicker" readonly="readonly" value="<?php echo $resReserva->fec_estado_rsv ?>">  
         <br/>
 		     <br> <br> <br>     
 		
@@ -116,7 +147,6 @@ $(document).ready(function(){
          <select>
         <label>Servicio: </label>
             <?php 
-      $objeto=new CasaMunoz;
       $consultarservicios=$objeto->consultar_servicio();
       //$consulta=mysql_query("SELECT cod_dpto, nom_dpto FROM DEPARTAMENTO");
       // Voy imprimiendo el primer select compuesto por los paises

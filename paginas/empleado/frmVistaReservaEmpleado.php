@@ -58,7 +58,7 @@ var ca=/^[ ]{1}/;
 var com=ca.test(valor);
   if((!com=="") || (valor=="")){document.getElementById("resultado").innerHTML="";}else{
   // Enviar la consulta
-      objeto.open("GET", "paginas/busqueda.phpServicio?valor=" + valor + "&pagina="+pag, true);
+      objeto.open("GET", "paginas/busquedaReserva.phpServicio?valor=" + valor + "&pagina="+pag, true);
       objeto.send(null);
   }
     
@@ -70,20 +70,6 @@ var com=ca.test(valor);
 
 </head>
 <body>
-<?php
-    function generaMedioComunicacion()
-  {
-      $objMedio=new Noticias;
-      $consultar=$objMedio->consultar_medio_comunicacion();
-      echo "<select name='lstMedio' id='lstMedio' onChange='leerDatos(this.options[this.selectedIndex].value,document.hongkiat.lstTipo.options[document.hongkiat.lstTipo.selectedIndex].value);'>";
-    echo "<option value='0'>Elige</option>";
-      while ($data = $consultar->fetch(PDO::FETCH_OBJ))
-    {
-      echo "<option value='".$data->idMedioComunicacion."'>".$data->Nombre."</option>";
-    }
-    echo "</select>";
-  }
-?>
 <script src="js/mask.js"></script>
 <script>
 

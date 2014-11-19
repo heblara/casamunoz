@@ -69,20 +69,6 @@ var com=ca.test(valor);
 
 </head>
 <body>
-<?php
-    function generaMedioComunicacion()
-	{
-	    $objMedio=new Noticias;
-	    $consultar=$objMedio->consultar_medio_comunicacion();
-	    echo "<select name='lstMedio' id='lstMedio' onChange='leerDatos(this.options[this.selectedIndex].value,document.hongkiat.lstTipo.options[document.hongkiat.lstTipo.selectedIndex].value);'>";
-		echo "<option value='0'>Elige</option>";
-	    while ($data = $consultar->fetch(PDO::FETCH_OBJ))
-		{
-			echo "<option value='".$data->idMedioComunicacion."'>".$data->Nombre."</option>";
-		}
-		echo "</select>";
-	}
-?>
 <script src="js/mask.js"></script>
 <script>
 
@@ -118,15 +104,14 @@ function seleccionar(){
   <section id="aligned" style='text-align:center;'>
     <div id="resultado" style='background:black;'>
     	<table width='100%' style="font-size:12pt;">
-    		<tr style="background:white;">
-    			<th>No.</th>
-    			<th>Fecha</th>
-    			<th>Hora</th>
-    			<th>Nombre del Pedicurista</th>
-    			<th>Sucursal</th>
-          <th>Estado</th>
-    			<th>Accion</th>
-    		</tr>
+      <?php 
+      $objCliente=new Casamunoz;
+      $consReserva=$objCliente->consultar_reservas_clientes($_SESSION['usuario']);
+      while ($resReserva=$consReserva->fetch(PDO::FETCH_OBJ)) {
+      ?>
+      <?php
+      }
+      ?>
     		<tr style="background:silver;">
     			<td>1</td>
     			<td>30/05/2014</td>
@@ -136,15 +121,6 @@ function seleccionar(){
           <td>Finalizada</td>
     			<td></td>
     		</tr>
-        <tr style="background:white;">
-          <td>2</td>
-          <td>29/08/2014</td>
-          <td>02:30 p.m.</td>
-          <td>Maria Andrade</td>
-          <td>La Joya</td>
-          <td>Pendiente</td>
-          <td><a href='?mod=reprogramarreserva'><img src="images/clock.png" title="Reprogramar" /></a></td>
-        </tr>
     	</table>
     </div>
   </section>

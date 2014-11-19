@@ -5,7 +5,7 @@ class CasaMunoz {
 
     }
 
-function consultar_servicios_dia() {
+    function consultar_servicios_dia() {
         $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
         $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
         $sql = "SELECT * from SERVICIO ";
@@ -19,7 +19,38 @@ function consultar_servicios_dia() {
         unset($dbh);
         unset($query);
     }
-
+    function consultar_estados() {
+        $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
+        $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
+        $sql = "SELECT * FROM ESTADO_RESERVA ";
+        //$sql = "SELECT * FROM SERVICIO";
+        $query = $dbh->prepare($sql); // Preparamos la consulta para dejarla lista para su ejecucion
+        $query->execute(); // Ejecutamos la consulta
+        if ($query)
+            return $query; //pasamos el query para utilizarlo luego con fetch
+        else
+            return false;
+        unset($dbh);
+        unset($query);
+    }
+    function consultar_reserva_cliente($cod) {
+        $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
+        $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
+        $sql = "SELECT * FROM RESERVA AS r
+        INNER JOIN CONTROL AS c ON c.cod_rsv=r.cod_rsv
+        INNER JOIN ESTADO_RESERVA AS es ON es.cod_estado_rsv=c.cod_estado
+        WHERE r.cod_rsv=:cod AND es.cod_estado_rsv=1";
+        //$sql = "SELECT * FROM SERVICIO";
+        $query = $dbh->prepare($sql); // Preparamos la consulta para dejarla lista para su ejecucion
+        $query->bindParam(":cod",$cod);
+        $query->execute(); // Ejecutamos la consulta
+        if ($query)
+            return $query; //pasamos el query para utilizarlo luego con fetch
+        else
+            return false;
+        unset($dbh);
+        unset($query);
+    }
     function consultar_cliente($dato) {
         $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
         $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
@@ -1255,7 +1286,33 @@ function consultar_servicios($dato) {
         unset($query);
     	}
     	
-    	
+    function consultar_reservas_cliente($cliente) {
+        $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
+        $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
+        $sql = "SELECT r.cod_rsv,s.nom_servicio, su.nom_sucursal,MAX(co.fec_estado_rsv) as fec_estado_rsv,
+    es.estado_rsv ,CONCAT_WS(' ',c.primer_nom,c.segundo_nom,c.primer_ape,c.segundo_ape) 
+as NombreCompletoCliente,
+CONCAT_WS(' ',e.primer_nom,e.segundo_nom,e.primer_ape,e.segundo_ape) 
+as NombreCompletoEmpleado
+    FROM EMPLEADO as e 
+INNER JOIN RESERVA r ON r.cod_emp=e.cod_emp
+INNER JOIN CONTROL co ON co.cod_rsv=r.cod_rsv
+INNER JOIN ESTADO_RESERVA as es ON es.cod_estado_rsv=co.cod_estado
+INNER JOIN CLIENTE c ON c.cod_cliente = r.cod_cliente
+INNER JOIN SERVICIO s ON s.cod_servicio = r.cod_servicio
+INNER JOIN SUCURSAL su ON su.cod_sucursal = r.cod_sucursal
+WHERE cod_cliente = :cliente
+GROUP BY fec_estado_rsv";
+        $query = $dbh->prepare($sql); // Preparamos la consulta para dejarla lista para su ejecucion
+        $query->bindParam(":cliente",$cliente);
+        $query->execute(); // Ejecutamos la consulta
+        if ($query)
+            return $query; //pasamos el query para utilizarlo luego con fetch
+        else
+            return false;
+        unset($dbh);
+        unset($query);
+    }
     function consultar_reserva($sucursal) {
         $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
         $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
