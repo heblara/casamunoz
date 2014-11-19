@@ -64,7 +64,8 @@ if(isset($_GET['sucursal']) && isset($_GET['fecha2'])){
 			}*/
 		}
 		if($i==0){
-			$tabla.="<tr><td><h1>No tenemos pedicuristas disponibles a esta hora, por favor seleccione otra.</h3></td></tr>";
+			$tabla.="<tr><td><h1>No se encuentran pedicuristas disponibles en esta sucursal para la hora y fecha seleccionada
+			<br />Por favor seleccione otra hora o si lo desea puede seleccionar otra sucursal.</h3></td></tr>";
 		}
 	}else{
 		$tabla.="<tr><td><h1>No se puede reservar en horas pasadas</h3></td></tr>";

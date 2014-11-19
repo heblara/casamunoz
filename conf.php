@@ -47,6 +47,10 @@ $conf['cambiarcontrasena']=array(
 'layout'=>LAYOUT_INICIO
 );
 //admin
+$conf['imprimirreserva']=array(
+'archivo'=>'admin/imprimirreserva.php',
+'layout'=>LAYOUT_INICIO
+);
 $conf['usuarioempleado']=array(
 'archivo'=>'admin/usuarioempleado.php',
 'layout'=>LAYOUT_INICIO

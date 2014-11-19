@@ -134,6 +134,7 @@ function enviarDatos(){
           alert("No fue posible registrar la reserva, intente de nuevo");
         }else if(respuesta.mensaje==1){
           alert("Reserva realizado con exito");
+          location.href='?mod=imprimirreserva&id=<?php echo $_SESSION['reserva'] ?>';
         }
     });
 }
@@ -190,7 +191,9 @@ $(document).ready(function(){
         </span>-->
         <label>Hora de Inicio: </label>
         <span id="demoDer">
-        <input type='time' min='' max='' class='txtinput time' disabled="disabled">
+        <select class='selmenu' id='txtHora' name='txtHora' disabled='disabled'>
+          <option value='0'>Seleccione una fecha</option>
+        </select>
         </span>
         <!--<label for="txthora">Hora:</label>
         <input type="text" id="txtHora" placeholder='Hora' class="txtinput time" />-->

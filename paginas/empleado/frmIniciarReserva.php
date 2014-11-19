@@ -143,6 +143,7 @@ function enviarDatos(){
           alert("No fue posible registrar la reserva, intente de nuevo");
         }else if(respuesta.mensaje==1){
           alert("Reserva realizado con exito");
+          location.href='?mod=imprimirreserva&id=<?php echo $_SESSION['reserva'] ?>';
         }
     });
 }

@@ -1358,6 +1358,30 @@ GROUP BY fec_estado_rsv";
         unset($dbh);
         unset($query);
     }
+    function consultar_datos_reserva($id) {
+        $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
+        $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
+        $sql = "SELECT su.nom_sucursal,r.cod_rsv,s.nom_servicio, su.nom_sucursal,MAX(co.fec_estado_rsv) AS fec_estado_rsv,
+        co.hora_rsv, es.estado_rsv ,CONCAT_WS(' ',c.primer_nom,c.segundo_nom,c.primer_ape,c.segundo_ape) AS NombreCompletoCliente,
+        CONCAT_WS(' ',e.primer_nom,e.segundo_nom,e.primer_ape,e.segundo_ape) AS NombreCompletoEmpleado
+        FROM EMPLEADO as e 
+        INNER JOIN RESERVA r ON r.cod_emp=e.cod_emp
+        INNER JOIN CONTROL co ON co.cod_rsv=r.cod_rsv
+        INNER JOIN ESTADO_RESERVA as es ON es.cod_estado_rsv=co.cod_estado
+        INNER JOIN CLIENTE c ON c.cod_cliente = r.cod_cliente
+        INNER JOIN SERVICIO s ON s.cod_servicio = r.cod_servicio
+        INNER JOIN SUCURSAL su ON su.cod_sucursal = r.cod_sucursal
+        WHERE r.cod_rsv=:cod";
+        $query = $dbh->prepare($sql); // Preparamos la consulta para dejarla lista para su ejecucion
+        $query->bindParam(":cod",$id);
+        $query->execute(); // Ejecutamos la consulta
+        if ($query)
+            return $query; //pasamos el query para utilizarlo luego con fetch
+        else
+            return false;
+        unset($dbh);
+        unset($query);
+    }
     	function mostrar_sucursal_servicio($dato) {
         $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
         $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
