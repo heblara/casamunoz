@@ -4,6 +4,16 @@
   <link rel="stylesheet" href="/resources/demos/style.css">
   <script type="text/javascript" src="js/jquery.blockUI.js"></script>
 <script type="text/javascript">
+
+function validarEmail(valor) {
+  if (/(\w+)(\.?)(\w*)(\@{1})(\w+)(\.?)(\w*)(\.{1})(\w{2,3})/.test(valor)){
+  return true;
+  } else {
+  return false;
+  }
+}
+
+
 function validar(){
     nombre1=document.getElementById('txtNombre1').value;
     apellido1=document.getElementById('txtApellido1').value;
@@ -13,7 +23,8 @@ function validar(){
     fecnac=document.getElementById('txtFecNac').value;
     cargo=document.getElementById('lstCargo').value;
     sucursal=document.getElementById('lstSucursal').value;
-    paises=document.getElementById('lstSucursal').value;
+    paises=document.getElementById('paises').value;
+	municipio=document.getElementById('estados').value;
     direccion=document.getElementById('txtDireccion').value;
     telfijo=document.getElementById('txtTelFijo').value;
     telmovil=document.getElementById('txtTelMovil').value;
@@ -81,6 +92,12 @@ function validar(){
         //#hongkiat-form input.name
         document.getElementsByName('paises').style="border-color:#F80303;";
         error=true;
+    }else if(municipio==0){
+        msg+='* Municipio';
+        alert("Seleccion un Municipio");
+        //#hongkiat-form input.name
+        document.getElementsByName('estados').style="border-color:#F80303;";
+        error=true;
     }else if(direccion==null || direccion==""){
         msg+='* Direccion';
         alert("Ingrese direccion");
@@ -95,7 +112,10 @@ function validar(){
         document.getElementsByName('txtFecIni').style="border-color:#F80303;";
         document.getElementById('txtFecIni').focus();
         error=true;
-    }
+    }else if(!validarEmail(document.getElementById("txtCorreo").value)){ // validamos el correo valido
+		alert("Ingrese un correo valido");
+		error=true;
+	}
 
     if(error==true){
       return false;

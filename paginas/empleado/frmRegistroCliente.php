@@ -10,6 +10,8 @@ function validar(){
     nombre1=document.getElementById('txtNombre1').value;
 	apellido1=document.getElementById('txtApellido1').value;
 	genero=document.getElementById('lstGenero').value;
+	paises=document.getElementById('paises').value;
+	municipio=document.getElementById('estados').value;
 	msg="";
     error=false;
     if(nombre1=="" || nombre1==null){
@@ -31,6 +33,18 @@ function validar(){
         alert("Seleccione un genero");
         //#hongkiat-form input.name
         document.getElementsByName('lstGenero').style="border-color:#F80303;";
+        error=true;
+    }else if(paises==0){
+        msg+='* Departamento';
+        alert("Seleccion un Departamento");
+        //#hongkiat-form input.name
+        document.getElementsByName('paises').style="border-color:#F80303;";
+        error=true;
+    }else if(municipio==0){
+        msg+='* Municipio';
+        alert("Seleccion un Municipio");
+        //#hongkiat-form input.name
+        document.getElementsByName('estados').style="border-color:#F80303;";
         error=true;
     }
 	 if(error==true){
@@ -64,13 +78,19 @@ function enviarDatos(){
         }
     });
 }
-$(document).ready(function(){         
+jQuery( document ).ready(function( $ ) {
+  // Code that uses jQuery's $ can follow here.
   $("#submitbtn").click(function(){
-    if(validar()){
-        enviarDatos();
-      }
-      return false;
-  });
+        if(validar()){
+          if($("input[id=rdDiabetico]:checked").val()){
+            enviarDatos();
+          }else{
+            alert("Indique si es diabetico o no");
+          }
+        }else{
+          //alert("Seleccione un cliente");
+        }
+    });
 });
 </script>
 <script>
