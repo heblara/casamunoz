@@ -1487,6 +1487,5 @@ GROUP BY fec_estado_rsv";
         unset($dbh);
         unset($query);
     }
-
 }
 ?>

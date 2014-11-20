@@ -151,7 +151,7 @@ $conf['reprogramarreserva']=array(
 );
 $conf['registrarse']=array(
 'archivo'=>'cliente/frmRegistroCliente.php',
-'layout'=>LAYOUT_CLIENTE
+'layout'=>LAYOUT_INICIO
 );
 $conf['imprimirreservac']=array(
 'archivo'=>'imprimirreserva.php',

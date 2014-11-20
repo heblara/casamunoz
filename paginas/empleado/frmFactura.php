@@ -30,9 +30,26 @@
         <label>No.:</label>
         <input type="text" name="txtNoFact" id="txtNoFact" placeholder="Numero de factura" autocomplete="off" tabindex="1" class="txtinput money">
         <label>Registro No.:</label>
-        <input type="text" name="txtRegistro" id="txtRegistro" placeholder="No. Registro" autocomplete="off" tabindex="1" class="txtinput name">
+        <input type="text" name="txtRegistro" id="txtRegistro" placeholder="No. Registro" autocomplete="off" tabindex="1" class="txtinput name" disabled="disabled" value="80742-7" >
         <label>NIT:</label>
-        <input type="text" name="txtNIT" id="txtNIT" placeholder="Numero de NIT" autocomplete="off" tabindex="1" class="txtinput id">
+        <input type="text" name="txtNIT" id="txtNIT" placeholder="Numero de NIT" autocomplete="off" tabindex="1" class="txtinput id" value="0614-180894-105-2">
+        <fieldset>
+          <legend>Servicios ejecutados este d&iacute;a</legend>
+          <table>
+          <?php 
+          $objeto=new Casamunoz;
+          $consReservas=$objeto->consultar_reservas_ejecutadas();
+          echo "<tr>
+            <td>Hora</td>
+            <td></td>
+          </tr>";
+          while($reserva=$consReservas->fetch(PDO::FETCH_OBJ)){
+          ?>
+          <?php
+          }
+          ?>
+          </table>
+        </fieldset>
         <fieldset>
           <legend>Factura</legend>
           <label>Fecha:</label>
