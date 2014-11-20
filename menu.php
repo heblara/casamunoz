@@ -145,6 +145,7 @@ if(isset($_SESSION['autenticado'])){
 </li>-->
 <li><a href='?mod=servicios'><span>Servicios</span></a></li>
 <li><a href='?mod=sucursales'><span>Sucursales</span></a></li>
+<li><a href='?mod=login'><span>Iniciar sesi&oacute;n</span></a></li>
 <li class="last" style="float:right;"><link rel="stylesheet" type="text/css" href="css/menu-login.css">
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
 <script type="text/javascript">

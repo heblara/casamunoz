@@ -102,25 +102,42 @@ function seleccionar(){
 <form name="hongkiat" id="hongkiat-form">
 <div id="wrapping" class="clearfix">
   <section id="aligned" style='text-align:center;'>
-    <div id="resultado" style='background:black;'>
+    <div id="resultado">
     	<table width='100%' style="font-size:12pt;">
+      <tr style="background:silver;">
+          <th>Numero</th>
+          <th>Fecha</th>
+          <th>Hora</th>
+          <th>Pedicurista</th>
+          <th>Sucursal</th>
+          <th>Estado</th>
+          <th></th>
+        </tr>
       <?php 
       $objCliente=new Casamunoz;
-      $consReserva=$objCliente->consultar_reservas_clientes($_SESSION['usuario']);
+      //echo $_SESSION['usuario'];
+      $consReserva=$objCliente->consultar_reservas_cliente($_SESSION['usuario']);
+      $i=0;
       while ($resReserva=$consReserva->fetch(PDO::FETCH_OBJ)) {
+        $i++;
+        if($i%2==0){
+          $estilo="background:silver;";
+        }else{
+          $estilo="background:white;";
+        }
       ?>
+        <tr style="<?php echo $estilo ?>">
+          <td><?php echo $i ?></td>
+          <td><?php echo $resReserva->fec_estado_rsv ?></td>
+          <td><?php echo $resReserva->hora_rsv ?></td>
+          <td><?php echo $resReserva->NombreCompletoEmpleado ?></td>
+          <td><?php echo $resReserva->nom_sucursal ?></td>
+          <td><?php echo $resReserva->estado_rsv ?></td>
+          <td></td>
+        </tr>
       <?php
       }
       ?>
-    		<tr style="background:silver;">
-    			<td>1</td>
-    			<td>30/05/2014</td>
-    			<td>10:00 a.m.</td>
-    			<td>Roxana Larios</td>
-    			<td>Las Cascadas</td>
-          <td>Finalizada</td>
-    			<td></td>
-    		</tr>
     	</table>
     </div>
   </section>

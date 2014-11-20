@@ -1,6 +1,6 @@
 <?php 
 require("dompdf/dompdf_config.inc.php");
-$id=$_GET['id'];
+$id=$_SESSION['reserva'];
 $objeto=new Casamunoz;
 $dompdf=new DOMPDF();
 $consReserva=$objeto->consultar_datos_reserva($id);

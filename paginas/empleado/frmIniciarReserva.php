@@ -1,3 +1,4 @@
+<?php @session_start(); ?>
 <form name="hongkiat" id="hongkiat-form">
     <div id="wrapping" class="clearfix">
         <section id="aligned">

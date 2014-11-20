@@ -11,8 +11,8 @@ if($user=="" || $user==null || trim($user)==""){
         $usuario = array($cuenta->cod_cliente,md5($codigo),"Activo","3");
         //if($validar=$objUser->ValidarCuenta($user)){
         if($objUser->guardar_usuario($usuario)){
-            echo "Su cuenta ha sido validada con exito<br>Su contrase&ntilde;a se ha enviado a su Correo Personal<br>Para ingresar a su cuenta haga <a href='http://localhost/casamunoz2/?mod=login'>clic aqui</a>";
-            $mensaje="Su cuenta ha sido validada con exito<br>Para ingresar a su cuenta haga <a href='http://localhost/casamunoz2/?mod=login'>clic aqui</a><br /><br />
+            echo "Su cuenta ha sido validada con exito<br>Su contrase&ntilde;a se ha enviado a su Correo Personal<br>Para ingresar a su cuenta haga <a href='http://casamunoz.heblara.biz/?mod=login'>clic aqui</a>";
+            $mensaje="Su cuenta ha sido validada con exito<br>Para ingresar a su cuenta haga <a href='http://casamunoz.heblara.biz/?mod=login'>Clic aqui</a><br /><br />
             Datos de acceso:<br />
             Usuario: ".$user."<br />
             Contrase&ntilde;a: ".$codigo."<br />

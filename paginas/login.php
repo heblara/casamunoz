@@ -51,11 +51,11 @@ $(document).ready(function(){
 <div id="box" style="">
 <div class="elements">
 <div class="avatar"></div>
-<form id="frmLogin" action="#" method="post" onsubmit="return false;">
-<input type="text" name="username" class="username" placeholder="Usuario" autocomplete='off' value="" />
-<input type="password" name="password" class="password" placeholder="Contrase&ntilde;a" autocomplete='off' />
-<input type="submit" name="login" class="submit" id="submit" value="Ingresar" />
-<h3><a class="forgot" href="?mod=registrarse">Registrate</a></h3>
+<form id="frmLogin">
+	<input type="text" name="username" class="username" placeholder="Usuario" autocomplete='off' value="" />
+	<input type="password" name="password" class="password" placeholder="Contrase&ntilde;a" autocomplete='off' />
+	<input type="button" name="login" class="submit" id="submit" value="Ingresar" />
+	<h3><a class="forgot" href="?mod=registrarse">Registrate</a></h3>
 </form>
 </div>
 <br>

@@ -220,7 +220,7 @@ $conf['inventario']=array(
 );
 $conf['expediente']=array(
 'archivo'=>'empleado/frmExpediente.php',
-'layout'=>LAYOUT_INICIO
+'layout'=>LAYOUT_EMPLEADO
 );
 
 ?>
