@@ -1391,7 +1391,7 @@ GROUP BY fec_estado_rsv";
     function consultar_datos_reserva($id) {
         $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
         $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
-        $sql = "SELECT su.nom_sucursal,r.cod_rsv,s.nom_servicio, su.nom_sucursal,MAX(co.fec_estado_rsv) AS fec_estado_rsv,
+        $sql = "SELECT c.cod_cliente,su.nom_sucursal,r.cod_rsv,s.nom_servicio, su.nom_sucursal,MAX(co.fec_estado_rsv) AS fec_estado_rsv,
         co.hora_rsv, es.estado_rsv ,CONCAT_WS(' ',c.primer_nom,c.segundo_nom,c.primer_ape,c.segundo_ape) AS NombreCompletoCliente,
         CONCAT_WS(' ',e.primer_nom,e.segundo_nom,e.primer_ape,e.segundo_ape) AS NombreCompletoEmpleado
         FROM EMPLEADO as e 

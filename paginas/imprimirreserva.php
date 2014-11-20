@@ -5,19 +5,20 @@ $objeto=new Casamunoz;
 $dompdf=new DOMPDF();
 $consReserva=$objeto->consultar_datos_reserva($id);
 if($consReserva->rowCount()>0){
-	if(file_exists("reporte/reserva".$id.".pdf")){
-		unlink("reporte/reserva".$id.".pdf");
+	//$reserva=$consReserva->fetch(PDO::FETCH_OBJ);
+	$reserva=$consReserva->fetch(PDO::FETCH_OBJ);
+	if(file_exists("reporte/reserva".$reserva->cod_cliente."-".$id.".pdf")){
+		unlink("reporte/reserva".$reserva->cod_cliente."-".$id.".pdf");
 
 	}
-	$reserva=$consReserva->fetch(PDO::FETCH_OBJ);
 	// include Barcode39 class 
 	include "Barcode39.php"; 
 
 	// set Barcode39 object 
-	$bc = new Barcode39($id); 
+	$bc = new Barcode39($reserva->cod_cliente."-".$id); 
 
 	// display new barcode 
-	$bc->draw("reporte/reserva".$id.".gif");
+	$bc->draw("reporte/reserva".$reserva->cod_cliente."-".$id.".gif");
 	$html="<style>
 	th{
 		text-align:left;
@@ -57,7 +58,7 @@ if($consReserva->rowCount()>0){
 			<td>".$reserva->estado_rsv."</td>
 		</tr>
 		<tr>
-			<td colspan='2' align='center'><img src='reporte/reserva".$id.".gif' /></td>
+			<td colspan='2' align='center'><img src='reporte/reserva".$reserva->cod_cliente."-".$id.".gif' /></td>
 		</tr>
 	</table>";
 	//echo $html;
@@ -74,8 +75,8 @@ if($consReserva->rowCount()>0){
 	// You can now write $pdf to disk, store it in a database or stream it
 	// to the client.
 
-	file_put_contents("reporte/reserva".$id.".pdf", $pdf);
-	echo "<iframe src='reporte/reserva".$id.".pdf' width='100%' height='500px' />";
+	file_put_contents("reporte/reserva".$reserva->cod_cliente."-".$id.".pdf", $pdf);
+	echo "<iframe src='reporte/reserva".$reserva->cod_cliente."-".$id.".pdf' width='100%' height='500px' />";
 }else{
 	echo "<h3><Reserva no encontrada</h3>";
 }
