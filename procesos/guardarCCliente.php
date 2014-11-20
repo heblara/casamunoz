@@ -50,7 +50,7 @@ if($ObjCliente->registrar_Ccliente($Cliente)){
 		";
 		//$Correo_Envio, $Nombre_Envio, $Mensaje_Envio, $Firma_Envio, $Correo_Envia, $Asunto_Mensaje,$Imagen
 		if(Enviar_Email($txtCorreo,$nombre,$mensaje,"Casa Munoz","","Activacion de su correo","")){
-			echo "Correo enviado"; 
+			//echo "Correo enviado"; 
 			$respuesta->mensaje = 1;
 		}else{
 			$respuesta->mensaje = 3;

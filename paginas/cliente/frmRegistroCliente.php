@@ -60,7 +60,7 @@ function enviarDatos(){
         if(respuesta.mensaje==2){
           alert("No fue posible registrar el empleado");
         }else if(respuesta.mensaje==1){
-          alert("Registro realizado con exito");
+          alert("Registro realizado con exito, un mensaje de verificaci&oacute;n ha sido enviado a su correo electr&oacute;nico");
         }
     });
 }
