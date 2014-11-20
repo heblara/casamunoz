@@ -15,9 +15,9 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
     //comprobamos si el archivo ha subido
     if ($file && move_uploaded_file($_FILES['archivo']['tmp_name'],"../img/baner/".$file))
     {
-       sleep(3);//retrasamos la petición 3 segundos}
+       //sleep(3);//retrasamos la petición 3 segundos}
 	   $objeto=new CasaMunoz;
-	   $imagen1= array($txtFechaRegistro,"../img/baner/".$file, $_SESSION['empleado'] );
+	   $imagen1= array($txtFechaRegistro,"../baner/".$file, $_SESSION['usuario'] );
 	   $consImagen=$objeto->insertar_imagen($imagen1);
        echo $file;//devolvemos el nombre del archivo para pintar la imagen
     }

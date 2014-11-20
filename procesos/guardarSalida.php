@@ -13,7 +13,7 @@ for ($i=0;$i<count($txtProducto);$i++){
 		$respuesta->mensaje = 3;
 	}else{
 		$salida=array($txtProducto[$i],$txtCantidadEntrega[$i],$lstEmpleadoSucursal,$_SESSION['sucursal']);
-		print_r($salida);
+		//print_r($salida);
 		if($obj->guardar_salida($salida)){
 			$inventario=array($txtProducto[$i],$_SESSION['sucursal']);
 			$consInventario=$obj->consultar_inventario($inventario);
