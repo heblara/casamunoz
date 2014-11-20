@@ -43,6 +43,7 @@ function enviarDatos(){
           alert("No fue posible registrar la entrada");
         }else if(respuesta.mensaje==1){
           alert("Registro realizado con exito");
+          document.getElementById('hongkiat-form').reset();
         }else if(respuesta.mensaje==3){
           alert("Las cantidades no deben sobrepasar las existencias");
         }
