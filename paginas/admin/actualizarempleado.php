@@ -196,9 +196,7 @@ if(isset($_GET['id'])){
           }
           echo "</select>";
           ?>
-          <label>Crear usuario</label>
-          <input type="radio" name="rdUsuario" id="rdUsuario" value="Si" class="radio">Si
-          <input type="radio" name="rdUsuario" id="rdUsuario" value="No" class="radio">No
+        
         </section>
         <section id="aside" class="clearfix">
         </section>

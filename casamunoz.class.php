@@ -1422,5 +1422,41 @@ function consultar_servicios($dato) {
         unset($dbh);
         unset($query);
     }
+
+    function consultar_pedicurista($sucursal) {
+        $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
+        $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
+        $sql = "SELECT * FROM EMPLEADO WHERE cod_cargo=2 AND cod_sucursal=:sucursal";
+        $query = $dbh->prepare($sql); // Preparamos la consulta para dejarla lista para su ejecucion
+         $query->bindParam(":sucursal",$sucursal);
+        $query->execute(); // Ejecutamos la consulta
+        if ($query)
+            return $query; //pasamos el query para utilizarlo luego con fetch
+        else
+            return false;
+        unset($dbh);
+        unset($query);
+    }
+
+    function insertar_horario($dato) {
+        $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
+        $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
+        $sql = "INSERT INTO `HORARIO`(`hora_ini`, `hora_fin`,`dia_horario`) 
+        VALUES (:horaini,:horafin,:dia)";
+        $query = $dbh->prepare($sql); // Preparamos la consulta para dejarla lista para su ejecucion
+        $query->bindParam(":horaini",$dato[0]);
+        $query->bindParam(":horafin",$dato[1]);
+        $query->bindParam(":dia",$dato[2]);
+        if($query->execute()){
+            return $query;
+        }else{
+            echo "\nPDO::errorInfo():\n";
+            print_r($dbh->errorInfo());
+            return false;
+        }
+        unset($dbh);
+        unset($query);
+    }
+
 }
 ?>

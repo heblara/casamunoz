@@ -51,6 +51,10 @@ $conf['imprimirreserva']=array(
 'archivo'=>'admin/imprimirreserva.php',
 'layout'=>LAYOUT_INICIO
 );
+$conf['asignarhorario']=array(
+'archivo'=>'admin/frmAsignarhorario.php',
+'layout'=>LAYOUT_INICIO
+);
 $conf['usuarioempleado']=array(
 'archivo'=>'admin/usuarioempleado.php',
 'layout'=>LAYOUT_INICIO

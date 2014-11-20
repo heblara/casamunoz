@@ -38,6 +38,7 @@ if(isset($_SESSION['autenticado'])){
     <li class='active has-sub'><a href='#'><span>Sucursal</span></a>
       <ul>
 	   <li class='last'><a href='?mod=nuevasucursal'><span>Registrar sucursal</span></a></li>
+     <li class='last'><a href='?mod=asignarhorario'><span>Asignar horario</span></a></li>
           <li class='last'><a href='?mod=registrartemporada'><span>Temporadas</span></a></li>
       </ul>
     </li>
@@ -72,7 +73,8 @@ if(isset($_SESSION['autenticado'])){
       <ul>
         <li><a href='?mod=registrarcliente'><span>Registrar</span></a></li>
         <li><a href='?mod=reservarservicio'><span>Reserva</span></a></li>
-        <li><a href='?mod=buscarcliente'><span>Expediente</span></a></li>
+        <li><a href='?mod=buscarcliente'><span>Administrar cliente</span></a></li>
+        <li><a href='?mod=expediente'><span>Expediente</span></a></li>
         <li class='last'><a href='?mod=vistareservaemp'><span>Vista de reserva</span></a></li>
       </ul>
     </li>
