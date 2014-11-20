@@ -72,7 +72,7 @@ if(isset($_GET['sucursal']) && isset($_GET['fecha2'])){
 	}
 
 }else{
-	$tabla.="<tr><td><h1>Lo sentimos, el sistema esta inactivo por la temporada: ".$temporada->nom_temp."<br />
+	$tabla.="<tr><td><h1>Lo sentimos, el sistema est&aacute; inactivo por la temporada: ".$temporada->nom_temp."<br />
 	Favor visite la sucursal m&aacute;s cercana donde ser&aacute; atendido por orden de llegada.</h3></td></tr>";
 }
       $tabla.="

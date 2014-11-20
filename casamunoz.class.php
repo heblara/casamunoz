@@ -1329,6 +1329,36 @@ GROUP BY fec_estado_rsv";
         unset($dbh);
         unset($query);
     }
+    function consultar_reporte_ventas($sucursal,$fecha) {
+        $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
+        $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
+        $sql = "SELECT *,r.cod_rsv,s.nom_servicio, su.nom_sucursal,MAX(co.fec_estado_rsv) as fec_estado_rsv,
+    es.estado_rsv ,CONCAT_WS(' ',c.primer_nom,c.segundo_nom,c.primer_ape,c.segundo_ape) 
+as NombreCompletoCliente,
+CONCAT_WS(' ',e.primer_nom,e.segundo_nom,e.primer_ape,e.segundo_ape) 
+as NombreCompletoEmpleado, cos.precio_Costo,f.num_factura
+    FROM EMPLEADO as e 
+INNER JOIN RESERVA as r ON r.cod_emp=e.cod_emp
+INNER JOIN FACTURA as f ON f.cod_rsv=r.cod_rsv
+INNER JOIN CONTROL as co ON co.cod_rsv=r.cod_rsv
+INNER JOIN ESTADO_RESERVA as es ON es.cod_estado_rsv=co.cod_estado
+INNER JOIN CLIENTE AS c ON c.cod_cliente = r.cod_cliente
+INNER JOIN SERVICIO AS s ON s.cod_servicio = r.cod_servicio
+INNER JOIN COSTO AS cos ON s.cod_costo=cos.cod_costo
+INNER JOIN SUCURSAL as su ON su.cod_sucursal = r.cod_sucursal
+WHERE r.cod_rsv= :sucursal and co.fec_estado_rsv=:fecha and co.cod_estado=5
+GROUP BY fec_estado_rsv";
+        $query = $dbh->prepare($sql); // Preparamos la consulta para dejarla lista para su ejecucion
+        $query->bindParam(":sucursal",$sucursal);
+        $query->bindParam(":fecha",$fecha);
+        $query->execute(); // Ejecutamos la consulta
+        if ($query)
+            return $query; //pasamos el query para utilizarlo luego con fetch
+        else
+            return false;
+        unset($dbh);
+        unset($query);
+    }
     function consultar_reserva($sucursal) {
         $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
         $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.

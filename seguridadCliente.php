@@ -2,7 +2,7 @@
 if($_SESSION["autenticado"]!="si"){
 	header("Location:?mod=home");
 }else{
-	if($_SESSION['tipo']!=2){
+	if($_SESSION['tipo']!=3){
 		header("Location:?mod=home");	
 	}
 }

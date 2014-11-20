@@ -134,7 +134,7 @@ function enviarDatos(){
           alert("No fue posible registrar la reserva, intente de nuevo");
         }else if(respuesta.mensaje==1){
           alert("Reserva realizado con exito");
-          location.href='?mod=imprimirreserva&id=<?php echo $_SESSION['reserva'] ?>';
+          location.href='?mod=imprimirreservac&id=<?php echo $_SESSION['reserva'] ?>';
         }
     });
 }
@@ -154,6 +154,20 @@ $(document).ready(function(){
     <div id="wrapping" class="clearfix">
         <section id="aligned">
         <h2>RESERVA DE SERVICIO</h2>
+        <p><h3>INDICACIONES:</h3>
+        <ol>
+          <li>Las reservas en l&iacute;nea solo permiten un rango de 3 d&iacute;as m&aacute;ximo, si desea reservar
+          en otra fecha llame a la sucursal de su preferencia para poder realizar la reservaci&oacute;n.
+          </li>
+          <li>
+            Se le sugiere presentarse por lo menos con 10 minutos de anticipaci&oacute;n, ya que al pasar 10 minutos de la hora
+            de la reserva, esta se dar&aacute; por cancelada si el cliente no se presenta.
+          </li>
+          <li>Ser puntual con el horario de reserva.</li>
+          <li>Si por alguna circunstancia no podr&aacute; asistir en la fecha que establezca, comunicarlo con anticipaci&oacute;n
+          a la sucursal correspondiente para poder reprogramar su cita.</li>
+        </ol>
+        </p>
         <label>Sucursal: </label>
         <script type="text/javascript" src="funciones/select_dependientes1.js"></script>
         <?php 
