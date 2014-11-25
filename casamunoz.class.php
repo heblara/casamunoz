@@ -1491,5 +1491,24 @@ GROUP BY fec_estado_rsv";
         unset($dbh);
         unset($query);
     }
+    
+     function correlativo_sucursal($supervisor) {
+        $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
+        $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
+        $sql = "SELECT nom_sucursal FROM SUCURSAL AS s
+        INNER JOIN EMPLEADO AS e ON e.cod_sucursal=s.cod_sucursal
+		INNER JOIN RESERVA AS r ON r.cod_emp=e.cod_emp
+		INNER JOIN FACTURA AS f ON f.cod_rsv=r.cod_rsv
+        WHERE e.cod_emp=:supervisor";
+        $query = $dbh->prepare($sql); // Preparamos la consulta para dejarla lista para su ejecucion
+         $query->bindParam(":supervisor",$supervisor);
+        $query->execute(); // Ejecutamos la consulta
+        if ($query)
+            return $query; //pasamos el query para utilizarlo luego con fetch
+        else
+            return false;
+        unset($dbh);
+        unset($query);
+    }
 }
 ?>
