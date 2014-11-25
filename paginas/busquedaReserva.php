@@ -7,7 +7,7 @@ if(isset($_GET['valor'])){
   $objeto=new CasaMunoz;
   $valor=$_GET['valor'];
 
-  $consReserva=$objeto->consultar_reserva($_SESSION['sucursal']);
+ $consReserva=$objeto->consultar_reserva($sucursal, $valor);
 
   if($consReserva->rowCount()){
     echo "<table style='background-color:white;' width=100%>";
