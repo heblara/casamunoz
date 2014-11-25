@@ -110,9 +110,10 @@ $(document).ready(function(){
         <label for="txtHora">Hora:</label>
         <input type='time' min='' max='' class='txtinput time' value="<?php echo $resReserva->hora_rsv ?>"> 
 
+   
             <label>Servicio: </label>
             <?php 
-      $consultarservicios=$objeto->consultar_servicio();
+      $consultarservicios=$objeto->listar_servicios();
       //$consulta=mysql_query("SELECT cod_dpto, nom_dpto FROM DEPARTAMENTO");
       // Voy imprimiendo el primer select compuesto por los paises
       //echo $consultarDepartamentos->rowCount();
@@ -123,19 +124,21 @@ $(document).ready(function(){
       while($servicio=$consultarservicios->fetch(PDO::FETCH_OBJ))
       {
       if($servicio->cod_servicio==$resReserva->cod_servicio){$servicio1='selected';
-        echo "<option value='".$servicio->cod_servicio."' selected='".$servicio1."'>".$servicio->nom_servicio."</option>";
+        echo "<option value='".$servicio->cod_servicio."' selected='".$servicio1."'>".$servicio->nom_servicio." ($".$servicio->precio_Costo.")</option>";
       } else {
-        echo "<option value='".$servicio->cod_servicio."' >".$servicio->nom_servicio."</option>";
+        echo "<option value='".$servicio->cod_servicio."' >".$servicio->nom_servicio." ($".$servicio->precio_Costo.")</option>";
       }
     }
 
       echo "</select>";
    ?>
 
+   
+            </select>
         <br> <br> <br> 
         <fieldset>
 		
-			 
+			 		 
 		 
 <label>Pedicurista: </label>
             <?php 
