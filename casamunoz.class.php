@@ -760,6 +760,26 @@ function consultar_empleado_reporte($dato) {
         unset($dbh);
         unset($query);
     }  
+
+     function consultar_municipio_sucursal($sucursal) {
+        $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
+        $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
+        $sql = "SELECT nom_municipio FROM MUNICIPIO as m
+        INNER JOIN SUCURSAL as s ON s.cod_municipio=m.cod_municipio
+        WHERE s.cod_sucursal=:sucursal";
+        $query = $dbh->prepare($sql); // Preparamos la consulta para dejarla lista para su ejecucion
+        $query->bindParam(":sucursal",$sucursal);
+        $query->execute(); // Ejecutamos la consulta
+     
+               if ($query) {
+            return $query;
+        } //pasamos el query para utilizarlo luego con fetch
+        else {
+            return false;
+        }
+        unset($dbh);
+        unset($query);
+    }
     
     function registar_cliente($datos) {
         $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager

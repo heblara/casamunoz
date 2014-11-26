@@ -173,6 +173,7 @@ $(document).ready(function(){
         <?php 
           $objeto=new CasaMunoz;
           $consultarSucursal=$objeto->consultar_sucursal();
+
           //$consulta=mysql_query("SELECT cod_dpto, nom_dpto FROM DEPARTAMENTO");
           // Voy imprimiendo el primer select compuesto por los paises
           //echo $consultarDepartamentos->rowCount();
@@ -181,7 +182,9 @@ $(document).ready(function(){
 
           while($registro=$consultarSucursal->fetch(PDO::FETCH_OBJ))
           {
-            echo "<option value='".$registro->cod_sucursal."'>".$registro->nom_sucursal."</option>";
+          $consultarMunicipio=$objeto->consultar_municipio_sucursal($registro->cod_sucursal);
+          $resMunicipio=$consultarMunicipio->fetch(PDO::FETCH_OBJ);
+            echo "<option value='".$registro->cod_sucursal."'>".$registro->nom_sucursal. " - ". $resMunicipio->nom_municipio. "</option>";
           }
           echo "</select>";
        ?>
