@@ -27,8 +27,8 @@
     <div id="wrapping" class="clearfix">
 <?php
       $ObjSucu=new CasaMunoz;
-		$consSucu=$ObjSucu->consultar_factura();
-    $resID=$consSucu->fetch(PDO::FETCH_OBJ);
+		$consSucu=$ObjSucu->consultar_factura($_SESSION['sucursal']);
+		$resID=$consSucu->fetch(PDO::FETCH_OBJ);
 		$mayor=0;
 		$codigo="";
 		$num=0;
@@ -39,8 +39,8 @@
 		//$cadena = preg_replace('[\s+]',"", $letraSucu1);
 		
     //$mayor=$resID->last_id;
-		if($resID->num_factura>$mayor){
-					$mayor=$resID->num_factura;
+		if($resID->last_id>$mayor){
+					$mayor=$resID->last_id;
 			}
 			 $mayor++;
 			if($mayor>0 && $mayor<10){
@@ -48,13 +48,13 @@
 			}else if($mayor>=10 && $mayor<100){
 				$cod="00".$mayor;
 			}else if($mayor>=100 && $mayor<1000){
-				$cod=$mayor;
+				$cod="0".$mayor;
 		}else{
 			$cod="0001";
 		}
 
 		$codigo=$letraSucu1.$cod;
-?>  	
+?>  
         <section id="aligned">
         <h2>FACTURA</h2>
         <label>No.:</label>
