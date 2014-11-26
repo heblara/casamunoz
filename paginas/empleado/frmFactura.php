@@ -27,35 +27,33 @@
     <div id="wrapping" class="clearfix">
 <?php
       $ObjSucu=new CasaMunoz;
-		$consSucu=$ObjSucu->correlativo_sucursal($_SESSION['empleado']);
+		$consSucu=$ObjSucu->consultar_factura();
+    $resID=$consSucu->fetch(PDO::FETCH_OBJ);
 		$mayor=0;
 		$codigo="";
 		$num=0;
 		$cod="";
 		$consSucu1=$ObjSucu->consultar_sucursal_unica($_SESSION['sucursal']);
 		$letraSucu=$resSucu1=$consSucu1->fetch(PDO::FETCH_OBJ);
-		$letraSucu1=substr($resSucu1->nom_sucursal, 0,4);
-		$cadena = preg_replace('[\s+]',"", $letraSucu1);
+		$letraSucu1=substr(preg_replace('[\s+]',"",($resSucu1->nom_sucursal)), 0,3);
+		//$cadena = preg_replace('[\s+]',"", $letraSucu1);
 		
-		if($consSucu->rowCount()>0){
-			while($resSucu=$consSucu->fetch(PDO::FETCH_OBJ)){
-				if(substr($resSucu->num_factura, 0,3)>$mayor){
-					$mayor=substr($resSucu->num_factura, 0,3);
-				}
+    //$mayor=$resID->last_id;
+		if($resID->num_factura>$mayor){
+					$mayor=$resID->num_factura;
 			}
-			$mayor++;
+			 $mayor++;
 			if($mayor>0 && $mayor<10){
 				$cod="000".$mayor;
 			}else if($mayor>=10 && $mayor<100){
 				$cod="00".$mayor;
 			}else if($mayor>=100 && $mayor<1000){
 				$cod=$mayor;
-			}
 		}else{
 			$cod="0001";
 		}
 
-		$codigo=$cadena.$cod;
+		$codigo=$letraSucu1.$cod;
 ?>  	
         <section id="aligned">
         <h2>FACTURA</h2>
