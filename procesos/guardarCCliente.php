@@ -15,8 +15,8 @@ $letraApe=substr($txtApellido1, 0,1);
 $letraNom=substr($txtNombre1, 0,1);
 if($consCliente->rowCount()>0){
 	while($resCliente=$consCliente->fetch(PDO::FETCH_OBJ)){
-		if(substr($resCliente->cod_cliente, 2,3)>$mayor){
-			$mayor=substr($resCliente->cod_cliente, 2,3);
+		if(substr($resCliente->cod_cliente, 4,3)>$mayor){
+			$mayor=substr($resCliente->cod_cliente, 4,3);
 		}
 	}
 	$mayor++;

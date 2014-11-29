@@ -12,6 +12,56 @@
 	});
 		});
 </script>
+<script language="JavaScript">
+var objeto = false;
+function procesaResultado() {
+// Si aun esta revisando los datos...
+if (objeto.readyState == 1) {
+//  document.getElementById('resultado').innerHTML = "Cargando datos con ajax...";
+  document.getElementById('resultado').innerHTML = "<td colspan='6'><img src='img/load.gif' title='Cargando datos' width='32' />";
+}
+// Si el estado es 4 significa que ya termino
+if (objeto.readyState == 4) {
+  // objeto.responseText trae el Resultado que metemos al DIV de arriba
+  document.getElementById('resultado').innerHTML = objeto.responseText;
+}
+}
+function crearObjeto() {
+  // --- Crear el Objeto dependiendo los diferentes Navegadores y versiones ---
+  try { objeto = new ActiveXObject("Msxml2.XMLHTTP");  }
+  catch (e) {
+  try { objeto = new ActiveXObject("Microsoft.XMLHTTP"); }
+  catch (E) {
+  objeto = false; }
+  }
+  // --- Si no se pudo crear... intentar este ultimo metodo ---
+  if (!objeto && typeof XMLHttpRequest!='undefined') {
+    objeto = new XMLHttpRequest();
+  }
+}
+
+// ------------------------------
+
+function cargarInfo(valor) {
+  alert(valor);
+  crearObjeto();
+  if (objeto.readyState != 0) {
+    alert('Error al crear el objeto XML. El Navegador no soporta AJAX');
+  } else {
+    // Preparar donde va a recibir el Resultado
+    objeto.onreadystatechange = procesaResultado;
+var ca=/^[ ]{1}/;
+var com=ca.test(valor);
+  if((!com=="") || (valor=="")){document.getElementById("resultado").innerHTML="";}else{
+  // Enviar la consulta
+      objeto.open("GET", "paginas/cargarInfo.php?&valor=" + valor, true);
+      objeto.send(null);
+  }
+    
+  }
+}
+// ------------------------------
+</script>
 <script src="js/mask.js"></script>
 <script>
   jQuery(function($){
@@ -35,112 +85,55 @@
         <input type="text" name="txtNIT" id="txtNIT" placeholder="Numero de NIT" autocomplete="off" tabindex="1" class="txtinput id" value="0614-180894-105-2">
         <fieldset>
           <legend>Servicios ejecutados este d&iacute;a</legend>
-          <table>
+          <table style="font-size:12pt;border:1px solid;" border="1" width="100%">
           <?php 
           $objeto=new Casamunoz;
-          $consReservas=$objeto->consultar_reservas_ejecutadas();
-          echo "<tr>
-            <td>Hora</td>
-            <td></td>
-          </tr>";
+          $consReservas=$objeto->consultar_reservas_ejecutadas($_SESSION['sucursal']);
+          $i=0;
           while($reserva=$consReservas->fetch(PDO::FETCH_OBJ)){
+            $i++;
+            if($i==0){
+              echo "<tr>
+              <th>Cod</th>
+            <th>Servicio</th>
+            <th>Hora</th>
+            <th>Pedicurista</th>
+            <th>Cliente</th>
+            <th>Seleccionar</th>
+          </tr>";
+            }
+            echo "<tr>
+            <td>".$reserva->cod_rsv."</td>
+            <td>".$reserva->nom_servicio."</td>
+            <td>".$reserva->hora_rsv."</td>
+            <td>".$reserva->NombreCompletoEmpleado."</td>
+            <td>".$reserva->NombreCompletoCliente."</td>
+            <td><input type='radio' class='radio' name='rdSeleccionar' id='rdSeleccionar' value='".$reserva->cod_servicio."' /></td>
+          </tr>";
           ?>
           <?php
           }
           ?>
+          <tr><td colspan="6" align="center"><input type="button" value="Seleccionar" class="submitbtn" onclick="cargarInfo(document.getElementById('rdSeleccionar').value)" /></td></tr>
           </table>
-        </fieldset>
-        <fieldset>
-          <legend>Factura</legend>
-          <label>Fecha:</label>
-          <input type="text" name="txtFecha" id="txtFecha" placeholder="Fecha" autocomplete="off" tabindex="1" class="txtinput calendar datepicker" value="<?php echo date('Y-m-d') ?>">  
-          <label>Empleado.:</label>
-          <input type="text" name="txtEmpleado" id="txtEmpleado" placeholder="Nombre del Empleado" autocomplete="off" tabindex="1" class="txtinput name">
-          <label>Cliente.:</label>
-          <input type="text" name="txtCliente" id="txtCliente" placeholder="Nombre del Cliente" autocomplete="off" tabindex="1" class="txtinput name">
-          <label>Tipo de pago:</label>
-        <select id="recipient" name="recipient" tabindex="6" class="selmenu">
-            <option value="0">-- Elija --</option>
-            <option value="F">Efectivo</option>
-            <option value="M">Tarjeta</option>
-        </select>
-        <label>Tipo de tarjeta:</label>
-        <select id="recipient" name="recipient" tabindex="6" class="selmenu">
-            <option value="0">-- Elija --</option>
-            <option value="1">Visa</option>
-            <option value="2">Mastercard</option>
-            <option value="3">American Express</option>
-        </select>
         </fieldset>
         <fieldset>
           <legend>Detalle</legend>
+          <div id='resultado'>
           <table width='100%' style="font-size:12pt;">
             <tr style="background:white;">
-              <th>Cantidad</th>
               <th>Descripcion</th>
+              <th>Cantidad</th>
               <th>Precio</th>
+              <th>Total</th>
             </tr>
             <tr style="background:white;">
               <td>&nbsp;</td>
               <td>&nbsp;</td>
               <td>&nbsp;</td>
-            </tr>
-            <tr style="background:white;">
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-            </tr>
-            <tr style="background:white;">
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-            </tr>
-            <tr style="background:white;">
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-            </tr>
-            <tr style="background:white;">
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-            </tr>
-            <tr style="background:white;">
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-            </tr>
-            <tr style="background:white;">
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-            </tr>
-            <tr style="background:white;">
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-            </tr>
-            <tr style="background:white;">
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-            </tr>
-            <tr style="background:white;">
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-            </tr>
-            <tr style="background:white;">
-              <td>Total:</td>
-              <td>&nbsp;</td>
-              <td>$ ----</td>
-            </tr>
-            <tr style="background:white;">
-              <td></td>
-              <td></td>
-              <td></td>
             </tr>
           </table>
+          </div>
         </fieldset>
         </section>
         <section id="aside" class="clearfix">

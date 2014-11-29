@@ -70,7 +70,6 @@ class CasaMunoz {
         $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
         $sql = "SELECT *,CONCAT_WS(' ',primer_nom,segundo_nom,primer_ape,segundo_ape) as NombreCompleto FROM CLIENTE";
         $query = $dbh->prepare($sql); // Preparamos la consulta para dejarla lista para su ejecucion
-        $query->bindParam(":nombre",$dato);
         $query->execute(); // Ejecutamos la consulta
         if ($query)
             return $query; //pasamos el query para utilizarlo luego con fetch
@@ -1378,6 +1377,34 @@ GROUP BY fec_estado_rsv";
         OR CONCAT_WS(' ',c.primer_nom,c.segundo_nom,c.primer_ape,c.segundo_ape) LIKE '%".$sucursal."%'
         AND co.fec_estado_rsv LIKE '%".$sucursal."%'
         GROUP BY fec_estado_rsv";
+        $query = $dbh->prepare($sql); // Preparamos la consulta para dejarla lista para su ejecucion
+        $query->bindParam(":sucursal",$sucursal);
+        $query->execute(); // Ejecutamos la consulta
+        if ($query)
+            return $query; //pasamos el query para utilizarlo luego con fetch
+        else
+            return false;
+        unset($dbh);
+        unset($query);
+    }
+    function consultar_reservas_ejecutadas($sucursal) {
+        $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
+        $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
+        $sql = "SELECT s.cod_servicio,c.cod_cliente,r.cod_rsv,s.nom_servicio, su.nom_sucursal,co.fec_estado_rsv,co.hora_rsv,
+        es.estado_rsv ,CONCAT_WS(' ',c.primer_nom,c.segundo_nom,c.primer_ape,c.segundo_ape) 
+        as NombreCompletoCliente,
+        CONCAT_WS(' ',e.primer_nom,e.segundo_nom,e.primer_ape,e.segundo_ape) 
+        as NombreCompletoEmpleado
+            FROM EMPLEADO as e 
+        INNER JOIN RESERVA r ON r.cod_emp=e.cod_emp
+        INNER JOIN CONTROL co ON co.cod_rsv=r.cod_rsv
+        INNER JOIN ESTADO_RESERVA as es ON es.cod_estado_rsv=co.cod_estado
+        INNER JOIN CLIENTE c ON c.cod_cliente = r.cod_cliente
+        INNER JOIN SERVICIO s ON s.cod_servicio = r.cod_servicio
+        INNER JOIN SUCURSAL su ON su.cod_sucursal = r.cod_sucursal
+        WHERE r.cod_sucursal=:sucursal
+        AND co.cod_estado = '2'
+        AND co.fec_estado_rsv='".date('Y-m-d')."'";
         $query = $dbh->prepare($sql); // Preparamos la consulta para dejarla lista para su ejecucion
         $query->bindParam(":sucursal",$sucursal);
         $query->execute(); // Ejecutamos la consulta

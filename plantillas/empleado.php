@@ -3,7 +3,7 @@ date_default_timezone_set('America/El_Salvador');
 ob_start();
 session_start();
 include("funciones/funciones.php");
-include("seguridadEmpleado.php");
+//include("seguridadEmpleado.php");
 ?>
 <!DOCTYPE HTML>
 <html xmlns="http://www.w3.org/1999/xhtml">

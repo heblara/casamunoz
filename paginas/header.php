@@ -1,6 +1,6 @@
 <?php 
 	if(isset($_SESSION['autenticado'])){
-		$cm1=new CasaMunoz;
+		$cm1=new Casamunoz;
 		$sucursal="";
 		$nombre="";
 		$nombre1="";
