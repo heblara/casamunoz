@@ -75,10 +75,41 @@ var com=ca.test(valor);
 </script>
 <form name="hongkiat" id="hongkiat-form" method="post" action="#">
     <div id="wrapping" class="clearfix">
+<?php
+      $ObjSucu=new CasaMunoz;
+		$consSucu=$ObjSucu->consultar_factura($_SESSION['sucursal']);
+		$resID=$consSucu->fetch(PDO::FETCH_OBJ);
+		$mayor=0;
+		$codigo="";
+		$num=0;
+		$cod="";
+		$consSucu1=$ObjSucu->consultar_sucursal_unica($_SESSION['sucursal']);
+		$letraSucu=$resSucu1=$consSucu1->fetch(PDO::FETCH_OBJ);
+		$letraSucu1=substr(preg_replace('[\s+]',"",($resSucu1->nom_sucursal)), 0,3);
+		//$cadena = preg_replace('[\s+]',"", $letraSucu1);
+		
+    //$mayor=$resID->last_id;
+		if($resID->last_id>$mayor){
+					$mayor=$resID->last_id;
+			}
+			 $mayor++;
+			if($mayor>0 && $mayor<10){
+				$cod="000".$mayor;
+			}else if($mayor>=10 && $mayor<100){
+				$cod="00".$mayor;
+			}else if($mayor>=100 && $mayor<1000){
+				$cod="0".$mayor;
+		}else{
+			$cod="0001";
+		}
+
+		$codigo=$letraSucu1.$cod;
+?>  
         <section id="aligned">
         <h2>FACTURA</h2>
         <label>No.:</label>
-        <input type="text" name="txtNoFact" id="txtNoFact" placeholder="Numero de factura" autocomplete="off" tabindex="1" class="txtinput money">
+        <input type="text" name="txtNoFact" id="txtNoFact" placeholder="Numero de factura" autocomplete="off" tabindex="1" class="txtinput money" 
+		value= "<?php echo $codigo; ?>" disabled="disabled" >
         <label>Registro No.:</label>
         <input type="text" name="txtRegistro" id="txtRegistro" placeholder="No. Registro" autocomplete="off" tabindex="1" class="txtinput name" disabled="disabled" value="80742-7" >
         <label>NIT:</label>

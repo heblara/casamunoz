@@ -51,7 +51,8 @@ class CasaMunoz {
         unset($dbh);
         unset($query);
     }
-    function consultar_cliente($dato) {
+    function 
+    e($dato) {
         $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
         $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
         $sql = "SELECT *,CONCAT_WS(' ',primer_nom,segundo_nom,primer_ape,segundo_ape) as NombreCompleto FROM CLIENTE WHERE CONCAT_WS(' ',primer_nom,segundo_nom,primer_ape,segundo_ape) LIKE'%".$dato."%'";
@@ -758,6 +759,26 @@ function consultar_empleado_reporte($dato) {
         unset($dbh);
         unset($query);
     }  
+
+     function consultar_municipio_sucursal($sucursal) {
+        $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
+        $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
+        $sql = "SELECT nom_municipio FROM MUNICIPIO as m
+        INNER JOIN SUCURSAL as s ON s.cod_municipio=m.cod_municipio
+        WHERE s.cod_sucursal=:sucursal";
+        $query = $dbh->prepare($sql); // Preparamos la consulta para dejarla lista para su ejecucion
+        $query->bindParam(":sucursal",$sucursal);
+        $query->execute(); // Ejecutamos la consulta
+     
+               if ($query) {
+            return $query;
+        } //pasamos el query para utilizarlo luego con fetch
+        else {
+            return false;
+        }
+        unset($dbh);
+        unset($query);
+    }
     
     function registar_cliente($datos) {
         $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
@@ -1358,7 +1379,7 @@ GROUP BY fec_estado_rsv";
         unset($dbh);
         unset($query);
     }
-    function consultar_reserva($sucursal) {
+    function consultar_reserva($sucursal, $cod_cliente) {
         $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
         $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
         $sql = "SELECT r.cod_rsv,s.nom_servicio, su.nom_sucursal,MAX(co.fec_estado_rsv) as fec_estado_rsv,
@@ -1373,12 +1394,13 @@ GROUP BY fec_estado_rsv";
         INNER JOIN CLIENTE c ON c.cod_cliente = r.cod_cliente
         INNER JOIN SERVICIO s ON s.cod_servicio = r.cod_servicio
         INNER JOIN SUCURSAL su ON su.cod_sucursal = r.cod_sucursal
-        WHERE r.cod_sucursal=:sucursal
-        OR CONCAT_WS(' ',c.primer_nom,c.segundo_nom,c.primer_ape,c.segundo_ape) LIKE '%".$sucursal."%'
+        WHERE r.cod_sucursal=:sucursal and c.cod_cliente=:cod_cliente
+        OR CONCAT_WS(' ',c.primer_nom,c.segundo_nom,c.primer_ape,c.segundo_ape) LIKE '%".$cod_cliente."%'
         AND co.fec_estado_rsv LIKE '%".$sucursal."%'
         GROUP BY fec_estado_rsv";
         $query = $dbh->prepare($sql); // Preparamos la consulta para dejarla lista para su ejecucion
-        $query->bindParam(":sucursal",$sucursal);
+   		$query->bindParam(":sucursal",$sucursal);
+		$query->bindParam(":cod_cliente",$cod_cliente);
         $query->execute(); // Ejecutamos la consulta
         if ($query)
             return $query; //pasamos el query para utilizarlo luego con fetch
@@ -1454,7 +1476,7 @@ GROUP BY fec_estado_rsv";
         unset($query);
     }
 
-        function consultar_expediente($cod_cliente) {
+        function consultar_expediente($cod_cliente,$sucursal) {
         $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
         $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
         $sql = "SELECT  CONCAT_WS(' ',c.primer_nom,c.segundo_nom,c.primer_ape,c.segundo_ape) AS NombreCompletoCliente, 
@@ -1467,13 +1489,14 @@ GROUP BY fec_estado_rsv";
         INNER JOIN ESTADO_RESERVA as es ON es.cod_estado_rsv=co.cod_estado
         INNER JOIN EMPLEADO e ON e.cod_emp = r.cod_emp
         INNER JOIN SERVICIO s ON s.cod_servicio = r.cod_servicio
-        WHERE c.cod_cliente=:cod_cliente
+        WHERE c.cod_cliente=:cod_cliente and su.cod_sucursal=:sucursal
         OR CONCAT_WS(' ',c.primer_nom,c.segundo_nom,c.primer_ape,c.segundo_ape) LIKE '%$cod_cliente%'
         GROUP BY r.cod_rsv
         ORDER BY co.fec_estado_rsv,co.hora_rsv
         ";
         $query = $dbh->prepare($sql); // Preparamos la consulta para dejarla lista para su ejecucion
         $query->bindParam(":cod_cliente",$cod_cliente);
+		$query->bindParam(":sucursal",$sucursal);
         $query->execute(); // Ejecutamos la consulta
         if ($query)
             return $query; //pasamos el query para utilizarlo luego con fetch
@@ -1516,6 +1539,25 @@ GROUP BY fec_estado_rsv";
         }
         unset($dbh);
         unset($query);
+    }
+    
+
+    function consultar_factura($sucursal) {
+    $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
+    $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
+    $sql = "SELECT LAST_INSERT_ID( num_factura ) AS last_id
+    FROM FACTURA
+	WHERE cod_sucursal=:sucursal
+    ORDER BY last_id DESC";
+    $query = $dbh->prepare($sql); // Preparamos la consulta para dejarla lista para su ejecucion
+    $query->bindParam(":sucursal",$sucursal);
+    $query->execute(); // Ejecutamos la consulta
+    if ($query)
+    return $query; //pasamos el query para utilizarlo luego con fetch
+    else
+    return false;
+    unset($dbh);
+    unset($query);
     }
 }
 ?>

@@ -4,7 +4,7 @@ sleep(1);
 if(isset($_GET['valor'])){
 	$objeto=new CasaMunoz;
 	$valor=$_GET['valor'];
-	$consCliente=$objeto->consultar_expediente($valor);
+	$consCliente=$objeto->consultar_expediente($valor,$sucursal);
 	if($consCliente->rowCount()){
 		echo "<table style='background-color:white;' width=100%>";
 		echo "<tr>
