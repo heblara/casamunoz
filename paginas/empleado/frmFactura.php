@@ -78,7 +78,7 @@ var com=ca.test(valor);
 <?php
       $ObjSucu=new CasaMunoz;
 		$consSucu=$ObjSucu->consultar_factura($_SESSION['sucursal']);
-		$resID=$consSucu->fetch(PDO::FETCH_OBJ);
+		//$resID=$consSucu->fetch(PDO::FETCH_OBJ);
 		$mayor=0;
 		$codigo="";
 		$num=0;
@@ -89,9 +89,12 @@ var com=ca.test(valor);
 		//$cadena = preg_replace('[\s+]',"", $letraSucu1);
 		
     //$mayor=$resID->last_id;
-		if($resID->last_id>$mayor){
-					$mayor=$resID->last_id;
-			}
+    if($consSucu->rowCount()>0){
+    while($resID=$consSucu->fetch(PDO::FETCH_OBJ)){
+    if(substr($resID->num_factura, 4,3)>$mayor){
+      $mayor=substr($resID->num_factura, 4,3);
+      }
+    }
 			 $mayor++;
 			if($mayor>0 && $mayor<10){
 				$cod="000".$mayor;
@@ -99,6 +102,9 @@ var com=ca.test(valor);
 				$cod="00".$mayor;
 			}else if($mayor>=100 && $mayor<1000){
 				$cod="0".$mayor;
+      }else{
+        $cod="0001";
+       }
 		}else{
 			$cod="0001";
 		}

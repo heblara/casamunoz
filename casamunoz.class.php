@@ -1545,7 +1545,7 @@ GROUP BY fec_estado_rsv";
     function consultar_factura($sucursal) {
     $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
     $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
-    $sql = "SELECT LAST_INSERT_ID( num_factura ) AS last_id
+    $sql = "SELECT *,LAST_INSERT_ID( num_factura ) AS last_id
     FROM FACTURA
 	WHERE cod_sucursal=:sucursal
     ORDER BY last_id DESC";
