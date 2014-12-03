@@ -1559,5 +1559,26 @@ GROUP BY fec_estado_rsv";
     unset($dbh);
     unset($query);
     }
+    
+    	function guardar_factura($dato) {
+    $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
+    $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
+    $sql = "INSERT INTO `FACTURA`(`num_factura`, `fec_factura`,`cod_rsv`, `cod_sucursal` )
+    VALUES (:num_factura,:fec_factura,:cod_rsv,:cod_sucursal)";
+    $query = $dbh->prepare($sql); // Preparamos la consulta para dejarla lista para su ejecucion
+        $hoy=date('Y-m-d H:i:s'); // Preparamos la consulta para dejarla lista para su ejecucion
+    $query->bindParam(":num_factura",$dato[0]);
+    $query->bindParam(":fec_factura",$hoy);
+    $query->bindParam(":cod_rsv",$dato[1]);
+    $query->bindParam(":cod_sucursal",$dato[2]);
+    if($query->execute()){
+    return $query;
+    }else{
+    echo "\nPDO::errorInfo():\n";
+    return false;
+    }
+    unset($dbh);
+    unset($query);
+    }
 }
 ?>
