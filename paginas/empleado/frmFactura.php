@@ -2,7 +2,10 @@
   <script src="//code.jquery.com/jquery-1.10.2.js"></script>
   <script src="//code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
   <link rel="stylesheet" href="/resources/demos/style.css">
-<script>
+<script type="text/javascript" src="js/jquery.blockUI.js"></script>
+
+
+<script type="text/javascript">
    $(function() {
 	$('.datepicker').datepicker({
 	dateFormat: 'yy-mm-dd', 
@@ -11,6 +14,36 @@
 	yearRange: '-40:+0'
 	});
 		});
+
+
+  $(function() {
+  //Se pone para que en todos los llamados ajax se bloquee la pantalla mostrando el mensaje Procesando...
+  $.blockUI.defaults.message = 'Procesando información, por favor espere... <br /><img src=\'img/load.gif\' /><br />';
+  $(document).ajaxStart($.blockUI).ajaxStop($.unblockUI);
+});
+function enviarDatos(){
+  var formulario = $("#hongkiat-form").serializeArray();
+    $.ajax({
+      type: "POST",
+      dataType: 'json',
+        url: "procesos/guardarFactura.php",
+        data: formulario,
+    }).done(function(respuesta){
+        if(respuesta.mensaje==2){
+          alert("No fue posible registrar la entrada");
+        }else if(respuesta.mensaje==1){
+          alert("Registro realizado con exito");
+     // document.getElementById('hongkiat-form').reset();
+         }
+    });
+}
+
+$(document).ready(function(){         
+  $("#submitbtn").click(function(){
+        enviarDatos();
+        return false;
+    });
+});
 </script>
 <script language="JavaScript">
 var objeto = false;
@@ -72,8 +105,10 @@ var com=ca.test(valor);
   jQuery(function($){
      $("#txtNIT").mask("9999-999999-999-9");   
   });
+
+
 </script>
-<form name="hongkiat" id="hongkiat-form" method="post" action="#">
+<form name="hongkiat" id="hongkiat-form" method="post" action="#" onsubmit="return false;">
     <div id="wrapping" class="clearfix">
 <?php
       $ObjSucu=new CasaMunoz;
@@ -115,7 +150,7 @@ var com=ca.test(valor);
         <h2>FACTURA</h2>
         <label>No.:</label>
         <input type="text" name="txtNoFact" id="txtNoFact" placeholder="Numero de factura" autocomplete="off" tabindex="1" class="txtinput money" 
-	value= "<?php echo $codigo; ?>" readonly >
+		value= "<?php echo $codigo; ?>" readonly >
         <label>Registro No.:</label>
         <input type="text" name="txtRegistro" id="txtRegistro" placeholder="No. Registro" autocomplete="off" tabindex="1" class="txtinput name" disabled="disabled" value="80742-7" >
         <label>NIT:</label>
