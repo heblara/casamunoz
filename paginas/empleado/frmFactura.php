@@ -115,7 +115,7 @@ var com=ca.test(valor);
         <h2>FACTURA</h2>
         <label>No.:</label>
         <input type="text" name="txtNoFact" id="txtNoFact" placeholder="Numero de factura" autocomplete="off" tabindex="1" class="txtinput money" 
-		value= "<?php echo $codigo; ?>" disabled="disabled" >
+	value= "<?php echo $codigo; ?>" readonly >
         <label>Registro No.:</label>
         <input type="text" name="txtRegistro" id="txtRegistro" placeholder="No. Registro" autocomplete="off" tabindex="1" class="txtinput name" disabled="disabled" value="80742-7" >
         <label>NIT:</label>
