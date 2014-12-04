@@ -223,6 +223,23 @@ class CasaMunoz {
         unset($dbh);
         unset($query);
     }  
+    function consultar_reserva_servicio($reserva) {
+        $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
+        $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
+        $sql = "SELECT * FROM RESERVA AS r 
+        INNER JOIN SERVICIO AS s ON r.cod_servicio=s.cod_servicio
+        INNER JOIN COSTO AS c ON s.cod_costo=c.cod_costo
+        WHERE r.cod_rsv=:reserva";
+        $query = $dbh->prepare($sql); // Preparamos la consulta para dejarla lista para su ejecucion
+        $query->bindParam(":reserva",$reserva);
+        $query->execute(); // Ejecutamos la consulta
+        if ($query->execute())
+            return $query; //pasamos el query para utilizarlo luego con fetch
+        else
+            return false;
+        unset($dbh);
+        unset($query);
+    } 
     function registrar_cliente($dato) {
         $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
         $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
@@ -1426,7 +1443,8 @@ GROUP BY fec_estado_rsv";
         INNER JOIN SUCURSAL su ON su.cod_sucursal = r.cod_sucursal
         WHERE r.cod_sucursal=:sucursal
         AND co.cod_estado = '2'
-        AND co.fec_estado_rsv='".date('Y-m-d')."'";
+        AND co.fec_estado_rsv='".date('Y-m-d')."'
+        GROUP BY r.cod_cliente,r.cod_rsv";
         $query = $dbh->prepare($sql); // Preparamos la consulta para dejarla lista para su ejecucion
         $query->bindParam(":sucursal",$sucursal);
         $query->execute(); // Ejecutamos la consulta
@@ -1560,25 +1578,47 @@ GROUP BY fec_estado_rsv";
     unset($query);
     }
     
-    	function guardar_factura($dato) {
-    $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
-    $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
-    $sql = "INSERT INTO `FACTURA`(`num_factura`, `fec_factura`,`cod_rsv`, `cod_sucursal` )
-    VALUES (:num_factura,:fec_factura,:cod_rsv,:cod_sucursal)";
-    $query = $dbh->prepare($sql); // Preparamos la consulta para dejarla lista para su ejecucion
-        $hoy=date('Y-m-d H:i:s'); // Preparamos la consulta para dejarla lista para su ejecucion
-    $query->bindParam(":num_factura",$dato[0]);
-    $query->bindParam(":fec_factura",$hoy);
-    $query->bindParam(":cod_rsv",$dato[1]);
-    $query->bindParam(":cod_sucursal",$dato[2]);
-    if($query->execute()){
-    return $query;
-    }else{
-    echo "\nPDO::errorInfo():\n";
-    return false;
+    function guardar_factura($dato) {
+        $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
+        $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
+        $sql = "INSERT INTO `FACTURA`(`num_factura`, `fec_factura`,`cod_rsv`, `cod_sucursal` )
+        VALUES (:num_factura,:fec_factura,:cod_rsv,:cod_sucursal)";
+        $query = $dbh->prepare($sql); // Preparamos la consulta para dejarla lista para su ejecucion
+            $hoy=date('Y-m-d H:i:s'); // Preparamos la consulta para dejarla lista para su ejecucion
+        $query->bindParam(":num_factura",$dato[0]);
+        $query->bindParam(":fec_factura",$hoy);
+        $query->bindParam(":cod_rsv",$dato[1]);
+        $query->bindParam(":cod_sucursal",$dato[2]);
+        if($query->execute()){
+        return $query;
+        }else{
+        echo "\nPDO::errorInfo():\n";
+        return false;
+        }
+        unset($dbh);
+        unset($query);
     }
-    unset($dbh);
-    unset($query);
+    function guardar_detalle_factura($dato) {
+        $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
+        $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
+        $sql = "INSERT INTO DETALLE_FACTURA 
+        VALUES (:cantidad,:descuento,:total,:numero,:servicio,:pago)";
+        $query = $dbh->prepare($sql); // Preparamos la consulta para dejarla lista para su ejecucion
+            $hoy=date('Y-m-d H:i:s'); // Preparamos la consulta para dejarla lista para su ejecucion
+        $query->bindParam(":cantidad",$dato[0]);
+        $query->bindParam(":descuento",$dato[1]);
+        $query->bindParam(":total",$dato[2]);
+        $query->bindParam(":numero",$dato[3]);
+        $query->bindParam(":servicio",$dato[4]);
+        $query->bindParam(":pago",$dato[5]);
+        if($query->execute()){
+        return $query;
+        }else{
+        echo "\nPDO::errorInfo():\n";
+        return false;
+        }
+        unset($dbh);
+        unset($query);
     }
     
     function actualizar_estado_reserva($reserva) {

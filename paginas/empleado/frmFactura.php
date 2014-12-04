@@ -33,6 +33,7 @@ function enviarDatos(){
           alert("No fue posible registrar la entrada");
         }else if(respuesta.mensaje==1){
           alert("Registro realizado con exito");
+          location.reload();
      // document.getElementById('hongkiat-form').reset();
          }
     });
@@ -74,24 +75,32 @@ function crearObjeto() {
 }
 
 // ------------------------------
-
-function cargarInfo(valor) {
-  alert(valor);
+function calcular(cantidad){
+    alert(cantidad);
+    var precio=document.getElementById('txtPrecio').value;
+    var descuento=document.getElementById('txtDescuento').value;
+    var subtotal=(cantidad*precio);
+    var total=subtotal-(subtotal*descuento);
+    alert(total);
+    document.getElementById('txtTotal').value=total;
+}
+function cargarInfo(valor,desc) {
+  //alert(valor);
   crearObjeto();
   if (objeto.readyState != 0) {
     alert('Error al crear el objeto XML. El Navegador no soporta AJAX');
   } else {
     // Preparar donde va a recibir el Resultado
     objeto.onreadystatechange = procesaResultado;
-var ca=/^[ ]{1}/;
-var com=ca.test(valor);
-  if((!com=="") || (valor=="")){document.getElementById("resultado").innerHTML="";}else{
-  // Enviar la consulta
-      objeto.open("GET", "paginas/cargarInfo.php?&valor=" + valor, true);
-      objeto.send(null);
-  }
-    
-  }
+    var ca=/^[ ]{1}/;
+    var com=ca.test(valor);
+      if((!com=="") || (valor=="")){document.getElementById("resultado").innerHTML="";}else{
+      // Enviar la consulta
+          objeto.open("GET", "paginas/cargarInfo.php?&valor=" + valor + "&desc="+desc, true);
+          objeto.send(null);
+      }
+        
+      }
 }
 // ------------------------------
 </script>
@@ -120,7 +129,7 @@ var com=ca.test(valor);
 		$cod="";
 		$consSucu1=$ObjSucu->consultar_sucursal_unica($_SESSION['sucursal']);
 		$letraSucu=$resSucu1=$consSucu1->fetch(PDO::FETCH_OBJ);
-		$letraSucu1=substr(preg_replace('[\s+]',"",($resSucu1->nom_sucursal)), 0,3);
+		$letraSucu1=substr(preg_replace('[\s+]',"",($resSucu1->nom_sucursal)),  0,3);
 		//$cadena = preg_replace('[\s+]',"", $letraSucu1);
 		
     //$mayor=$resID->last_id;
@@ -155,6 +164,8 @@ var com=ca.test(valor);
         <input type="text" name="txtRegistro" id="txtRegistro" placeholder="No. Registro" autocomplete="off" tabindex="1" class="txtinput name" disabled="disabled" value="80742-7" >
         <label>NIT:</label>
         <input type="text" name="txtNIT" id="txtNIT" placeholder="Numero de NIT" autocomplete="off" tabindex="1" class="txtinput id" value="0614-180894-105-2">
+        <label>Descuento:</label>
+        <input type="text" name="txtDescuento" id="txtDescuento" placeholder="Descuento" autocomplete="off" tabindex="1" class="txtinput id" value="0">
         <fieldset>
           <legend>Servicios ejecutados este d&iacute;a</legend>
           <table style="font-size:12pt;border:1px solid;" border="1" width="100%">
@@ -163,7 +174,6 @@ var com=ca.test(valor);
           $consReservas=$objeto->consultar_reservas_ejecutadas($_SESSION['sucursal']);
           $i=0;
           while($reserva=$consReservas->fetch(PDO::FETCH_OBJ)){
-            $i++;
             if($i==0){
               echo "<tr>
               <th>Cod</th>
@@ -174,19 +184,20 @@ var com=ca.test(valor);
             <th>Seleccionar</th>
           </tr>";
             }
+            $i++;
             echo "<tr>
             <td>".$reserva->cod_rsv."</td>
             <td>".$reserva->nom_servicio."</td>
             <td>".$reserva->hora_rsv."</td>
             <td>".$reserva->NombreCompletoEmpleado."</td>
             <td>".$reserva->NombreCompletoCliente."</td>
-            <td><input type='radio' class='radio' name='rdSeleccionar' id='rdSeleccionar' value='".$reserva->cod_servicio."' /></td>
+            <td><input type='radio' class='radio' name='rdSeleccionar' id='rdSeleccionar' value='".$reserva->cod_rsv."' onclick='cargarInfo(this.value,document.getElementById(\"txtDescuento\").value)' /></td>
           </tr>";
           ?>
           <?php
           }
           ?>
-          <tr><td colspan="6" align="center"><input type="button" value="Seleccionar" class="submitbtn" onclick="cargarInfo(document.getElementById('rdSeleccionar').value)" /></td></tr>
+          <tr><td colspan="6" align="center"><input type="button" value="Seleccionar" class="submitbtn" onclick="cargarInfo(document.getElementById('rdSeleccionar').checked)" /></td></tr>
           </table>
         </fieldset>
         <fieldset>
