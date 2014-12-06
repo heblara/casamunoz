@@ -98,6 +98,19 @@ $conf['actualizarservicio']=array(
 'archivo'=>'admin/frmActualizarServicio.php',
 'layout'=>LAYOUT_ADMIN
 );
+
+
+
+
+
+
+$conf['ejecutar']=array(
+'archivo'=>'empleado/frmEjecutardo.php',
+'layout'=>LAYOUT_EMPLEADO
+);
+
+
+
 $conf['registrartemporada']=array(
 'archivo'=>'admin/frmRegistroTemporada.php',
 'layout'=>LAYOUT_ADMIN
@@ -222,5 +235,13 @@ $conf['expediente']=array(
 'archivo'=>'empleado/frmExpediente.php',
 'layout'=>LAYOUT_EMPLEADO
 );
+
+
+
+$conf['ejecutar']=array(
+'archivo'=>'empleado/frmEjecutardo.php',
+'layout'=>LAYOUT_EMPLEADO
+);
+
 
 ?>

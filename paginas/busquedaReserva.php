@@ -1,4 +1,3 @@
-
 <?php 
 session_start();
 include("funciones.php");
@@ -7,7 +6,7 @@ if(isset($_GET['valor'])){
   $objeto=new CasaMunoz;
   $valor=$_GET['valor'];
 
- $consReserva=$objeto->consultar_reserva($sucursal, $valor);
+ $consReserva=$objeto->consultar_reserva($_SESSION['sucursal'] , $valor);
 
   if($consReserva->rowCount()){
     echo "<table style='background-color:white;' width=100%>";
@@ -15,9 +14,10 @@ if(isset($_GET['valor'])){
     <td>No.</td>
     <td>Nombre de cliente</td>
     <td>Nombre de empleado</td>
-       <td>Nombre servicio</td>
+      <td>Nombre servicio</td>
       <td>Fecha de reserva</td>
       <td>Estado</td>
+      <td>Opciones</td>
             
     </tr>";
     $i=0; 
@@ -31,12 +31,19 @@ if(isset($_GET['valor'])){
       <td>".$resReserva->nom_servicio."</td>    
     <td>".$resReserva->fec_estado_rsv."</td> 
    <td>".$resReserva->estado_rsv."</td>
-      <td><a href='?mod=actualizarreserva&id=".base64_encode($resReserva->cod_rsv)."'><img src='img/edit.png' /></a></td>
-      </tr>";
+
+
+      <td><a href='?mod=actualizarreserva&id=".base64_encode($resReserva->cod_rsv)."'><img src='img/edit.png' /></a>";
+      if($resReserva->estado_rsv=='Reservado' ){
+    echo "<a href='?mod=ejecutar&id=".base64_encode($resReserva->cod_rsv)."'><img src='img/read.png'/>";
     }
+      echo "
+      </td>
+      </tr>"; 
+      }
     echo "</table>";
   }else{
     echo "Su busqueda no devolvio resultados";
   }
-}
+  }
 ?>

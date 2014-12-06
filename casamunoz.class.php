@@ -1635,5 +1635,37 @@ GROUP BY fec_estado_rsv";
     unset($dbh);
     unset($query);
 	}
+	
+	function consultar_datos_reserva_cliente($cod) {
+        $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
+        $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
+        $sql = "SELECT * FROM CONTROL
+       ";
+        //$sql = "SELECT * FROM SERVICIO";
+        $query = $dbh->prepare($sql); // Preparamos la consulta para dejarla lista para su ejecucion
+        $query->bindParam(":cod",$cod);
+        $query->execute(); // Ejecutamos la consulta
+        if ($query)
+            return $query; //pasamos el query para utilizarlo luego con fetch
+        else
+            return false;
+        unset($dbh);
+        unset($query);
+    }	
+	
+	function actualizar_estado_reservado($reserva) {
+    $con = new DBManager(); //creamos el objeto $con a partir de la clase DBManager
+    $dbh = $con->conectar("mysql"); //Pasamos como parametro que la base de datos a utilizar para el caso MySQL.
+    $sql = "UPDATE CONTROL SET cod_estado='2' WHERE cod_rsv=:reserva";
+    $query = $dbh->prepare($sql); // Preparamos la consulta para dejarla lista para su ejecucion
+    $query->bindParam(":reserva",$reserva);
+    $query->execute(); // Ejecutamos la consulta
+    if ($query)
+    return $query; //pasamos el query para utilizarlo luego con fetch
+    else
+    return false;
+    unset($dbh);
+    unset($query);
+	}
 }
 ?>

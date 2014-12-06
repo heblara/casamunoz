@@ -1,82 +1,195 @@
-<link rel="stylesheet" href="//code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css">
+<?php @session_start(); ?>
+<form name="hongkiat" id="hongkiat-form">
+    <div id="wrapping" class="clearfix">
+        <section id="aligned">
+        <h2>RESERVA DE SERVICIO</h2>
+        <!--<label>Sucursal: </label>
+        <script type="text/javascript" src="funciones/select_dependientes1.js"></script>
+        <?php 
+          $objeto=new CasaMunoz;
+          $consultarSucursal=$objeto->consultar_sucursal();
+          //$consulta=mysql_query("SELECT cod_dpto, nom_dpto FROM DEPARTAMENTO");
+          // Voy imprimiendo el primer select compuesto por los paises
+          //echo $consultarDepartamentos->rowCount();
+          echo "<select name='lstSucursal' id='lstSucursal' class='selmenu' onchange='validarSucursal()'>";
+          echo "<option value='0'>Elige</option>";
+
+          while($registro=$consultarSucursal->fetch(PDO::FETCH_OBJ))
+          {
+            echo "<option value='".$registro->cod_sucursal."'>".$registro->nom_sucursal."</option>";
+          }
+          echo "</select>";
+       ?>-->
+       <!--<label>Cliente:</label>-->
+        <!--<input type="text" name="txtCliente" id="txtCliente" placeholder="Ingrese el nombre del cliente" autocomplete="off" tabindex="1" class="txtinput name">-->
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css">
   <script src="//code.jquery.com/jquery-1.10.2.js"></script>
   <script src="//code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
   <link rel="stylesheet" href="/resources/demos/style.css">
-  <script type="text/javascript" src="js/jquery.blockUI.js"></script>
-<script type="text/javascript">
-      $(function( $ ) {
+  <script type="text/javascript">
+      jQuery.noConflict();
+      (function( $ ) {
         $(function() {
           $('.datepicker').datepicker({
               dateFormat: 'yy-mm-dd', 
               changeMonth: true, 
               changeYear: true, 
-              //yearRange: '+0:+1',
-              /*onClose: function( selectedDate ) {
-                $( "#txtFechaRegistro" ).datepicker( "option", "minDate", selectedDate );
-              },*/
-              minDate:'-0',
-              maxDate:'+3D'              
+              yearRange: '+0:+1',
+              minDate: -0, maxDate: "+15D"
               //maxDate:'+1M +10D'
           });
         });
-      });
-  function validar(){
-    sucursal=document.getElementById('lstEmpleadoSucursal').value;
-    cantidad=document.getElementById('txtCantidadEntrega[]').value;
-    error=false;
-    if(sucursal==0){
-        alert("Seleccione un empleado");
-        error=true;
-    }else if(isNaN(cantidad)){
-        alert("Ingrese un numero en la cantidad");
-        error=true;
-    }
-    if(error==true){
-      return false;
-    }else{
-      return true;
-    }
+      })(jQuery);
+      // Code that uses other library's $ can follow here.
+  </script>
+<script language="JavaScript">
+var objeto = false;
+function procesaResultado() {
+// Si aun esta revisando los datos...
+if (objeto.readyState == 1) {
+//  document.getElementById('resultado').innerHTML = "Cargando datos con ajax...";
+  document.getElementById('demoDer').innerHTML = "<td colspan='6'>Cargando...";
+}
+// Si el estado es 4 significa que ya termino
+if (objeto.readyState == 4) {
+  // objeto.responseText trae el Resultado que metemos al DIV de arriba
+  document.getElementById('demoDer').innerHTML = objeto.responseText;
+}
+}
+function procesaTabla() {
+// Si aun esta revisando los datos...
+if (objeto.readyState == 1) {
+//  document.getElementById('resultado').innerHTML = "Cargando datos con ajax...";
+  document.getElementById('horarios').innerHTML = "<td colspan='6'><img src='img/load.gif' title='Cargando datos' width='32' />";
+}
+// Si el estado es 4 significa que ya termino
+if (objeto.readyState == 4) {
+  // objeto.responseText trae el Resultado que metemos al DIV de arriba
+  document.getElementById('horarios').innerHTML = objeto.responseText;
+}
+}
+function crearObjeto() {
+  // --- Crear el Objeto dependiendo los diferentes Navegadores y versiones ---
+  try { objeto = new ActiveXObject("Msxml2.XMLHTTP");  }
+  catch (e) {
+  try { objeto = new ActiveXObject("Microsoft.XMLHTTP"); }
+  catch (E) {
+  objeto = false; }
   }
+  // --- Si no se pudo crear... intentar este ultimo metodo ---
+  if (!objeto && typeof XMLHttpRequest!='undefined') {
+    objeto = new XMLHttpRequest();
+  }
+}
+
+// ------------------------------
+
+function leerDatos(sucursal,fecha,servicio) {
+  crearObjeto();
+  if (objeto.readyState != 0) {
+    alert('Error al crear el objeto XML. El Navegador no soporta AJAX');
+  } else {
+    // Preparar donde va a recibir el Resultado
+    objeto.onreadystatechange = procesaResultado;
+    var ca=/^[ ]{1}/;
+    var com=ca.test(sucursal);
+    if((!com=="") || (sucursal=="") || (fecha=="")){document.getElementById("demoDer").innerHTML="";}else{
+    // Enviar la consulta
+        objeto.open("GET", "paginas/cargarHorario.php?sucursal=" + sucursal + "&fecha="+fecha+"&serv="+servicio, true);
+        objeto.send(null);
+    } 
+  }
+}
+function cargarHorario(sucursal,fecha2,hora) {
+  //alert(hor);
+  //alert(fecha2);
+  crearObjeto();
+  if (objeto.readyState != 0) {
+    alert('Error al crear el objeto XML. El Navegador no soporta AJAX');
+  } else {
+    // Preparar donde va a recibir el Resultado
+    objeto.onreadystatechange = procesaTabla;
+    var ca=/^[ ]{1}/;
+    var com=ca.test(sucursal);
+    if((!com=="") || (sucursal=="") || (fecha2=="")){document.getElementById("horarios").innerHTML="";}else{
+    // Enviar la consulta
+        objeto.open("GET", "paginas/cargarEmpleado.php?sucursal=" + sucursal + "&fecha2="+fecha2+"&hora="+hora, true);
+        objeto.send(null);
+    } 
+  }
+}
 </script>
+<script type="text/javascript" src="js/jquery.blockUI.js"></script>
 <script type="text/javascript">
+jQuery.noConflict();
+(function( $ ) {
   $(function() {
-  //Se pone para que en todos los llamados ajax se bloquee la pantalla mostrando el mensaje Procesando...
-  $.blockUI.defaults.message = 'Procesando información, por favor espere... <br /><img src=\'img/load.gif\' /><br />';
-  $(document).ajaxStart($.blockUI).ajaxStop($.unblockUI);
-});
+    // More code using $ as alias to jQuery
+    //Se pone para que en todos los llamados ajax se bloquee la pantalla mostrando el mensaje Procesando...
+    $.blockUI.defaults.message = 'Procesando información, por favor espere... <br /><img src=\'img/load.gif\' /><br />';
+    $(document).ajaxStart($.blockUI).ajaxStop($.unblockUI);
+  });
+})(jQuery);
+  
 function enviarDatos(){
-  var formulario = $("#hongkiat-form").serializeArray();
-    $.ajax({
+  //var formulario = 
+    var j = jQuery.noConflict();
+    j.ajax({
       type: "POST",
       dataType: 'json',
-        url: "procesos/actualizardoreserva.php",
-        data: formulario,
+        url: "procesos/guardarReservaEmp.php",
+        data: j("#hongkiat-form").serializeArray(),
     }).done(function(respuesta){
         if(respuesta.mensaje==2){
-          alert("No fue posible registrar la entrada");
+          alert("No fue posible registrar la reserva, intente de nuevo");
         }else if(respuesta.mensaje==1){
-          alert("Registro realizado con exito");
-        }else if(respuesta.mensaje==3){
-          alert("Las cantidades no deben sobrepasar las existencias");
+          alert("Reserva realizado con exito");
+          location.href='?mod=imprimirreserva&id=<?php echo $_SESSION['reserva'] ?>';
         }
     });
 }
-$(document).ready(function(){         
+$.noConflict();
+jQuery( document ).ready(function( $ ) {
+  // Code that uses jQuery's $ can follow here.
   $("#submitbtn").click(function(){
-      if(validar()){
-        enviarDatos();
-      }
-      return false;
-  });
+        if(validar()){
+          if($("input[id=rdSeleccionar]:checked").val()){
+            enviarDatos();
+          }else{
+            alert("Seleccione un horario");
+          }
+        }else{
+          //alert("Seleccione un cliente");
+        }
+    });
 });
+
 </script>
- 
-<script language="JavaScript">
-</script>
-<form name="hongkiat" id="hongkiat-form" method="post" action="#">
-    <div id="wrapping" class="clearfix">
-        <section id="aligned">
-        <h2>REPROGRAMACION DE RESERVA</h2>
+        <!-- RECURSOS PARA EL BUSCADOR DE CLIENTES-->
+  <link rel="stylesheet" href="test.css" type="text/css" media="screen" title="Test Stylesheet" charset="utf-8" />
+  <script src="js/search/protoculous-effects-shrinkvars.js" type="text/javascript" charset="utf-8"></script>
+  <script src="js/search/textboxlist.js" type="text/javascript" charset="utf-8"></script>
+  <script src="js/search/test.js" type="text/javascript" charset="utf-8"></script>
+  <script>
+  function validar(){
+    var cliente=document.getElementById("txtCliente").value;
+    var dato=$F('facebook-demo').split("###");
+    tlist2.update();
+    //alert("Valor: "+dato[0]);
+    if($F('facebook-demo')!=""){
+      document.getElementById("txtCliente").value=$F('facebook-demo');
+      //enviarnot
+      return true;
+      //return true;  
+    }else{
+      alert("Es necesario ingresar un cliente");
+      return false;
+    }
+  }
+  </script>
+
+    
+        <h2>SEGUIMIENTO DE RESERVA</h2>
           <?php 
           $objeto=new CasaMunoz;
             $id=base64_decode($_GET['id']);
@@ -93,108 +206,72 @@ $(document).ready(function(){
             <?php 
             $consEstados=$objeto->consultar_estados();
             while($resEstados=$consEstados->fetch(PDO::FETCH_OBJ)){
-              if($resEstados->cod_estado_rsv!=1 && $resEstados->cod_estado_rsv!=5){
+              if($resEstados->cod_estado_rsv!=1 && $resEstados->cod_estado_rsv!=2 && $resEstados->cod_estado_rsv!=5){
                 echo "<option value='".$resEstados->cod_estado_rsv."'>".$resEstados->estado_rsv."</option>";
               }
             }
             ?>
            <br> <br> <br>
         </select>
-		
-		
-		<label>Fecha registro reprogramar</label>
-        <input type="text" name="txtFechaRegistro" id="txtFechaRegistro" placeholder="Fecha de reprogramacion" autocomplete="off" tabindex="1" class="txtinput calendar datepicker" readonly="readonly" value="<?php echo $resReserva->fec_estado_rsv ?>">  
-        <br/>
-		     <br> <br> <br>     
-		
-        <label for="txtHora">Hora:</label>
-        <input type='time' min='' max='' class='txtinput time' value="<?php echo $resReserva->hora_rsv ?>"> 
 
-   
-            <label>Servicio: </label>
+<!-- FIN DE RECURSOS FUNCIONARIOS-->
+<br /><br />
+        <label for="lstServicios">Servicio:</label>
+        <?php 
+        //echo $_SESSION['sucursal'];
+        ?>
+        <select id="lstServicios" name="lstServicios" tabindex="6" class="selmenu">
+            <option value="0">-- Elija servicio --</option>
             <?php 
-      $consultarservicios=$objeto->listar_servicios();
-      //$consulta=mysql_query("SELECT cod_dpto, nom_dpto FROM DEPARTAMENTO");
-      // Voy imprimiendo el primer select compuesto por los paises
-      //echo $consultarDepartamentos->rowCount();
-      echo "<select name='lstServicio' id='lstServicio' class='selmenu'>";
-      echo "<option value='0'>Elige</option>";
+            $conServicios=$objeto->listar_servicios($_SESSION["sucursal"]);
+            while($servicio=$conServicios->fetch(PDO::FETCH_OBJ)){
 
-      $servicio1="";
-      while($servicio=$consultarservicios->fetch(PDO::FETCH_OBJ))
-      {
-      if($servicio->cod_servicio==$resReserva->cod_servicio){$servicio1='selected';
+
+
+               {
+      if($servicio->cod_servicio==$resReserva->cod_servicio){ 
+        $servicio1='selected';
         echo "<option value='".$servicio->cod_servicio."' selected='".$servicio1."'>".$servicio->nom_servicio." ($".$servicio->precio_Costo.")</option>";
       } else {
         echo "<option value='".$servicio->cod_servicio."' >".$servicio->nom_servicio." ($".$servicio->precio_Costo.")</option>";
       }
     }
+ 
+              
+            }
+            ?>
+        </select>
+        <label>Fecha:</label>
+        <?php 
+        $fecha = date('Y-m-d');
+        $fecha = strtotime ( '-1 day' , strtotime ( $fecha ) );
+        $nuevafecha = strtotime ( '+15 day' , strtotime ( $fecha ) ) ;
+        $nuevafecha = date ( 'Y-m-d' , $nuevafecha );
+        ?>
+        <input type="text" name="txtFecha" id="txtFecha" placeholder="Seleccione una fecha" autocomplete="off" tabindex="1" class="txtinput calendar datepicker"  readonly="readonly" value="<?php echo $resReserva->fec_estado_rsv ?>"    min="<?php echo $fecha ?>"    max="<?php echo $nuevafecha ?>"    onchange="leerDatos(<?php echo $_SESSION['sucursal'] ?>,this.value)" >  
+       
+     
 
-      echo "</select>";
-   ?>
-
-   
-            </select>
-        <br> <br> <br> 
-        <fieldset>
-		
-			 		 
-		 
-<label>Pedicurista: </label>
-            <?php 
-      $consultarpedicurista=$objeto->consultar_pedicurista($_SESSION['sucursal']);
-      //$consulta=mysql_query("SELECT cod_dpto, nom_dpto FROM DEPARTAMENTO");
-      // Voy imprimiendo el primer select compuesto por los paises
-      //echo $consultarDepartamentos->rowCount();
-      echo "<select name='lstPedicurista' id='lstPedicurista' class='selmenu'>";
-      echo "<option value='0'>Elige</option>";
-
-      $pedicurista1="";
-      while($pedicurista=$consultarpedicurista->fetch(PDO::FETCH_OBJ))
-      {
-      if($pedicurista->cod_emp==$resReserva->cod_emp){$pedicurista1='selected';
-        echo "<option value='".$pedicurista->cod_emp."' selected='".$pedicurista1."'>".$pedicurista->primer_nom."</option>";
-      } else {
-        echo "<option value='".$pedicurista->cod_emp."' >".$pedicurista->primer_nom."</option>";
-      }
-    }
-
-      echo "</select>";
-   ?>
-
-
-          <legend><span style='font-size:12pt;'>Disponibilidad de pedicurista seleccionado</span></legend>
-          <table width="100%" border='1' style="border:groove 1px;font-size:12pt;">
-              <tr>
-                <th>Hora</th>
-                <th>Estado</th>
-              </tr>
-              <tr>
-                <td>08:00</td>
-                <td>Ocupado</td>
-              </tr>
-              <tr>
-                <td>08:30</td>
-                <td>Disponible</td>
-              </tr>
-              <tr>
-                <td>09:00</td>
-                <td>Ocupado</td>
-              </tr>
-            </table>
-        </fieldset>
-       <br> <br> <br>
-         <select>
+        <label>Hora de Inicio: </label>
+        <span id="demoDer">
+        <select class='selmenu' id='txtHora' name='txtHora' disabled='disabled'>
+          <option value='0'>Seleccione una fecha</option>
+        </select>
+        <!--<input type='time' min='' max='' class='txtinput time' disabled="disabled">-->
+        </span>
+        <!--<label for="txthora">Hora:</label>
+        <input type="text" id="txtHora" placeholder='Hora' class="txtinput time" />-->
+        <div id="horarios"></div>
+        <br />
+        <br />
+        <br />
         
-        <br />
-        <br />
-        <br />
         <section id="aside" class="clearfix">
         </section>
     </div>
-    <section id="buttons">
+    <section id='buttons'>
         <!--<input type="reset" name="reset" id="resetbtn" class="resetbtn" value="Reset">-->
-        <input type="submit" name="submit" id="submitbtn" class="submitbtn" tabindex="7" value="Reservar">
-        <br style="clear:both;">
+        <input type='button' name='submit' id='submitbtn' class='submitbtn' tabindex='7' value='Reservar'>
+        <br style='clear:both;'>
     </section>
 </form>
